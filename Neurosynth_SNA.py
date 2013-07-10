@@ -48,19 +48,34 @@ def GetFileNamesInDirectory(directory):
 
 	return file_names
 
-def create_cross_correlation_table(maindir, files_names, outdir, outname):
+def CreateCrossCorrelationTable(maindir, file_names, outdir, outname):
 	"""
-	Takes a directory and list of numpy files and horizontally concatenates them all and saves the output in outdir. 
+	Takes a directory and list of numpy files and horizontally concatenates them all and saves the output in outdir. Labels are also added.
 	"""
-	for brain in range(0,979):
-		database_brain = np.load(maindir+os.sep+file_names[brain]) # Loading the image
-		#database_brain_data = database_brain.get_data() # Accessing numbers from the nibabel object and putting in numpy array.
-		if brain==0:
+	for number, file_name in enumerate(file_names):
+		database_brain = np.load(maindir+os.sep+file_name) # Loading the correlation column.
+		if number==0:
 			concatenate_data= database_brain
 		else:
 			concatenate_data=np.concatenate((concatenate_data, database_brain), axis=1)
+
+
+	# Add concept indices:
+	num_of_rows = concatenate_data.shape[0]
+	horz_labels = np.arange(0, num_of_rows)
+	horz_labels = np.expand_dims(horz_labels, axis=0) # Necessary for swapping and concatenating.
+	vert_labels = np.swapaxes(horz_labels, 0, 1)
+	horz_labels = np.insert(horz_labels, 0, 0)
+	horz_labels = np.expand_dims(horz_labels, axis=0) # Expands again because the last line eliminates an axis for some reason.
+
+
+	concatenate_data = np.concatenate((vert_labels, concatenate_data), axis=1)
+	import pdb; pdb.set_trace()
+	concatenate_data = np.concatenate((horz_labels, concatenate_data), axis=0)
+
 	outpath=os.sep.join([outdir, outname])
 	np.save(outpath, concatenate_data)
+	np.savetxt(outpath+'.txt', concatenate_data, fmt='%10.3f', delimiter=',')
 		
 def CreateEdgelist(maindir, file_names, outdir, outname):
 	"""
@@ -79,11 +94,10 @@ def CreateEdgelist(maindir, file_names, outdir, outname):
 			concatenate_data = np.concatenate((concatenate_data, three_col), axis=0)
 	outpath=os.sep.join([outdir, outname])
 	np.save(outpath, concatenate_data)
-	set_trace()
 	np.savetxt(outpath+'.txt', concatenate_data, fmt='%10.f %10.f %1.3f', delimiter='\t')
 
-def ImportEdgelist(file):
-	graph = Graph.Read_Edgelist(file)
+def ImportAdjacencyMatrix(file):
+	graph = Graph.Read_Adjacency(file)
 	return graph
 
 def VisualizeData():
@@ -102,9 +116,20 @@ def main():
 	
 if __name__ == '__main__':
 	maindir, outdir, forward_inference_edgelist, reverse_inference_edgelist = SetPaths()
-	file_names                                                              = GetFileNamesInDirectory(maindir)
+	#file_names                                                              = GetFileNamesInDirectory(maindir)
+	adjacency_matrix = np.load(outpath, concatenate_data)
+	ImportAdjacencyMatrix(outdir+os.sep+'reverse_inference_cross_table.txt')
 
-	CreateEdgelist(maindir, file_names, outdir, 'reverse_inference2')
+	
 
+
+"""
+Old commands:
+
+
+CreateEdgelist(maindir, file_names, outdir, 'reverse_inference2')
+CreateCrossCorrelationTable(maindir, file_names, outdir, 'reverse_inference_cross_table')
+ImportAdjacencyMatrix(outdir+os.sep+'reverse_inference_cross_table.txt')
+"""
 
 

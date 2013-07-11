@@ -114,16 +114,14 @@ def ImportNcol(file):
 def VisualizeData():
 	pass
 
-<<<<<<< HEAD
 def SaveGraph(graph, path):
 	graph.write_pickle(path)
-=======
+	
 def CommonCommands():
 	"""
 	Random commands.
 	"""
 	graph = ImportData(forward_inference_edgelist)
->>>>>>> 090c89e6eb173571fa49fe467a9b154ab0f76039
 
 def LoadGraph(pickle_path):
 	graph = Graph.Read_Pickle(pickle_path)

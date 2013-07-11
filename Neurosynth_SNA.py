@@ -104,6 +104,9 @@ def VisualizeData():
 	pass
 
 def CommonCommands():
+	"""
+	Random commands.
+	"""
 	graph = ImportData(forward_inference_edgelist)
 
 

@@ -8,34 +8,35 @@ Neurosynth_SNA.py
 
 """
 from __future__ import division
-import os, sys, getpass
-import random as rand
-import cPickle
-import numpy as np
 from igraph import *
 from pdb import *
-
+import os, sys, getpass, random as rand, cPickle, numpy as np
 
 def SetPaths():
 	"""
 	Set relevant paths for windows, linux, and mac systems.
 	"""
 	if sys.platform == "darwin":
-		maindir = os.sep.join(['/Volumes', 'huettel', 'KBE.01',  'Analysis', 'Neurosynth', 'ReverseResults'])
-		outdir  = os.sep.join(['/Volumes', 'huettel', 'KBE.01', 'Analysis', 'Neurosynth', 'Data'])
+		maindir = os.sep.join(['/Volumes', 'huettel', 'KBE.01',  'Analysis', 'Neurosynth', 'ForwardResults'])
+		outdir  = os.sep.join(['/Volumes', 'huettel', 'KBE.01', 'Analysis', 'Neurosynth', 'SNAFiles'])
+		r_pickle_path = os.sep.join(['/Volumes', 'huettel', 'KBE.01', 'Analysis', 'Neurosynth', 'SNAFiles', 'reverse_graph.p'])
+		f_pickle_path = os.sep.join(['/Volumes', 'huettel', 'KBE.01', 'Analysis', 'Neurosynth', 'SNAFiles', 'forward_graph.p'])
 	elif sys.platform == "win32":
-		maindir = os.sep.join(['M:', 'KBE.01', 'Analysis', 'Neurosynth', 'ReverseResults'])
-		outdir  = os.sep.join(['M:', 'KBE.01', 'Analysis', 'Neurosynth', 'Data'])
+		maindir = os.sep.join(['M:', 'KBE.01', 'Analysis', 'Neurosynth', 'ForwardResults'])
+		outdir  = os.sep.join(['M:', 'KBE.01', 'Analysis', 'Neurosynth', 'SNAFiles'])
+		r_pickle_path = os.sep.join(['M:', 'KBE.01', 'Analysis', 'Neurosynth', 'SNAFiles', 'reverse_graph.p'])
+		f_pickle_path = os.sep.join(['M:', 'KBE.01', 'Analysis', 'Neurosynth', 'SNAFiles', 'forward_graph.p'])
 	elif sys.platform == "linux2":
 		username=getpass.getuser()
-		maindir = os.sep.join(['/home', username, 'experiments', 'KBE.01', 'Analysis', 'Neurosynth', 'ReverseResults'])
-		outdir  = os.sep.join(['/home', username, 'experiments', 'KBE.01', 'Analysis', 'Neurosynth', 'Data'])
+		maindir = os.sep.join(['/home', username, 'experiments', 'KBE.01', 'Analysis', 'Neurosynth', 'ForwardResults'])
+		outdir  = os.sep.join(['/home', username, 'experiments', 'KBE.01', 'Analysis', 'Neurosynth', 'SNAFiles'])
+		r_pickle_path = os.sep.join(['/home', username, 'experiments', 'KBE.01', 'Analysis', 'Neurosynth', 'SNAFiles', 'reverse_graph.p'])
+		f_pickle_path = os.sep.join(['/home', username, 'experiments', 'KBE.01', 'Analysis', 'Neurosynth', 'SNAFiles', 'forward_graph.p'])
 
 	forward_inference_edgelist = os.sep.join([outdir, "forward_inference.txt"])
 	reverse_inference_edgelist = os.sep.join([outdir, "reverse_inference.txt"])
 
-	return maindir, outdir, forward_inference_edgelist, reverse_inference_edgelist
-
+	return maindir, outdir, forward_inference_edgelist, reverse_inference_edgelist, f_pickle_path, r_pickle_path
 
 def GetFileNamesInDirectory(directory):
 	"""
@@ -45,6 +46,11 @@ def GetFileNamesInDirectory(directory):
 		for file in files:
 			file_names=file
 	file_names.sort()
+
+	try:
+		file_names.remove('.DS_Store') # This is a file that mac systems automatically insert into directories and must be removed.
+	except:
+		pass
 
 	return file_names
 
@@ -93,41 +99,58 @@ def CreateEdgelist(maindir, file_names, outdir, outname):
 		else:
 			concatenate_data = np.concatenate((concatenate_data, three_col), axis=0)
 	outpath=os.sep.join([outdir, outname])
-	np.save(outpath, concatenate_data)
-	np.savetxt(outpath+'.txt', concatenate_data, fmt='%10.f %10.f %1.3f', delimiter='\t')
 
+	np.save(outpath, concatenate_data)
+	np.savetxt(outpath+'.txt', concatenate_data, fmt='%1.f %1.f %1.3f')
+	
 def ImportAdjacencyMatrix(file):
 	graph = Graph.Read_Adjacency(file)
+	return graph
+
+def ImportNcol(file):
+	graph = Graph.Read_Ncol(file, names=True, weights=True)
 	return graph
 
 def VisualizeData():
 	pass
 
-def CommonCommands():
-	graph = ImportData(forward_inference_edgelist)
+def SaveGraph(graph, path):
+	graph.write_pickle(path)
+
+def LoadGraph(pickle_path):
+	graph = Graph.Read_Pickle(pickle_path)
+	return graph
+
+####### Statistics
+
+def MakeSubGraph(vertices, edges):
+	pass
+
+def VisualizeGraph(graph, outdir):
+	graph.write_svg(outdir+os.sep+'forward_graph_kamada_kawai', labels = "name", layout = graph.layout_kamada_kawai())
+	pass
+
+def CalculateBetweennessCentrality(graph):
+	pass
+
+
 
 
 """
 Start of specific user commands.
-"""
-
-def main():
-	pass
-	
+"""	
 if __name__ == '__main__':
-	maindir, outdir, forward_inference_edgelist, reverse_inference_edgelist = SetPaths()
-	#file_names                                                              = GetFileNamesInDirectory(maindir)
-	adjacency_matrix = np.load(outpath, concatenate_data)
-	ImportAdjacencyMatrix(outdir+os.sep+'reverse_inference_cross_table.txt')
-
-	
+	maindir, outdir, forward_inference_edgelist, reverse_inference_edgelist, f_pickle_path, r_pickle_path = SetPaths()
+	fg = LoadGraph(f_pickle_path)
+	rg = LoadGraph(r_pickle_path)
+	import pdb; pdb.set_trace()
 
 
 """
 Old commands:
-
-
-CreateEdgelist(maindir, file_names, outdir, 'reverse_inference2')
+file_names = GetFileNamesInDirectory(maindir)
+CreateEdgelist(maindir, file_names, outdir, 'forward_inference')
+graph = ImportNcol(outdir+os.sep+'reverse_inference.txt')
 CreateCrossCorrelationTable(maindir, file_names, outdir, 'reverse_inference_cross_table')
 ImportAdjacencyMatrix(outdir+os.sep+'reverse_inference_cross_table.txt')
 """

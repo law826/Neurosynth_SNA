@@ -3,9 +3,6 @@
 """
 Neurosynth_SNA.py
 
-[] test whether current import protocol works
-[] add functionality for windows
-
 """
 from __future__ import division
 from pdb import *
@@ -147,16 +144,15 @@ def CalculateBetweennessCentrality(graph):
 
 """
 Start of specific user commands.
+
+To do list:
+[] refine names to get rid of underscores and keep only first part (hint: string.sep('_'))
 """	
 if __name__ == '__main__':
 	maindir, outdir, forward_inference_edgelist, reverse_inference_edgelist, f_pickle_path, r_pickle_path = SetPaths()
 	fg = LoadGraph(f_pickle_path)
 	rg = LoadGraph(r_pickle_path)
-	
-	file_names=GetFileNamesInDirectory(maindir)
-	fg.vs["names"]=[file_names]
-
-set_trace()
+	set_trace()
 
 
 """
@@ -164,8 +160,10 @@ Old commands:
 file_names = GetFileNamesInDirectory(maindir)
 CreateEdgelist(maindir, file_names, outdir, 'forward_inference')
 graph = ImportNcol(outdir+os.sep+'reverse_inference.txt')
-CreateCrossCorrelationTable(maindir, file_names, outdir, 'reverse_inference_cross_table')
-ImportAdjacencyMatrix(outdir+os.sep+'reverse_inference_cross_table.txt')
+fg.vs["names"]=[file_names] # Set the names of the vertices.
+rg.vs["names"]=[file_names] # Set the names of the vertices.
+SaveGraph(fg, f_pickle_path) # Pickle the forward graph.
+SaveGraph(rg, r_pickle_path) # Pickle the reverse graph.
 """
 
 

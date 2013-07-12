@@ -152,7 +152,11 @@ if __name__ == '__main__':
 	maindir, outdir, forward_inference_edgelist, reverse_inference_edgelist, f_pickle_path, r_pickle_path = SetPaths()
 	fg = LoadGraph(f_pickle_path)
 	rg = LoadGraph(r_pickle_path)
-	import pdb; pdb.set_trace()
+	
+	file_names=GetFileNamesInDirectory(maindir)
+	fg.vs["names"]=[file_names]
+
+set_trace()
 
 
 """

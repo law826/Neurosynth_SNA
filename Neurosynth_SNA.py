@@ -8,9 +8,12 @@ Neurosynth_SNA.py
 
 """
 from __future__ import division
-from igraph import *
 from pdb import *
 import os, sys, getpass, random as rand, cPickle, numpy as np
+try:
+	from igraph import *
+except Import Error:
+	raise ImportError, "The igraph module is required to run this program."
 
 def SetPaths():
 	"""
@@ -146,10 +149,11 @@ def CalculateBetweennessCentrality(graph):
 Start of specific user commands.
 """	
 if __name__ == '__main__':
-	maindir, outdir, forward_inference_edgelist, reverse_inference_edgelist, f_pickle_path, r_pickle_path = SetPaths()
-	fg = LoadGraph(f_pickle_path)
-	rg = LoadGraph(r_pickle_path)
-	import pdb; pdb.set_trace()
+	print "test"
+	# maindir, outdir, forward_inference_edgelist, reverse_inference_edgelist, f_pickle_path, r_pickle_path = SetPaths()
+	# fg = LoadGraph(f_pickle_path)
+	# rg = LoadGraph(r_pickle_path)
+	# import pdb; pdb.set_trace()
 
 
 """

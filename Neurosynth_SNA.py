@@ -2,7 +2,7 @@
 # encoding: utf-8
 """
 Neurosynth_SNA.py
-
+[] 
 [] test whether current import protocol works
 [] add functionality for windows
 

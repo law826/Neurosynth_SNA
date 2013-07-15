@@ -19,24 +19,27 @@ def SetPaths():
 	if sys.platform == "darwin":
 		maindir = os.sep.join(['/Volumes', 'huettel', 'KBE.01',  'Analysis', 'Neurosynth', 'ForwardResults'])
 		outdir  = os.sep.join(['/Volumes', 'huettel', 'KBE.01', 'Analysis', 'Neurosynth', 'SNAFiles'])
+		importdir  = os.sep.join(['/Volumes', 'huettel', 'KBE.01', 'Analysis', 'Neurosynth', 'Data'])
 		r_pickle_path = os.sep.join(['/Volumes', 'huettel', 'KBE.01', 'Analysis', 'Neurosynth', 'SNAFiles', 'reverse_graph.p'])
 		f_pickle_path = os.sep.join(['/Volumes', 'huettel', 'KBE.01', 'Analysis', 'Neurosynth', 'SNAFiles', 'forward_graph.p'])
 	elif sys.platform == "win32":
 		maindir = os.sep.join(['M:', 'KBE.01', 'Analysis', 'Neurosynth', 'ForwardResults'])
 		outdir  = os.sep.join(['M:', 'KBE.01', 'Analysis', 'Neurosynth', 'SNAFiles'])
+		importdir  = os.sep.join(['M:', 'KBE.01', 'Analysis', 'Neurosynth', 'Data'])
 		r_pickle_path = os.sep.join(['M:', 'KBE.01', 'Analysis', 'Neurosynth', 'SNAFiles', 'reverse_graph.p'])
 		f_pickle_path = os.sep.join(['M:', 'KBE.01', 'Analysis', 'Neurosynth', 'SNAFiles', 'forward_graph.p'])
 	elif sys.platform == "linux2":
 		username=getpass.getuser()
 		maindir = os.sep.join(['/home', username, 'experiments', 'KBE.01', 'Analysis', 'Neurosynth', 'ForwardResults'])
 		outdir  = os.sep.join(['/home', username, 'experiments', 'KBE.01', 'Analysis', 'Neurosynth', 'SNAFiles'])
+		importdir  = os.sep.join(['/home', username, 'experiments', 'KBE.01', 'Analysis', 'Neurosynth', 'Data'])
 		r_pickle_path = os.sep.join(['/home', username, 'experiments', 'KBE.01', 'Analysis', 'Neurosynth', 'SNAFiles', 'reverse_graph.p'])
 		f_pickle_path = os.sep.join(['/home', username, 'experiments', 'KBE.01', 'Analysis', 'Neurosynth', 'SNAFiles', 'forward_graph.p'])
 
 	forward_inference_edgelist = os.sep.join([outdir, "forward_inference.txt"])
 	reverse_inference_edgelist = os.sep.join([outdir, "reverse_inference.txt"])
 
-	return maindir, outdir, forward_inference_edgelist, reverse_inference_edgelist, f_pickle_path, r_pickle_path
+	return maindir, outdir, importdir, forward_inference_edgelist, reverse_inference_edgelist, f_pickle_path, r_pickle_path
 
 def GetFileNamesInDirectory(directory):
 	"""
@@ -115,7 +118,7 @@ def VisualizeData():
 	pass
 
 def SaveGraph(graph, path):
-	graph.write_pickle(path)
+	Graph.write_pickle(graph, path)
 	
 def CommonCommands():
 	"""
@@ -149,10 +152,20 @@ To do list:
 [] refine names to get rid of underscores and keep only first part (hint: string.sep('_'))
 """	
 if __name__ == '__main__':
-	maindir, outdir, forward_inference_edgelist, reverse_inference_edgelist, f_pickle_path, r_pickle_path = SetPaths()
-	fg = LoadGraph(f_pickle_path)
-	rg = LoadGraph(r_pickle_path)
+	maindir, outdir, importdir, forward_inference_edgelist, reverse_inference_edgelist, f_pickle_path, r_pickle_path = SetPaths()
+	file_names = GetFileNamesInDirectory(maindir)
+	fg = ImportNcol(importdir+os.sep+'forward_inference.txt')
+	rg = ImportNcol(importdir+os.sep+'reverse_inference.txt')
+	fg.vs["term"]=file_names # Set the names of the vertices.
+	rg.vs["term"]=file_names # Set the names of the vertices.
+	string_list=fg.vs["term"]
+	fg.vs["term"]=[x.split('_')[1] for x in string_list]
+	SaveGraph(fg, f_pickle_path) # Pickle the forward graph.
+	SaveGraph(rg, r_pickle_path) # Pickle the reverse graph.
+	#fg = LoadGraph(f_pickle_path)
+	#rg = LoadGraph(r_pickle_path)n
 	set_trace()
+	
 
 
 """
@@ -160,8 +173,8 @@ Old commands:
 file_names = GetFileNamesInDirectory(maindir)
 CreateEdgelist(maindir, file_names, outdir, 'forward_inference')
 graph = ImportNcol(outdir+os.sep+'reverse_inference.txt')
-fg.vs["names"]=[file_names] # Set the names of the vertices.
-rg.vs["names"]=[file_names] # Set the names of the vertices.
+fg.vs["names"]=file_names # Set the names of the vertices.
+rg.vs["names"]=file_names # Set the names of the vertices.
 SaveGraph(fg, f_pickle_path) # Pickle the forward graph.
 SaveGraph(rg, r_pickle_path) # Pickle the reverse graph.
 """

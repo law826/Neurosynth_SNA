@@ -1,13 +1,11 @@
 #!/usr/bin/env python
 # encoding: utf-8
 """
-Neurosynth_SNA.py
-<<<<<<< HEAD
-[] 
+
+[] make functionality for starting from the beginning again.
 [] test whether current import protocol works
 [] add functionality for windows
-=======
->>>>>>> f25f954655056f394507a96da0c844f0f0a3bf63
+
 
 """
 from __future__ import division

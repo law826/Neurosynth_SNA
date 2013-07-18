@@ -6,6 +6,7 @@
 [] add functionality for windows
 """
 from __future__ import division
+import database
 from pdb import *
 import os, sys, getpass, random as rand, cPickle, numpy as np
 try:
@@ -130,6 +131,15 @@ def LoadGraph(pickle_path):
 	graph = Graph.Read_Pickle(pickle_path)
 	return graph
 
+def StripName(graph, rawterms): 
+	"""
+	input: nameless graph, nonstripped list of terms(separated by underscores)
+	output: graph of stripped terms (name of attribute= "term")
+	"""
+	graph.vs["term"]=rawterms # Set the names of the vertices.
+	graph.vs["term"]=[x.split('_')[1] for x in graph.vs["term"]]
+	return graph
+
 ####### Statistics
 def VisualizeGraph(graph, outdir):
 	graph.write_svg(outdir+os.sep+'forward_graph_kamada_kawai', labels = "name", layout = graph.layout_kamada_kawai())
@@ -149,17 +159,9 @@ To do list:
 """	
 if __name__ == '__main__':
 	maindir, outdir, importdir, forward_inference_edgelist, reverse_inference_edgelist, f_pickle_path, r_pickle_path = SetPaths()
-	file_names = GetFileNamesInDirectory(maindir)
-	fg = ImportNcol(importdir+os.sep+'forward_inference.txt')
-	rg = ImportNcol(importdir+os.sep+'reverse_inference.txt')
-	fg.vs["term"]=file_names # Set the names of the vertices.
-	rg.vs["term"]=file_names # Set the names of the vertices.
-	string_list=fg.vs["term"]
-	fg.vs["term"]=[x.split('_')[1] for x in string_list]
-	SaveGraph(fg, f_pickle_path) # Pickle the forward graph.
-	SaveGraph(rg, r_pickle_path) # Pickle the reverse graph.
-	#fg = LoadGraph(f_pickle_path)
-	#rg = LoadGraph(r_pickle_path)n
+	fg = LoadGraph(f_pickle_path)
+	rg = LoadGraph(r_pickle_path)
+	database.IsolateSubGraph(fg, ["face", "emotion"])
 	set_trace()
 	
 

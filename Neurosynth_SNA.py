@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 # encoding: utf-8
 """
-Neurosynth_SNA.py
-
+[] make functionality for starting from the beginning again.
+[] test whether current import protocol works
+[] add functionality for windows
 """
 from __future__ import division
 from pdb import *
@@ -79,7 +80,6 @@ def CreateCrossCorrelationTable(maindir, file_names, outdir, outname):
 
 
 	concatenate_data = np.concatenate((vert_labels, concatenate_data), axis=1)
-	import pdb; pdb.set_trace()
 	concatenate_data = np.concatenate((horz_labels, concatenate_data), axis=0)
 
 	outpath=os.sep.join([outdir, outname])
@@ -131,10 +131,6 @@ def LoadGraph(pickle_path):
 	return graph
 
 ####### Statistics
-
-def MakeSubGraph(vertices, edges):
-	pass
-
 def VisualizeGraph(graph, outdir):
 	graph.write_svg(outdir+os.sep+'forward_graph_kamada_kawai', labels = "name", layout = graph.layout_kamada_kawai())
 	pass
@@ -178,5 +174,3 @@ rg.vs["names"]=file_names # Set the names of the vertices.
 SaveGraph(fg, f_pickle_path) # Pickle the forward graph.
 SaveGraph(rg, r_pickle_path) # Pickle the reverse graph.
 """
-
-

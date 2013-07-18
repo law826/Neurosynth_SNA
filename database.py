@@ -1,9 +1,19 @@
 from __future__ import division
-import os, sys, random as rand, tkMessageBox, tkFileDialog, cPickle, numpy as np, getpass, tkentrycomplete as tkcomp, re, nltk
-from Tkinter import *
+import os
+import sys
+import random as rand
+import tkMessageBox
+import tkFileDialog
+import cPickle 
+import numpy as np
+import getpass
+#import tkentrycomplete as tkcomp
+#import re
+#import nltk
+#from Tkinter import *
 from pdb import *
 from igraph import *
-import basefunctions as bf
+#import basefunctions as bf
 
 """
 

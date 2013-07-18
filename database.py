@@ -21,7 +21,7 @@ from igraph import *
 
 def AddNode(nodename, type, graph=None):
 	"""
-	Takes: (1) the name of the node (attribute='name') (2) the type (attribute='type') (3) an optional graph.
+	Takes: (1) the name of the node (attribute='term') (2) the type (attribute='type') (3) an optional graph.
 
 	- Adds a new node and creates a new graph if no graph is provided. 
 	- It does not do anything if the node name already exists.
@@ -171,3 +171,11 @@ def NodesInOrderOfCentrality(graph, type):
 
 	return list_of_tuples
 
+def StripLoops(graph):
+	try:
+		index_to_delete = [i for i, x in enumerate(graph.is_loop()) if x][0]
+		graph.delete_edges(index_to_delete)
+	except IndexError:
+		pass
+
+	return graph

@@ -1,5 +1,7 @@
 import database
+import os
 import unittest
+import pickle
 from igraph import Graph
 from pdb import set_trace
 
@@ -44,10 +46,10 @@ class TestDatabase(unittest.TestCase):
 		self.assertEqual(self.g.get_eid(5,7), 4)
 		self.assertEqual(self.g.get_eid(6,7), 5)
 
-	# def test_IdentifySimilarNodes(self):
-	# 	# Simple test that car and cart are most related and not racecars.
-	# 	self.node_tuples = database.IdentifySimilarNodes(['car', 'cart', 'racecars'])
-	# 	self.assertEqual(self.node_tuples, [('car', 'cart')])
+	def test_IdentifySimilarNodes(self):
+		# Simple test that car and cart are most related and not racecars.
+		self.node_tuples = database.IdentifySimilarNodes(['car', 'cart', 'racecars'])
+		self.assertEqual(self.node_tuples, [('car', 'cart')])
 
 	def test_MergeNodes(self):
 		# After merging, e should remain and be connected to b and c.
@@ -55,6 +57,24 @@ class TestDatabase(unittest.TestCase):
 
 		self.assertEqual([node["name"] for node in self.g.vs.find(name='e').neighbors()], ['b', 'c'])
 		self.assertRaises(ValueError, self.g.vs.find, name='a') 
+
+	def test_DocumentMergedPair(self):
+		# If there is no save file.
+		try:
+			os.remove('test_merged_pairs.p')
+		except OSError:
+			pass
+		database.DocumentMergedPair('a', 'b', 'test_merged_pairs.p')
+		merged_pairs = pickle.load(open('test_merged_pairs.p', 'rb'))
+		self.assertEqual([('a', 'b')], merged_pairs)
+
+		# If there already is a save file.
+		database.DocumentMergedPair('c', 'd', 'test_merged_pairs.p')
+		merged_pairs = pickle.load(open('test_merged_pairs.p', 'rb'))
+		self.assertEqual(('a', 'b'), merged_pairs[0])
+		self.assertEqual(('c', 'd'), merged_pairs[1])
+		self.assertRaises(IndexError, lambda: merged_pairs[2])
+		os.remove('test_merged_pairs.p')
 
 	def test_MergeWeightedNodes(self):
 		self.g.es["weight"] = 1.0
@@ -116,7 +136,6 @@ class TestDatabase(unittest.TestCase):
 	def test_StripLoops(self):
 		self.g['a', 'a'] = 2
 		self.g['a', 'a'] = 2
-		print self.g.es.is_loop()
 
 		self.g_loopless = database.StripLoops(self.g)
 		self.assertEqual(all(self.g_loopless.is_loop()), False)

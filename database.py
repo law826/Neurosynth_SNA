@@ -2,17 +2,18 @@ from __future__ import division
 import os
 import sys
 import random as rand
-#import tkMessageBox
-#import tkFileDialog
 import cPickle 
 import numpy as np
 import getpass
-#import tkentrycomplete as tkcomp
-#import re
-#import nltk
-#from Tkinter import *
+import nltk
 from pdb import *
 from igraph import *
+import pickle
+#import tkMessageBox
+#import tkFileDialog
+#import tkentrycomplete as tkcomp
+#import re
+#from Tkinter import *
 #import basefunctions as bf
 
 """
@@ -142,6 +143,14 @@ def MergeWeightedNodes(graph, nodename1, nodename2):
 
 	return graph
 
+def DocumentMergedPair(nodename1, nodename2, save_file):
+	try:
+		merged_pairs = pickle.load(open(save_file, 'rb'))
+	except IOError:
+		merged_pairs = []
+	merged_pairs.append((nodename1, nodename2))
+	pickle.dump(merged_pairs, open(save_file, 'wb'))
+
 def IsolateSubGraph(graph, nodename_list):
 	"""
 	Takes: (1) graph (2) list of names of nodes that should be matched. (where attribute='term')
@@ -177,5 +186,4 @@ def StripLoops(graph):
 		graph.delete_edges(index_to_delete)
 	except IndexError:
 		pass
-
 	return graph

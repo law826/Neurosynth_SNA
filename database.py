@@ -134,13 +134,13 @@ def MergeWeightedNodes(graph, nodename1, nodename2):
 
 def IsolateSubGraph(graph, nodename_list):
 	"""
-	Takes: (1) graph (2) list of names of nodes that should be matched. (where attribute='name')
+	Takes: (1) graph (2) list of names of nodes that should be matched. (where attribute='term')
 
 	This will keep the interconnections between those members on the list, but ignore edges and nodes not in the list.
 
 	Returns: (1) a new subgraph
 	"""
-	nodeindex_list = [graph.vs.find(name=nodename) for nodename in nodename_list]
+	nodeindex_list = [graph.vs.find(term=nodename) for nodename in nodename_list]
 	sub_graph = graph.subgraph(nodeindex_list)
 	return sub_graph
 

@@ -6,6 +6,7 @@
 [] add functionality for windows
 """
 from __future__ import division
+import database
 from pdb import *
 import os, sys, getpass, random as rand, cPickle, numpy as np
 try:

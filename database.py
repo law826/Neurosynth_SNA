@@ -2,8 +2,8 @@ from __future__ import division
 import os
 import sys
 import random as rand
-import tkMessageBox
-import tkFileDialog
+#import tkMessageBox
+#import tkFileDialog
 import cPickle 
 import numpy as np
 import getpass

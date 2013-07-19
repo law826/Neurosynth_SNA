@@ -9,6 +9,7 @@ import nltk
 from pdb import *
 from igraph import *
 import pickle
+import basefunctions
 #import tkMessageBox
 #import tkFileDialog
 #import tkentrycomplete as tkcomp
@@ -144,6 +145,10 @@ def MergeWeightedNodes(graph, nodename1, nodename2):
 	return graph
 
 def DocumentMergedPair(nodename1, nodename2, save_file):
+	"""
+	Given two nodes, this will save the pair in a list of tuples in either a new file (if file doesn't exist) 
+	or in the file given.
+	"""
 	try:
 		merged_pairs = pickle.load(open(save_file, 'rb'))
 	except IOError:
@@ -151,8 +156,13 @@ def DocumentMergedPair(nodename1, nodename2, save_file):
 	merged_pairs.append((nodename1, nodename2))
 	pickle.dump(merged_pairs, open(save_file, 'wb'))
 
-def CheckForOldMerges():
+def CategorizeNodes():
 	pass
+	"""
+	Launches a GUI and iterates through nodes so that they can be categorized under various types.
+	Saves
+	"""
+
 
 def IsolateSubGraph(graph, nodename_list):
 	"""

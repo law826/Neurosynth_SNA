@@ -76,6 +76,10 @@ class TestDatabase(unittest.TestCase):
 		self.assertRaises(IndexError, lambda: merged_pairs[2])
 		os.remove('test_merged_pairs.p')
 
+	def test_CategorizeNodes(self):
+		self.g.vs['type'] = ['brain', 'brain', 'brain', 'concept', 'concept', 'concept']
+		pass
+
 	def test_MergeWeightedNodes(self):
 		self.g.es["weight"] = 1.0
 		self.g['a', 'c'] = 2

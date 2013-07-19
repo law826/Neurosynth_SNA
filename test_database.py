@@ -76,6 +76,10 @@ class TestDatabase(unittest.TestCase):
 		self.assertRaises(IndexError, lambda: merged_pairs[2])
 		os.remove('test_merged_pairs.p')
 
+	def test_CategorizeNodes(self):
+		self.g.vs['type'] = ['brain', 'brain', 'brain', 'concept', 'concept', 'concept']
+		pass
+
 	def test_MergeWeightedNodes(self):
 		self.g.es["weight"] = 1.0
 		self.g['a', 'c'] = 2
@@ -109,16 +113,16 @@ class TestDatabase(unittest.TestCase):
 		database.MergeWeightedNodes(self.g, 'a', 'b')
 		self.assertEqual(self.g['a', 'e'], 4)
 
-	# def test_IsolateSubGraph(self):
-	# 	self.g_sub = database.IsolateSubGraph(self.g, ['a', 'b', 'e'])
+	def test_IsolateSubGraph(self):
+		self.g_sub = database.IsolateSubGraph(self.g, ['a', 'b', 'e'], 'name')
 
-	# 	# There should be three vertices and 1 edge.
-	# 	self.assertEqual(len(self.g_sub.vs), 3)
-	# 	self.assertEqual(len(self.g_sub.es), 1)
-	# 	self.assertEqual(self.g_sub.vs['name'], ['a', 'b', 'e'])
+		# There should be three vertices and 1 edge.
+		self.assertEqual(len(self.g_sub.vs), 3)
+		self.assertEqual(len(self.g_sub.es), 1)
+		self.assertEqual(self.g_sub.vs['name'], ['a', 'b', 'e'])
 
-	# 	# There should be an edge between 'a' and 'b'.
-	# 	self.assertEqual(self.g_sub.get_eid(0, 1), 0)
+		# There should be an edge between 'a' and 'b'.
+		self.assertEqual(self.g_sub.get_eid(0, 1), 0)
 
 	def test_NodesInOrderOfCentrality(self):
 		# Make a the most highly connected node.

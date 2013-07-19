@@ -68,7 +68,7 @@ class CategorizeNodesGUI:
 			pass
 		else:
 			try: 
-				self.node_to_eval = next(node for node in self.list_of_nodes if node not in self.old_nodes[0])
+				self.node_to_eval = next(node for node in self.list_of_nodes if node not in self.saved_pairs[0])
 			except StopIteration:
 				self.node_to_eval = "No more terms to evaluate!"
 			except IndexError:
@@ -112,7 +112,7 @@ class CategorizeNodesGUI:
 			self.tuple_list = pickle.load(open(self.save_file, 'rb'))
 		except IOError:
 			self.tuple_list = []
-		self.old_nodes = map(list, zip(*self.tuple_list))
+		self.saved_pairs = map(list, zip(*self.tuple_list))
 
 	def SaveTupleFile(self):
 		pickle.dump(self.tuple_list, open(self.save_file, 'wb'))
@@ -122,10 +122,20 @@ class CategorizeNodesGUI:
 		cv = CategorizeNodes()
 
 class CNBridge:
-	def __init__(self):
-		pass
-
-
+	"""
+	Take the picke output from CategorizeNodesGUI and apply it to existing graph.
+	This only applies to the attribute = 'type' and 'term' at this point. 
+	"""
+	def __init__(self, graph, pickle_path):
+		self.save_file = pickle_path
+		self.g = graph
+	
+	def LoadPickle(self):
+		self.tuple_list = pickle.load(open(self.save_file, 'rb'))
+		self.saved_pairs = map(list, zip(*self.tuple_list))
+		for i, pair in enumerate(self.tuple_list):
+			self.node = self.g.vs.find(term=(self.saved_pairs[0][i]))
+			self.node['type'] = self.saved_pairs[1][i]
 
 if __name__ == '__main__':
 	main()

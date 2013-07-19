@@ -151,6 +151,9 @@ def DocumentMergedPair(nodename1, nodename2, save_file):
 	merged_pairs.append((nodename1, nodename2))
 	pickle.dump(merged_pairs, open(save_file, 'wb'))
 
+def CheckForOldMerges():
+	pass
+
 def IsolateSubGraph(graph, nodename_list):
 	"""
 	Takes: (1) graph (2) list of names of nodes that should be matched. (where attribute='term')

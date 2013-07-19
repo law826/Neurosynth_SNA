@@ -113,16 +113,16 @@ class TestDatabase(unittest.TestCase):
 		database.MergeWeightedNodes(self.g, 'a', 'b')
 		self.assertEqual(self.g['a', 'e'], 4)
 
-	# def test_IsolateSubGraph(self):
-	# 	self.g_sub = database.IsolateSubGraph(self.g, ['a', 'b', 'e'])
+	def test_IsolateSubGraph(self):
+		self.g_sub = database.IsolateSubGraph(self.g, ['a', 'b', 'e'], 'name')
 
-	# 	# There should be three vertices and 1 edge.
-	# 	self.assertEqual(len(self.g_sub.vs), 3)
-	# 	self.assertEqual(len(self.g_sub.es), 1)
-	# 	self.assertEqual(self.g_sub.vs['name'], ['a', 'b', 'e'])
+		# There should be three vertices and 1 edge.
+		self.assertEqual(len(self.g_sub.vs), 3)
+		self.assertEqual(len(self.g_sub.es), 1)
+		self.assertEqual(self.g_sub.vs['name'], ['a', 'b', 'e'])
 
-	# 	# There should be an edge between 'a' and 'b'.
-	# 	self.assertEqual(self.g_sub.get_eid(0, 1), 0)
+		# There should be an edge between 'a' and 'b'.
+		self.assertEqual(self.g_sub.get_eid(0, 1), 0)
 
 	def test_NodesInOrderOfCentrality(self):
 		# Make a the most highly connected node.

@@ -156,7 +156,7 @@ def DocumentMergedPair(nodename1, nodename2, save_file):
 	merged_pairs.append((nodename1, nodename2))
 	pickle.dump(merged_pairs, open(save_file, 'wb'))
 
-def IsolateSubGraph(graph, nodename_list):
+def IsolateSubGraph(graph, nodename_list, name):
 	"""
 	Takes: (1) graph (2) list of names of nodes that should be matched. (where attribute='term')
 
@@ -164,8 +164,13 @@ def IsolateSubGraph(graph, nodename_list):
 
 	Returns: (1) a new subgraph
 	"""
-	nodeindex_list = [graph.vs.find(term=nodename) for nodename in nodename_list]
-	sub_graph = graph.subgraph(nodeindex_list)
+	node_list = []
+	for nodename in nodename_list:
+		kwargs = {}
+		kwargs[name] = nodename
+		node_list.append(graph.vs.find(**kwargs))
+
+	sub_graph = graph.subgraph(node_list)
 	return sub_graph
 
 def NodesInOrderOfCentrality(graph, type):

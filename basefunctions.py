@@ -4,7 +4,6 @@ import Tkinter as tk
 from pdb import *
 from igraph import *
 
-
 def Label(parent, text):
 	"""
 	Tkinter label that simply packs into a frame. 
@@ -43,18 +42,4 @@ def ParseEntryCommaSeparated(entryWidget, emptyErrorMessage):
 		es_split = [x.lstrip() for x in es_split_pre]
 
 	return es_split
-
-# def ButtonPallette(parent, list_of_buttons, ourcommmand = lambda: InsertFunctionHere(button)):
-# 	"""
-# 	Creates a frame.
-# 	Packs a series of buttons into that frame.
-# 	Buttons return string from button and execute a defined function
-# 	"""
-# 	buttonFrame = Frame(parent)
-# 	buttonFrame.pack()
-
-# 	# Buttons
-# 	buttons = list_of_buttons
-# 	for button in buttons:
-# 		b = Button(buttonFrame, text=str(button), command = ourcommand).pack(side = LEFT)
 

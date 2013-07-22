@@ -18,7 +18,7 @@ import basefunctions
 #import basefunctions as bf
 
 """
-
+[] Complete merge functionality
 """
 
 def AddNode(nodename, type, graph=None):

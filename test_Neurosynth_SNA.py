@@ -20,15 +20,17 @@ class TestDatabase(unittest.TestCase):
 		self.assertEqual(len(files), 525)
 		self.assertNotEqual(files[0], '_DS.Store')
 
-	def test_Graph(self):
+	def test_graph_vertices_and_edges(self):
+		number_of_vertices = 525
+		number_of_edges = (275625-525)/2
+
 		fg = ns.LoadGraph(self.f_pickle_path)
 		rg = ns.LoadGraph(self.r_pickle_path)
 
 		for graph in [fg, rg]:
-			self.assertEqual(len(graph.vs), 525)
-			self.assertEqual(len(graph.es), ((275625-525)/2))
-			[edge.is_loop() for edge in fg.es if edge.is_loop == True]
-			#137550
+			self.assertEqual(len(graph.vs), number_of_vertices)
+			self.assertEqual(len(graph.es), number_of_edges)
+			self.assertEqual(all(graph.is_loop()), False)
 
 	def tearDown(self):
 		"""

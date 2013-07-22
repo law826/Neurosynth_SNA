@@ -21,24 +21,27 @@ def SetPaths():
 	if sys.platform == "darwin":
 		maindir = os.sep.join(['/Volumes', 'huettel', 'KBE.01',  'Analysis', 'Neurosynth', 'ForwardResults'])
 		outdir  = os.sep.join(['/Volumes', 'huettel', 'KBE.01', 'Analysis', 'Neurosynth', 'SNAFiles'])
+		importdir  = os.sep.join(['/Volumes', 'huettel', 'KBE.01', 'Analysis', 'Neurosynth', 'Data'])
 		r_pickle_path = os.sep.join(['/Volumes', 'huettel', 'KBE.01', 'Analysis', 'Neurosynth', 'SNAFiles', 'reverse_graph.p'])
 		f_pickle_path = os.sep.join(['/Volumes', 'huettel', 'KBE.01', 'Analysis', 'Neurosynth', 'SNAFiles', 'forward_graph.p'])
 	elif sys.platform == "win32":
 		maindir = os.sep.join(['M:', 'KBE.01', 'Analysis', 'Neurosynth', 'ForwardResults'])
 		outdir  = os.sep.join(['M:', 'KBE.01', 'Analysis', 'Neurosynth', 'SNAFiles'])
+		importdir  = os.sep.join(['M:', 'KBE.01', 'Analysis', 'Neurosynth', 'Data'])
 		r_pickle_path = os.sep.join(['M:', 'KBE.01', 'Analysis', 'Neurosynth', 'SNAFiles', 'reverse_graph.p'])
 		f_pickle_path = os.sep.join(['M:', 'KBE.01', 'Analysis', 'Neurosynth', 'SNAFiles', 'forward_graph.p'])
 	elif sys.platform == "linux2":
 		username=getpass.getuser()
 		maindir = os.sep.join(['/home', username, 'experiments', 'KBE.01', 'Analysis', 'Neurosynth', 'ForwardResults'])
 		outdir  = os.sep.join(['/home', username, 'experiments', 'KBE.01', 'Analysis', 'Neurosynth', 'SNAFiles'])
+		importdir  = os.sep.join(['/home', username, 'experiments', 'KBE.01', 'Analysis', 'Neurosynth', 'Data'])
 		r_pickle_path = os.sep.join(['/home', username, 'experiments', 'KBE.01', 'Analysis', 'Neurosynth', 'SNAFiles', 'reverse_graph.p'])
 		f_pickle_path = os.sep.join(['/home', username, 'experiments', 'KBE.01', 'Analysis', 'Neurosynth', 'SNAFiles', 'forward_graph.p'])
 
 	forward_inference_edgelist = os.sep.join([outdir, "forward_inference.txt"])
 	reverse_inference_edgelist = os.sep.join([outdir, "reverse_inference.txt"])
 
-	return maindir, outdir, forward_inference_edgelist, reverse_inference_edgelist, f_pickle_path, r_pickle_path
+	return maindir, outdir, importdir, forward_inference_edgelist, reverse_inference_edgelist, f_pickle_path, r_pickle_path
 
 def GetFileNamesInDirectory(directory):
 	"""
@@ -116,7 +119,7 @@ def VisualizeData():
 	pass
 
 def SaveGraph(graph, path):
-	graph.write_pickle(path)
+	Graph.write_pickle(graph, path)
 	
 def CommonCommands():
 	"""
@@ -126,6 +129,15 @@ def CommonCommands():
 
 def LoadGraph(pickle_path):
 	graph = Graph.Read_Pickle(pickle_path)
+	return graph
+
+def StripName(graph, rawterms): 
+	"""
+	input: nameless graph, nonstripped list of terms(separated by underscores)
+	output: graph of stripped terms (name of attribute= "term")
+	"""
+	graph.vs["term"]=rawterms # Set the names of the vertices.
+	graph.vs["term"]=[x.split('_')[1] for x in graph.vs["term"]]
 	return graph
 
 ####### Statistics
@@ -144,12 +156,32 @@ Start of specific user commands.
 
 To do list:
 [] refine names to get rid of underscores and keep only first part (hint: string.sep('_'))
+refine graphs fg and rg to get rid of loops and undirected using commands:
+	graph.to_undirected() to get rid of undirected 
+	database.StripLoops
+	graph.summary()
+	(to get summary of edges, use fg.es["weight"])
 """	
 if __name__ == '__main__':
-	maindir, outdir, forward_inference_edgelist, reverse_inference_edgelist, f_pickle_path, r_pickle_path = SetPaths()
+	maindir, outdir, importdir, forward_inference_edgelist, reverse_inference_edgelist, f_pickle_path, r_pickle_path = SetPaths()
 	fg = LoadGraph(f_pickle_path)
 	rg = LoadGraph(r_pickle_path)
+	sub_list_concept = ["face", "novelty", "episodic", "retrieval", "semantic", "word", "emotion", "sequence", "category", "memory", "encoding", "load", "social", "cognition",
+	"motor", "learning", "representation", "executive", "control", "object", "recognition", "inhibition", "target", "top-down", "attention", "selection", "vision",
+	"auditory", "detection", "motion", "spatial", "information", "perception", "shape", "speech", "sensory", "prediction", "error", "risk", "reward", "future", "anticipation",
+	"working memory", "verbal", "action", "observation", "movement", "priming", "repetition", "suppression"]
+	sub_list_brain = ["intraparietal sulcus", "PSTS", "cingulate cortex", "temporal sulcus", "precuneus", "STS", "PCC", "frontal", "premotor cortex", "STG", "PCC", "mPFC", 
+	"DmPFC", "DlPFC", "OFC", "parietal cortex", "temporal cortex", "PFC", "thalamus", "ACC", "Pre-SMA", "PPC", "MTL", "amygdala", "anterior insula", "insula", "hippocampus", 
+	"fusiform", "FFA", "putamen", "caudate", "S2", "S1", "M1", "cingulate", "SMA", "cerebellum", "somatosensory cortex", "basal ganglia", "LIFG", "RIFG", "IFG", "IPL", "MTA",
+	"V5", "extrastriate", "visual cortex", "V1", "V2", "V3"]
+	sub_list_brain_concept["decision making", "frontoparietal cortex", "occipital cortex", "fusiform", "FEF", "emotion", "sensitivity", "fear", "ACC", "attention", "cognition", "amygdala", "FFA", 
+	"prediction", "OFC", "observation", "control", "brainstem", "executive", "PFC", "parietal cortex", "novelty", "retrieval", "memory", "hippocampus", "selection", "vision", "information", "active", 
+	"top-down", "cerebellum", "extrastriate", "learning", "encoding", "MTL", "parahippocampus", "visual cortex", "object", "representation", "V1", "somatosensory", "S2", 
+	"sensorimotor", "language", "frontal", "semantic", "LIFG", "M1", "motor", "premortor cortex", "V5", "motion", "MTA"]
+	sfgc = database.IsolateSubGraph(fg, sub_list_concept)
+	sfgb = database.IsolateSubGraph(fg, sub_list_brain)
 	set_trace()
+	
 
 
 """
@@ -157,8 +189,8 @@ Old commands:
 file_names = GetFileNamesInDirectory(maindir)
 CreateEdgelist(maindir, file_names, outdir, 'forward_inference')
 graph = ImportNcol(outdir+os.sep+'reverse_inference.txt')
-fg.vs["names"]=[file_names] # Set the names of the vertices.
-rg.vs["names"]=[file_names] # Set the names of the vertices.
+fg.vs["names"]=file_names # Set the names of the vertices.
+rg.vs["names"]=file_names # Set the names of the vertices.
 SaveGraph(fg, f_pickle_path) # Pickle the forward graph.
 SaveGraph(rg, r_pickle_path) # Pickle the reverse graph.
 """

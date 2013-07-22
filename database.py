@@ -192,7 +192,7 @@ def NodesInOrderOfCentrality(graph, type):
 
 def StripLoops(graph):
 	try:
-		index_to_delete = [i for i, x in enumerate(graph.is_loop()) if x][0]
+		index_to_delete = [i for i, x in enumerate(graph.is_loop()) if x]
 		graph.delete_edges(index_to_delete)
 	except IndexError:
 		pass

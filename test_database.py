@@ -140,6 +140,7 @@ class TestDatabase(unittest.TestCase):
 	def test_StripLoops(self):
 		self.g['a', 'a'] = 2
 		self.g['a', 'a'] = 2
+		self.g['b', 'b'] = 3
 
 		self.g_loopless = database.StripLoops(self.g)
 		self.assertEqual(all(self.g_loopless.is_loop()), False)

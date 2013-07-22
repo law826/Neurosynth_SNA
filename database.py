@@ -156,9 +156,9 @@ def DocumentMergedPair(nodename1, nodename2, save_file):
 	merged_pairs.append((nodename1, nodename2))
 	pickle.dump(merged_pairs, open(save_file, 'wb'))
 
-def IsolateSubGraph(graph, nodename_list, name):
+def IsolateSubGraph(graph, nodename_list, attribute_name):
 	"""
-	Takes: (1) graph (2) list of names of nodes that should be matched. (where attribute='term')
+	Takes: (1) graph (2) list of names of nodes that should be matched. (3) name of the attribute that corresponds to nodename_list.
 
 	This will keep the interconnections between those members on the list, but ignore edges and nodes not in the list.
 
@@ -167,7 +167,7 @@ def IsolateSubGraph(graph, nodename_list, name):
 	node_list = []
 	for nodename in nodename_list:
 		kwargs = {}
-		kwargs[name] = nodename
+		kwargs[attribute_name] = nodename
 		node_list.append(graph.vs.find(**kwargs))
 
 	sub_graph = graph.subgraph(node_list)

@@ -135,6 +135,8 @@ def StripName(graph, rawterms):
 	"""
 	input: nameless graph, nonstripped list of terms(separated by underscores)
 	output: graph of stripped terms (name of attribute= "term")
+	Ex. list_rawterms = rg.vs["term"]
+		rg = StripName(rg, list_rawterms)
 	"""
 	graph.vs["term"]=rawterms # Set the names of the vertices.
 	graph.vs["term"]=[x.split('_')[1] for x in graph.vs["term"]]
@@ -146,6 +148,8 @@ def VisualizeGraph(graph, outpath):
 
 def CalculateBetweennessCentrality(graph):
 	pass
+
+
 
 
 
@@ -172,15 +176,8 @@ if __name__ == '__main__':
 	maindir, outdir, importdir, forward_inference_edgelist, reverse_inference_edgelist, f_pickle_path, r_pickle_path = SetPaths()
 	fg = LoadGraph(f_pickle_path)
 	rg = LoadGraph(r_pickle_path)
-	# fg.to_undirected(mode="collapse", combine_edges= "max")
-	# rg.to_undirected(mode="collapse", combine_edges= "max")
-	# fg = database.StripLoops(fg)
-	# rg = database.StripLoops(rg)
-	# [edge.isloop() for edge in fg.es]
-	sub_list_concept = ["face", "novelty", "episodic", "retrieval", "semantic", "word", "emotion", "sequence", "category", "memory", "encoding", "load", "social", "cognition",
-	"motor", "learning", "representation", "executive", "control", "object", "recognition", "inhibition", "target", "top-down", "attention", "selection", "vision",
-	"auditory", "detection", "motion", "spatial", "information", "perception", "shape", "speech", "sensory", "prediction", "error", "risk", "reward", "future", "anticipation",
-	"working memory", "verbal", "action", "observation", "movement", "priming", "repetition", "suppression"]
+	
+	
 	# sub_list_brain = ["intraparietal sulcus", "PSTS", "cingulate cortex", "temporal sulcus", "precuneus", "STS", "PCC", "frontal", "premotor cortex", "STG", "PCC", "mPFC", 
 	# "DmPFC", "DlPFC", "OFC", "parietal cortex", "temporal cortex", "PFC", "thalamus", "ACC", "Pre-SMA", "PPC", "MTL", "amygdala", "anterior insula", "insula", "hippocampus", 
 	# "fusiform", "FFA", "putamen", "caudate", "S2", "S1", "M1", "cingulate", "SMA", "cerebellum", "somatosensory cortex", "basal ganglia", "LIFG", "RIFG", "IFG", "IPL", "MTA",
@@ -189,15 +186,76 @@ if __name__ == '__main__':
 	# "prediction", "OFC", "observation", "control", "brainstem", "executive", "PFC", "parietal cortex", "novelty", "retrieval", "memory", "hippocampus", "selection", "vision", "information", "active", 
 	# "top-down", "cerebellum", "extrastriate", "learning", "encoding", "MTL", "parahippocampus", "visual cortex", "object", "representation", "V1", "somatosensory", "S2", 
 	# "sensorimotor", "language", "frontal", "semantic", "LIFG", "M1", "motor", "premortor cortex", "V5", "motion", "MTA"]
-	sfgc = database.IsolateSubGraph(fg, sub_list_concept, "term")
-	index_to_delete = [sfgc.es.select(weight_lt=0.3)]
-	graph.delete_edges(index_to_delete)
-	VisualizeGraph(sfgc, "test_graph")
-	# sfgb = database.IsolateSubGraph(fg, sub_list_brain)
-	SaveGraph(sfgc, "test")
-	os.system("start "+ "test_graph")
-	set_trace()
 	
+
+
+
+sub_list_concept = ["face", "novelty", "episodic", "retrieval", "semantic", "word", "emotion", "sequence", "category", "memory", "encoding", "load", "social", "cognition",
+	"motor", "learning", "representation", "executive", "control", "object", "recognition", "inhibition", "target", "top-down", "attention", "selection", "vision",
+	"auditory", "detection", "motion", "spatial", "information", "perception", "shape", "speech", "sensory", "prediction", "error", "risk", "reward", "future", "anticipation",
+	"working memory", "verbal", "action", "observation", "movement", "priming", "repetition", "suppression"]
+
+sfgc = database.IsolateSubGraph(fg, sub_list_concept, "term") # creates sub graph from main graph rg
+index_to_delete = [edge.index for edge in sfgc.es.select(weight_lt=0.8)] # creates threshold by selecting edges lower than a certain weight
+sfgc.delete_edges(index_to_delete) #deletes selected edges
+
+#VisualizeGraph(sfgc, "sub_forward_graph_concept.svg")#creates graphs with layout_kamada_kawai
+visual_style = {} #sets method of modifying graph characteristics
+visual_style ["vertex_label"]= sfgc.vs["term"] # labels the vertices
+visual_style ["vertex_label_dist"] = 2 # specifies the distance between the labels and the vertices
+visual_style ["vertex_size"] = 10 # specifies size of vertex_size
+plot (sfgc, **visual_style) # creates the changes
+ 
+#plot (sfgc, outdir+os.sep+ "forward_sub_graph_concept", **visual_style) # creates the changes
+set_trace()
+SaveGraph(srgc, outdir+os.sep+"sub_reverse_graph_concept") #saves graph in outdir
+	
+	
+	
+	
+"""
+to create sub graph for rg:
+
+sub_list_concept = ["face", "novelty", "episodic", "retrieval", "semantic", "word", "emotion", "sequence", "category", "memory", "encoding", "load", "social", "cognition",
+	"motor", "learning", "representation", "executive", "control", "object", "recognition", "inhibition", "target", "top-down", "attention", "selection", "vision",
+	"auditory", "detection", "motion", "spatial", "information", "perception", "shape", "speech", "sensory", "prediction", "error", "risk", "reward", "future", "anticipation",
+	"working memory", "verbal", "action", "observation", "movement", "priming", "repetition", "suppression"]
+
+srgc = database.IsolateSubGraph(rg, sub_list_concept, "term") # creates sub graph from main graph rg
+index_to_delete = [edge.index for edge in srgc.es.select(weight_lt=0.20)] # creates threshold by selecting edges lower than a certain weight
+srgc.delete_edges(index_to_delete) #deletes selected edges
+
+VisualizeGraph(srgc, "test_graph_rg") #creates graphs with layout_kamada_kawai
+visual_style = {} #sets method of modifying graph characteristics
+visual_style ["vertex_label"]= srgc.vs["term"] # labels the vertices
+visual_style ["vertex_label_dist"] = 1.8 # specifies the distance between the labels and the vertices
+visual_style ["vertex_size"] = 10 # specifies size of vertex_size
+plot (srgc, **visual_style) # creates the changes
+SaveGraph(srgc, outdir+os.sep+"sub_reverse_graph_concept") #saves graph in outdir
+
+"""
+"""
+to create sub graph for fg concept
+
+sub_list_concept = ["face", "novelty", "episodic", "retrieval", "semantic", "word", "emotion", "sequence", "category", "memory", "encoding", "load", "social", "cognition",
+	"motor", "learning", "representation", "executive", "control", "object", "recognition", "inhibition", "target", "top-down", "attention", "selection", "vision",
+	"auditory", "detection", "motion", "spatial", "information", "perception", "shape", "speech", "sensory", "prediction", "error", "risk", "reward", "future", "anticipation",
+	"working memory", "verbal", "action", "observation", "movement", "priming", "repetition", "suppression"]
+
+sfgc = database.IsolateSubGraph(fg, sub_list_concept, "term") # creates sub graph from main graph rg
+index_to_delete = [edge.index for edge in sfgc.es.select(weight_lt=0.8)] # creates threshold by selecting edges lower than a certain weight
+sfgc.delete_edges(index_to_delete) #deletes selected edges
+
+
+visual_style = {} #sets method of modifying graph characteristics
+visual_style ["vertex_label"]= sfgc.vs["term"] # labels the vertices
+visual_style ["vertex_label_dist"] = 2 # specifies the distance between the labels and the vertices
+visual_style ["vertex_size"] = 10 # specifies size of vertex_size
+plot (sfgc, **visual_style) # creates the changes
+ 
+SaveGraph(srgc, outdir+os.sep+"sub_reverse_graph_concept") #saves graph in outdir
+
+"""	
 
 
 """
@@ -209,4 +267,9 @@ fg.vs["names"]=file_names # Set the names of the vertices.
 rg.vs["names"]=file_names # Set the names of the vertices.
 SaveGraph(fg, f_pickle_path) # Pickle the forward graph.
 SaveGraph(rg, r_pickle_path) # Pickle the reverse graph.
+os.system("start "+ "test_graph") #opens igraph in browser for windows
+fg.to_undirected(mode="collapse", combine_edges= "max") #makes graph without direction, thus A to B is same as B to A
+rg.to_undirected(mode="collapse", combine_edges= "max")
+fg = database.StripLoops(fg) # Removes loops (values with itself such as A to A, etc.)
+rg = database.StripLoops(rg)
 """

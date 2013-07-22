@@ -156,8 +156,11 @@ Start of specific user commands.
 
 To do list:
 [] refine names to get rid of underscores and keep only first part (hint: string.sep('_'))
-#graph.to_undirected()
-database.StripLoops
+refine graphs fg and rg to get rid of loops and undirected using commands:
+	graph.to_undirected() to get rid of undirected 
+	database.StripLoops
+	graph.summary()
+	(to get summary of edges, use fg.es["weight"])
 """	
 if __name__ == '__main__':
 	maindir, outdir, importdir, forward_inference_edgelist, reverse_inference_edgelist, f_pickle_path, r_pickle_path = SetPaths()

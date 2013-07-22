@@ -44,10 +44,10 @@ class TestDatabase(unittest.TestCase):
 		self.assertEqual(self.g.get_eid(5,7), 4)
 		self.assertEqual(self.g.get_eid(6,7), 5)
 
-	def test_IdentifySimilarNodes(self):
-		# Simple test that car and cart are most related and not racecars.
-		self.node_tuples = database.IdentifySimilarNodes(['car', 'cart', 'racecars'])
-		self.assertEqual(self.node_tuples, [('car', 'cart')])
+	# def test_IdentifySimilarNodes(self):
+	# 	# Simple test that car and cart are most related and not racecars.
+	# 	self.node_tuples = database.IdentifySimilarNodes(['car', 'cart', 'racecars'])
+	# 	self.assertEqual(self.node_tuples, [('car', 'cart')])
 
 	def test_MergeNodes(self):
 		# After merging, e should remain and be connected to b and c.
@@ -89,16 +89,16 @@ class TestDatabase(unittest.TestCase):
 		database.MergeWeightedNodes(self.g, 'a', 'b')
 		self.assertEqual(self.g['a', 'e'], 4)
 
-	def test_IsolateSubGraph(self):
-		self.g_sub = database.IsolateSubGraph(self.g, ['a', 'b', 'e'])
+	# def test_IsolateSubGraph(self):
+	# 	self.g_sub = database.IsolateSubGraph(self.g, ['a', 'b', 'e'])
 
-		# There should be three vertices and 1 edge.
-		self.assertEqual(len(self.g_sub.vs), 3)
-		self.assertEqual(len(self.g_sub.es), 1)
-		self.assertEqual(self.g_sub.vs['name'], ['a', 'b', 'e'])
+	# 	# There should be three vertices and 1 edge.
+	# 	self.assertEqual(len(self.g_sub.vs), 3)
+	# 	self.assertEqual(len(self.g_sub.es), 1)
+	# 	self.assertEqual(self.g_sub.vs['name'], ['a', 'b', 'e'])
 
-		# There should be an edge between 'a' and 'b'.
-		self.assertEqual(self.g_sub.get_eid(0, 1), 0)
+	# 	# There should be an edge between 'a' and 'b'.
+	# 	self.assertEqual(self.g_sub.get_eid(0, 1), 0)
 
 	def test_NodesInOrderOfCentrality(self):
 		# Make a the most highly connected node.
@@ -112,6 +112,14 @@ class TestDatabase(unittest.TestCase):
 
 		list_of_tuples = database.NodesInOrderOfCentrality(self.g, 'betweenness')
 		self.assertEqual(list_of_tuples, [('a', 8.0), ('h', 0.0), ('g', 0.0), ('f', 0.0), ('e', 0.0), ('d', 0.0), ('c', 0.0), ('b', 0.0)])
+
+	def test_StripLoops(self):
+		self.g['a', 'a'] = 2
+		self.g['a', 'a'] = 2
+		print self.g.es.is_loop()
+
+		self.g_loopless = database.StripLoops(self.g)
+		self.assertEqual(all(self.g_loopless.is_loop()), False)
 
 	def tearDown(self):
 		"""

@@ -2,17 +2,19 @@ from __future__ import division
 import os
 import sys
 import random as rand
-#import tkMessageBox
-#import tkFileDialog
 import cPickle 
 import numpy as np
 import getpass
-#import tkentrycomplete as tkcomp
-#import re
-#import nltk
-#from Tkinter import *
+import nltk
 from pdb import *
 from igraph import *
+import pickle
+import basefunctions
+#import tkMessageBox
+#import tkFileDialog
+#import tkentrycomplete as tkcomp
+#import re
+#from Tkinter import *
 #import basefunctions as bf
 
 """
@@ -142,7 +144,19 @@ def MergeWeightedNodes(graph, nodename1, nodename2):
 
 	return graph
 
-def IsolateSubGraph(graph, nodename_list):
+def DocumentMergedPair(nodename1, nodename2, save_file):
+	"""
+	Given two nodes, this will save the pair in a list of tuples in either a new file (if file doesn't exist) 
+	or in the file given.
+	"""
+	try:
+		merged_pairs = pickle.load(open(save_file, 'rb'))
+	except IOError:
+		merged_pairs = []
+	merged_pairs.append((nodename1, nodename2))
+	pickle.dump(merged_pairs, open(save_file, 'wb'))
+
+def IsolateSubGraph(graph, nodename_list, name):
 	"""
 	Takes: (1) graph (2) list of names of nodes that should be matched. (where attribute='term')
 
@@ -150,8 +164,13 @@ def IsolateSubGraph(graph, nodename_list):
 
 	Returns: (1) a new subgraph
 	"""
-	nodeindex_list = [graph.vs.find(term=nodename) for nodename in nodename_list]
-	sub_graph = graph.subgraph(nodeindex_list)
+	node_list = []
+	for nodename in nodename_list:
+		kwargs = {}
+		kwargs[name] = nodename
+		node_list.append(graph.vs.find(**kwargs))
+
+	sub_graph = graph.subgraph(node_list)
 	return sub_graph
 
 def NodesInOrderOfCentrality(graph, type):
@@ -177,5 +196,4 @@ def StripLoops(graph):
 		graph.delete_edges(index_to_delete)
 	except IndexError:
 		pass
-
 	return graph

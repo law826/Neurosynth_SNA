@@ -18,7 +18,7 @@ import pickle
 #import basefunctions as bf
 
 """
-
+[] Complete merge functionality
 """
 
 def AddNode(nodename, type, graph=None):
@@ -168,7 +168,10 @@ def IsolateSubGraph(graph, nodename_list, attribute_name):
 	for nodename in nodename_list:
 		kwargs = {}
 		kwargs[attribute_name] = nodename
-		node_list.append(graph.vs.find(**kwargs))
+		try:
+			node_list.append(graph.vs.find(**kwargs))
+		except ValueError:
+			pass
 
 	sub_graph = graph.subgraph(node_list)
 	return sub_graph

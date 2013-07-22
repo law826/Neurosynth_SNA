@@ -141,9 +141,8 @@ def StripName(graph, rawterms):
 	return graph
 
 ####### Statistics
-def VisualizeGraph(graph, outdir):
-	graph.write_svg(outdir+os.sep+'forward_graph_kamada_kawai', labels = "name", layout = graph.layout_kamada_kawai())
-	pass
+def VisualizeGraph(graph, outpath):
+	graph.write_svg(outpath, labels = "term", layout = graph.layout_kamada_kawai())
 
 def CalculateBetweennessCentrality(graph):
 	pass
@@ -191,7 +190,12 @@ if __name__ == '__main__':
 	# "top-down", "cerebellum", "extrastriate", "learning", "encoding", "MTL", "parahippocampus", "visual cortex", "object", "representation", "V1", "somatosensory", "S2", 
 	# "sensorimotor", "language", "frontal", "semantic", "LIFG", "M1", "motor", "premortor cortex", "V5", "motion", "MTA"]
 	sfgc = database.IsolateSubGraph(fg, sub_list_concept, "term")
+	index_to_delete = [sfgc.es.select(weight_lt=0.3)]
+	graph.delete_edges(index_to_delete)
+	VisualizeGraph(sfgc, "test_graph")
 	# sfgb = database.IsolateSubGraph(fg, sub_list_brain)
+	SaveGraph(sfgc, "test")
+	os.system("start "+ "test_graph")
 	set_trace()
 	
 

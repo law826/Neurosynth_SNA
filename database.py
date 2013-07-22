@@ -9,7 +9,7 @@ import nltk
 from pdb import *
 from igraph import *
 import pickle
-import basefunctions
+# import basefunctions
 #import tkMessageBox
 #import tkFileDialog
 #import tkentrycomplete as tkcomp

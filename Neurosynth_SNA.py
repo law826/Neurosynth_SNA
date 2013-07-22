@@ -161,25 +161,37 @@ refine graphs fg and rg to get rid of loops and undirected using commands:
 	database.StripLoops
 	graph.summary()
 	(to get summary of edges, use fg.es["weight"])
+	to create list of edges [edge.is_loop() for edge in fg.es]
+	[edge.tuple for edge in fg.es]
+	to return loops [edge.isloop() for edge in fg.es if edge.is_loop() == True]
+	to calculate number, use len([edge.isloop() for edge in fg.es if edge.is loop() ==True])
+
+
+
 """	
 if __name__ == '__main__':
 	maindir, outdir, importdir, forward_inference_edgelist, reverse_inference_edgelist, f_pickle_path, r_pickle_path = SetPaths()
 	fg = LoadGraph(f_pickle_path)
 	rg = LoadGraph(r_pickle_path)
-	sub_list_concept = ["face", "novelty", "episodic", "retrieval", "semantic", "word", "emotion", "sequence", "category", "memory", "encoding", "load", "social", "cognition",
-	"motor", "learning", "representation", "executive", "control", "object", "recognition", "inhibition", "target", "top-down", "attention", "selection", "vision",
-	"auditory", "detection", "motion", "spatial", "information", "perception", "shape", "speech", "sensory", "prediction", "error", "risk", "reward", "future", "anticipation",
-	"working memory", "verbal", "action", "observation", "movement", "priming", "repetition", "suppression"]
-	sub_list_brain = ["intraparietal sulcus", "PSTS", "cingulate cortex", "temporal sulcus", "precuneus", "STS", "PCC", "frontal", "premotor cortex", "STG", "PCC", "mPFC", 
-	"DmPFC", "DlPFC", "OFC", "parietal cortex", "temporal cortex", "PFC", "thalamus", "ACC", "Pre-SMA", "PPC", "MTL", "amygdala", "anterior insula", "insula", "hippocampus", 
-	"fusiform", "FFA", "putamen", "caudate", "S2", "S1", "M1", "cingulate", "SMA", "cerebellum", "somatosensory cortex", "basal ganglia", "LIFG", "RIFG", "IFG", "IPL", "MTA",
-	"V5", "extrastriate", "visual cortex", "V1", "V2", "V3"]
-	sub_list_brain_concept["decision making", "frontoparietal cortex", "occipital cortex", "fusiform", "FEF", "emotion", "sensitivity", "fear", "ACC", "attention", "cognition", "amygdala", "FFA", 
-	"prediction", "OFC", "observation", "control", "brainstem", "executive", "PFC", "parietal cortex", "novelty", "retrieval", "memory", "hippocampus", "selection", "vision", "information", "active", 
-	"top-down", "cerebellum", "extrastriate", "learning", "encoding", "MTL", "parahippocampus", "visual cortex", "object", "representation", "V1", "somatosensory", "S2", 
-	"sensorimotor", "language", "frontal", "semantic", "LIFG", "M1", "motor", "premortor cortex", "V5", "motion", "MTA"]
-	sfgc = database.IsolateSubGraph(fg, sub_list_concept)
-	sfgb = database.IsolateSubGraph(fg, sub_list_brain)
+	fg.to_undirected(mode="collapse", combine_edges= "max")
+	rg.to_undirected(mode="collapse", combine_edges= "max")
+	fg = database.StripLoops(fg)
+	rg = database.StripLoops(rg)
+	[edge.isloop() for edge in fg.es]
+	# sub_list_concept = ["face", "novelty", "episodic", "retrieval", "semantic", "word", "emotion", "sequence", "category", "memory", "encoding", "load", "social", "cognition",
+	# "motor", "learning", "representation", "executive", "control", "object", "recognition", "inhibition", "target", "top-down", "attention", "selection", "vision",
+	# "auditory", "detection", "motion", "spatial", "information", "perception", "shape", "speech", "sensory", "prediction", "error", "risk", "reward", "future", "anticipation",
+	# "working memory", "verbal", "action", "observation", "movement", "priming", "repetition", "suppression"]
+	# sub_list_brain = ["intraparietal sulcus", "PSTS", "cingulate cortex", "temporal sulcus", "precuneus", "STS", "PCC", "frontal", "premotor cortex", "STG", "PCC", "mPFC", 
+	# "DmPFC", "DlPFC", "OFC", "parietal cortex", "temporal cortex", "PFC", "thalamus", "ACC", "Pre-SMA", "PPC", "MTL", "amygdala", "anterior insula", "insula", "hippocampus", 
+	# "fusiform", "FFA", "putamen", "caudate", "S2", "S1", "M1", "cingulate", "SMA", "cerebellum", "somatosensory cortex", "basal ganglia", "LIFG", "RIFG", "IFG", "IPL", "MTA",
+	# "V5", "extrastriate", "visual cortex", "V1", "V2", "V3"]
+	# sub_list_brain_concept["decision making", "frontoparietal cortex", "occipital cortex", "fusiform", "FEF", "emotion", "sensitivity", "fear", "ACC", "attention", "cognition", "amygdala", "FFA", 
+	# "prediction", "OFC", "observation", "control", "brainstem", "executive", "PFC", "parietal cortex", "novelty", "retrieval", "memory", "hippocampus", "selection", "vision", "information", "active", 
+	# "top-down", "cerebellum", "extrastriate", "learning", "encoding", "MTL", "parahippocampus", "visual cortex", "object", "representation", "V1", "somatosensory", "S2", 
+	# "sensorimotor", "language", "frontal", "semantic", "LIFG", "M1", "motor", "premortor cortex", "V5", "motion", "MTA"]
+	# sfgc = database.IsolateSubGraph(fg, sub_list_concept)
+	# sfgb = database.IsolateSubGraph(fg, sub_list_brain)
 	set_trace()
 	
 

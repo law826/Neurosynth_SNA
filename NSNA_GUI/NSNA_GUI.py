@@ -6,13 +6,13 @@ radiology_diagnoser.py
 [] handle import file and merging
 [] handle old matches from the merge window
 [] connect higher order term to everything
-[] order symptoms in terms of best algorithm to get to specific diagnosis
+[] order Neighbors in terms of best algorithm to get to specific Concepts
 [] expand width of windows
 [] entry box to merge two nodes in particular
 [] figure out brackets
 [] edit entry
 [] fuzzy search
-[] auto update diagnoses and symptoms list upon keystroke (implement fuzzy search)
+[] auto update Concepts and Neighbors list upon keystroke (implement fuzzy search)
 [] clean up row management
 [] make larger entry box
 [] make a queue for stored dx and sx
@@ -53,83 +53,35 @@ class MainWindow:
 		self.mw = MergeWindow()
 		self.id = ImportData()
 
-		gui_elements = [self.DCWLabelEntryUI,
-						self.LabelEntryUI,
-						self.ResetButton,
-						self.SearchedTermUI,
+		gui_elements = [self.SearchedTermUI,
 						self.Listboxes,
-						self.ButtonsUI]
+						self.ButtonsUI
+						]
 
-		startingrow=0
-		for gui_element in gui_elements:
+		self.gui_element_dict = {}
+
+		for startingrow, gui_element in enumerate(gui_elements):
+			self.gui_element_dict[gui_element] = startingrow
 			gui_element(startingrow=startingrow)
-			startingrow = startingrow + 1
-
-		# self.DCWLabelEntryUI(startingrow=0)
-		# self.LabelEntryUI(startingrow=1)
-		# self.ResetButton(startingrow=2)
-		# searched_term_row = 3
-		# self.SearchedTermUI(startingrow=searched_term_row)
-		# self.Listboxes()
-		# self.ButtonsUI(startingrow=6)		
-
+			
 		self.root.mainloop()
 
 	def Listboxes(self, startingrow=None):
-		self.DiagnosesListBox(startingrow=listbox_row)
-		self.SymptomsListBox(startingrow=listbox_row)
+		self.ConceptsListBox(startingrow=self.gui_element_dict[self.Listboxes])
+		self.NeighborsListBox(startingrow=self.gui_element_dict[self.Listboxes])
 
 
 	def DCWLabelEntryUI(self, startingrow):
 		# Create a text frame to hold the text Label and the Entry widget
 		self.DCWtextFrame = Frame(self.root)		
 				
-		self.DCWentryLabel = bf.Label(self.DCWtextFrame, "Enter a new diagnosis followed by a comma and then symptoms separated by commas.")
+		self.DCWentryLabel = bf.Label(self.DCWtextFrame, "Enter a new Concepts followed by a comma and then Neighbors separated by commas.")
 		try:
-			self.DCWentry = bf.Entry(self.DCWtextFrame, self.DiagnosisCharacterizationSubmitted, completion_list=self.DB.g.vs["name"])
+			self.DCWentry = bf.Entry(self.DCWtextFrame, self.ConceptsCharacterizationSubmitted, completion_list=self.DB.g.vs["name"])
 		except KeyError:
 			self.DCWentry = bf.Entry(self.DCWtextFrame, self.DiagnosisCharacterizationSubmitted, completion_list=[])
 
 		self.DCWtextFrame.grid(row=startingrow, columnspan=2)
-
-	def DiagnosisCharacterizationSubmitted(self, event=0):
-		es_split = bf.ParseEntryCommaSeparated(self.DCWentry, "Enter a diagnosis")
-		
-		if es_split != []:
-			for i, entry in enumerate(es_split):
-				if i==0:
-					node_index = self.DB.AddNode(entry, "diagnosis")
-					node_index_list = []
-				else:
-					node_index = self.DB.AddNode(entry, "symptom")
-
-				node_index_list.append(node_index)
-
-			node_index_list = self.DB.IndicesOfVertexNeighborsToo(node_index_list)
-
-			self.DB.AddEdges(node_index_list)
-			self.UpdateListBox(self.dlistbox, [es_split[0]], row=listbox_row+1, column=0)
-			pre_updated_symptom_list = [self.DB.g.vs[x]["name"] for x in node_index_list]
-			del pre_updated_symptom_list[0]
-			updated_symptom_list = list(set(pre_updated_symptom_list))
-			self.UpdateListBox(self.slistbox, updated_symptom_list, row=listbox_row+1, column=1)
-			self.DCWentry.delete(0, END)
-
-	def LabelEntryUI(self, startingrow=None):
-		# Create a text frame to hold the text Label and the Entry widget
-		self.textFrame = Frame(self.root)		
-				
-		self.entryLabel = bf.Label(self.textFrame, "Enter a diagnosis or symptom")
-		try:
-			self.entryWidget = bf.Entry(self.textFrame, self.SearchEntrySubmitted, completion_list=self.DB.g.vs["name"])
-		except KeyError:
-			self.entryWidget = bf.Entry(self.textFrame, self.SearchEntrySubmitted, completion_list=[])
-
-		self.textFrame.grid(row=startingrow, columnspan=2)
-
-	
-	def ResetButton(self, startingrow=None):
-		self.r = Button(self.root, text="Reset", default="normal", command=self.ResetButtonPressed).grid(row=startingrow, columnspan=2)
 
 	def UpdateSearchedTerm(self, startingrow=None):
 		startingrow = self.SearchTermUI_startingrow
@@ -145,52 +97,50 @@ class MainWindow:
 		self.searched_term_label = Label(self.root, text="")
 		self.searched_term_label.grid(row=startingrow, columnspan=2)
 
-	def DiagnosesListBox(self, startingrow=None):
+	def ConceptsListBox(self, startingrow=None):
 		self.lbframe = Frame(self.root)
 		# Label.
-		self.diagnosisLabel = Label(self.lbframe)
-		self.diagnosisLabel["text"] = "Diagnoses"
-		self.diagnosisLabel.grid(row=0,column=0)
+		self.ConceptsLabel = Label(self.lbframe)
+		self.ConceptsLabel["text"] = "Concepts"
+		self.ConceptsLabel.grid(row=0,column=0)
 
 		# Listbox.
-		self.dlistbox = Listbox(self.lbframe, width=40)
-		self.dlistbox.grid(row=1,column=0)
+		self.clistbox = Listbox(self.lbframe, width=40)
+		self.clistbox.grid(row=1,column=0)
 		try: 
 			for concept in self.DB.g.vs:
-				if concept["type"] == 'diagnosis':
-					self.dlistbox.insert(END, concept["name"])
+				self.clistbox.insert(END, concept["term"])
 		except AttributeError:
 		# If there are no items yet.
 			pass
-		self.dlistbox.bind("<ButtonRelease-1>", self.DiagnosisListPressed)
+		self.clistbox.bind("<ButtonRelease-1>", self.UpdateNeighborsListBox)
 
-	def SymptomsListBox(self, startingrow=None):	
-		self.symptomsLabel = Label(self.lbframe)
-		self.symptomsLabel["text"] = "Symptoms"
-		self.symptomsLabel.grid(row=0,column=1)
-		self.slistbox = Listbox(self.lbframe, width=40)
-		self.slistbox.grid(row=1,column=1)
+	def NeighborsListBox(self, startingrow=None):	
+		self.NeighborsLabel = Label(self.lbframe)
+		self.NeighborsLabel["text"] = "Neighbors"
+		self.NeighborsLabel.grid(row=0,column=1)
+		self.nlistbox = Listbox(self.lbframe, width=40)
+		self.nlistbox.grid(row=1,column=1)
 		self.lbframe.grid(row=startingrow, column=0)
+
+		#self.nlistbox.bind("<ButtonRelease-1>", self.SymptomListPressed)
+
+	def UpdateNeighborsListBox(self, event=0):
+		selected_index = self.clistbox.curselection()
+		selected_concept = self.clistbox.get(selected_index)
+		selected_vertex = self.DB.g.vs.find(term=selected_concept)
+		self.nlistbox.delete(0, END)
 		try: 
-			for concept in self.DB.g.vs:
-				if concept["type"] == 'symptom':
-					self.slistbox.insert(END, concept["name"])
+			self.DB.g.vs
+			pair_list = [(neighbor['term'], self.DB.g[neighbor['name'], selected_vertex.index]) for neighbor in selected_vertex.neighbors()]
+			pair_list.sort(key=lambda x: x[1])
+			pair_list.reverse()
+			for pair in pair_list:
+				self.nlistbox.insert(END, "%s (%.3f)" %(pair[0], pair[1]))
 		except AttributeError:
 		# If there are no items yet.
 			pass
-
-		self.slistbox.bind("<ButtonRelease-1>", self.SymptomListPressed)
-
-	def UpdateListBox(self, listbox, list, row, column):
-		listbox.grid_forget()
-		listbox.delete(0, END)
-		try: 
-			for concept in list:
-				listbox.insert(END, concept)
-		except AttributeError:
-		# If there are no items yet.
-			pass
-		listbox.grid(row=row, column=column)
+		self.nlistbox.grid(row=1, column=1)
 
 	def SearchEntrySubmitted(self, event=0, list_clicked=False, selected_concept=None):
 		if list_clicked:
@@ -207,25 +157,18 @@ class MainWindow:
 		if (dneighbors == None) and (sneighbors == None):
 			pass
 		else:
-			if self.DB.g.vs.find(name=self.entrystring)['type']=='diagnosis':
+			if self.DB.g.vs.find(name=self.entrystring)['type']=='Concepts':
 				dneighbors = [self.entrystring]
-			self.UpdateListBox(self.dlistbox, dneighbors, listbox_row+1, 0)
-			self.UpdateListBox(self.slistbox, sneighbors, listbox_row+1, 1)
-			self.UpdateSearchedTerm(startingrow=searched_term_row)
+			self.UpdateListBox(self.dlistbox, dneighbors, 1, 0)
+			self.UpdateListBox(self.slistbox, sneighbors, 1, 1)
+			self.UpdateSearchedTerm(startingrow=self.gui_element_dict[self.SearchedTermUI])
 			self.entryWidget.delete(0, END)
 
-	def ResetButtonPressed(self):
-		self.diagnosisLabel.grid_forget()
-		self.symptomsLabel.grid_forget()
-		self.dlistbox.grid_forget()
-		self.slistbox.grid_forget()
-		self.Listboxes()
-
-	def DiagnosisListPressed(self, event=0):
+	def ConceptsListPressed(self, event=0):
 		selected_index = self.dlistbox.curselection()
 		selected_concept = self.dlistbox.get(selected_index)
 		self.SearchEntrySubmitted(list_clicked=True, selected_concept=selected_concept)
-		self.ListFocus = "diagnosis"
+		self.ListFocus = "Concepts"
 
 	def SymptomListPressed(self, event=0):
 		selected_index = self.slistbox.curselection()
@@ -236,6 +179,7 @@ class MainWindow:
 	def ButtonsUI(self, startingrow=None):
 		self.bottom_buttons_frame = Frame(self.root)
 		button_labels = [
+			"Reset",
 			"View Graph",
 			"Import",
 			"Merge Items",
@@ -244,6 +188,7 @@ class MainWindow:
 			]
 
 		button_commands = [ 
+			self.ResetButtonPressed,
 			self.ViewGraphButtonPressed,
 			self.ImportButtonPressed,
 			self.MergeButtonPressed,
@@ -255,6 +200,15 @@ class MainWindow:
 			b = Button(self.bottom_buttons_frame, text=label, default="normal", command=button_commands[button_number]).pack()
 
 		self.bottom_buttons_frame.grid(row=startingrow, columnspan=2)
+
+
+	def ResetButtonPressed(self):
+		self.ConceptsLabel.grid_forget()
+		self.NeighborsLabel.grid_forget()
+		self.dlistbox.grid_forget()
+		self.slistbox.grid_forget()
+		self.Listboxes()
+
 	def ViewGraphButtonPressed(self):
 		self.DB.g.write_svg("graph.svg", labels = "name", layout = self.DB.g.layout_kamada_kawai())
 		os.system("open "+self.DB.save_path+os.sep+"graph.svg")

@@ -4,6 +4,7 @@ import Tkinter as tk
 from pdb import *
 from igraph import *
 
+
 def Label(parent, text):
 	"""
 	Tkinter label that simply packs into a frame. 
@@ -11,7 +12,6 @@ def Label(parent, text):
 	label = tk.Label(parent)
 	label["text"] = text
 	label.pack()
-
 	return label
 
 def Entry(parent, action, completion_list=None, width = 50, binding = "<Return>", focus=True):

@@ -1,6 +1,5 @@
 from __future__ import division
-import os
-import sys
+import os, sys
 import random as rand
 import cPickle 
 import numpy as np
@@ -10,8 +9,10 @@ from pdb import *
 from igraph import *
 import pickle
 from Tkinter import *
-import basefunctions
 import unittest
+
+sys.path.append(os.path.realpath('..'))
+import basefunctions
 from CategorizeNodes import CategorizeNodesGUI
 from CategorizeNodes import CNBridge
 

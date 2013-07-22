@@ -1,5 +1,4 @@
 from __future__ import division
-import Neurosynth_SNA as ns
 import unittest
 from pdb import *
 import os, sys, getpass, random as rand, cPickle, numpy as np
@@ -7,6 +6,9 @@ try:
 	from igraph import *
 except ImportError:
 	raise ImportError, "The igraph module is required to run this program."
+
+sys.path.append(os.path.realpath('..'))
+import Neurosynth_SNA as ns
 
 
 class TestDatabase(unittest.TestCase):
@@ -31,6 +33,9 @@ class TestDatabase(unittest.TestCase):
 			self.assertEqual(len(graph.vs), number_of_vertices)
 			self.assertEqual(len(graph.es), number_of_edges)
 			self.assertEqual(all(graph.is_loop()), False)
+
+	def test_subgraphs(self):
+		pass
 
 	def tearDown(self):
 		"""

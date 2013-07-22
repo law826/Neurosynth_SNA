@@ -1,9 +1,11 @@
-import database
-import os
+import os, sys
 import unittest
 import pickle
 from igraph import Graph
 from pdb import set_trace
+
+sys.path.append(os.path.realpath('..'))
+import database
 
 
 class TestDatabase(unittest.TestCase):

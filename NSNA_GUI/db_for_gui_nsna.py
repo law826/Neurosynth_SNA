@@ -4,6 +4,8 @@ from Tkinter import *
 from pdb import *
 from igraph import *
 
+sys.path.append(os.path.realpath('..'))
+import database as db
 import basefunctions as bf
 
 class DataBaseForGUI:
@@ -29,7 +31,7 @@ class DataBaseForGUI:
 			self.SetPath()
 
 	def LoadGraph(self):
-		self.g = Graph.Read_Pickle(os.sep.join([self.save_path, "graph.p"]))
+		self.g = Graph.Read_Pickle(os.sep.join([self.save_path, "forward_graph.p"]))
 
 	def AddNode(self, item, type):
 		try:
@@ -104,8 +106,8 @@ class DataBaseForGUI:
 		"""
 		try:
 			node = self.g.vs.find(name=nodename)
-			dneighbors = [x["name"] for x in node.neighbors() if x["type"]=="diagnosis"]
-			sneighbors = [x["name"] for x in node.neighbors() if x["type"]=="symptom"]
+			dneighbors = [x["name"] for x in node.neighbors()] #if x["type"]=="diagnosis"]
+			sneighbors = [x["name"] for x in node.neighbors()] #if x["type"]=="symptom"]
 		except (NameError, ValueError):
 			tkMessageBox.showinfo("Term Not Found", "%s is not in the database" %nodename)
 			dneighbors = None

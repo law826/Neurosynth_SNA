@@ -12,7 +12,7 @@ except ImportError:
 class TestDatabase(unittest.TestCase):
 
 	def setUp(self):
-		self.maindir, self.outdir, self.forward_inference_edgelist, self.reverse_inference_edgelist, self.f_pickle_path, self.r_pickle_path = ns.SetPaths()
+		self.maindir, self.outdir, self.importdir, self.forward_inference_edgelist, self.reverse_inference_edgelist, self.f_pickle_path, self.r_pickle_path = ns.SetPaths()
 
 	def test_GetFileNamesInDirectory(self):
 		files = ns.GetFileNamesInDirectory('/Volumes/huettel/KBE.01/Analysis/Neurosynth/ReverseResults/')
@@ -26,7 +26,9 @@ class TestDatabase(unittest.TestCase):
 
 		for graph in [fg, rg]:
 			self.assertEqual(len(graph.vs), 525)
-			self.assertEqual(len(graph.es), 275625)
+			self.assertEqual(len(graph.es), ((275625-525)/2))
+			[edge.is_loop() for edge in fg.es if edge.is_loop == True]
+			#137550
 
 	def tearDown(self):
 		"""

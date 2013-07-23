@@ -4,6 +4,10 @@
 [] make functionality for starting from the beginning again.
 [] test whether current import protocol works
 [] add functionality for windows
+[] encode number of studies
+[] make the margins of the picture fit
+[] perform centrality measures on the data
+[] incorporate new data
 """
 from __future__ import division
 import database

@@ -35,12 +35,7 @@ import basefunctions as bf
 from db_for_gui_nsna import DataBaseForGUI
 from mergewindow import MergeWindow
 from importdata import ImportData
-
-global searched_term_row
-global listbox_row
-searched_term_row = 3
-listbox_row = 4
-
+from subprocess import Popen, PIPE, STDOUT
 
 class MainWindow:
 	def __init__(self):
@@ -89,12 +84,12 @@ class MainWindow:
 			self.searched_term_label.grid_forget()
 		except:
 			pass
-		self.searched_term_label = Label(self.root, text=self.DB.graph_mode)
+		self.searched_term_label = Label(self.root, text=self.DB.graph_mode+' Inference')
 		self.searched_term_label.grid(row=startingrow, columnspan=2)
 
 	def SearchedTermUI(self, startingrow=None):
 		self.SearchTermUI_startingrow=startingrow
-		self.searched_term_label = Label(self.root, text=self.DB.graph_mode)
+		self.searched_term_label = Label(self.root, text=self.DB.graph_mode+' Inference')
 		self.searched_term_label.grid(row=startingrow, columnspan=2)
 
 	def ConceptsListBox(self, startingrow=None):
@@ -113,7 +108,14 @@ class MainWindow:
 		except AttributeError:
 		# If there are no items yet.
 			pass
-		self.clistbox.bind("<ButtonRelease-1>", self.UpdateNeighborsListBox)
+		self.clistbox.bind("<ButtonRelease-1>", self.ConceptsListPressed)
+
+		try:
+			self.NeighborsLabel2["text"] = self.selected_concept
+			self.NeighborsLabel2.grid_forget()
+			self.NeighborsLabel2.grid(row=2, column=0)
+		except AttributeError:
+			pass
 
 	def NeighborsListBox(self, startingrow=None):	
 		self.NeighborsLabel = Label(self.lbframe)
@@ -122,13 +124,19 @@ class MainWindow:
 		self.nlistbox = Listbox(self.lbframe, width=40)
 		self.nlistbox.grid(row=1,column=1)
 		self.lbframe.grid(row=startingrow, column=0)
+		self.NeighborsLabel2 = Label(self.lbframe)
+		try:
+			self.NeighborsLabel2["text"] = self.selected_neighbor
+			self.NeighborsLabel2.grid_forget()
+			self.NeighborsLabel2.grid(row=2, column=1)
+		except AttributeError:
+			pass
+		self.nlistbox.bind("<ButtonRelease-1>", self.NeighborListPressed)
 
-		#self.nlistbox.bind("<ButtonRelease-1>", self.SymptomListPressed)
-
-	def UpdateNeighborsListBox(self, event=0):
+	def ConceptsListPressed(self, event=0):
 		selected_index = self.clistbox.curselection()
-		selected_concept = self.clistbox.get(selected_index)
-		selected_vertex = self.DB.g.vs.find(term=selected_concept)
+		self.selected_concept = self.clistbox.get(selected_index)
+		selected_vertex = self.DB.g.vs.find(term=self.selected_concept)
 		self.nlistbox.delete(0, END)
 		try: 
 			self.DB.g.vs
@@ -140,57 +148,48 @@ class MainWindow:
 		except AttributeError:
 		# If there are no items yet.
 			pass
+
+		try:
+			self.ConceptsLabel2.grid_forget()
+		except AttributeError:
+			pass
+
+		self.ConceptsLabel2 = Label(self.lbframe)
+		try:
+			self.ConceptsLabel2["text"] = self.selected_concept
+			self.ConceptsLabel2.grid(row=2, column=0)
+		except AttributeError:
+			pass
 		self.nlistbox.grid(row=1, column=1)
 
-	def SearchEntrySubmitted(self, event=0, list_clicked=False, selected_concept=None):
-		if list_clicked:
-			self.entrystring = selected_concept
-			dneighbors, sneighbors = self.DB.FindNeighborsOfNode(self.entrystring)
-		else:
-			if self.entryWidget.get().strip() == "":
-				tkMessageBox.showerror("Tkinter Entry Widget", "Enter a term")
-			else:
-				self.entrystring = self.entryWidget.get().strip()
-				dneighbors, sneighbors = self.DB.FindNeighborsOfNode(self.entrystring)
-				
 
-		if (dneighbors == None) and (sneighbors == None):
-			pass
-		else:
-			if self.DB.g.vs.find(name=self.entrystring)['type']=='Concepts':
-				dneighbors = [self.entrystring]
-			self.UpdateListBox(self.dlistbox, dneighbors, 1, 0)
-			self.UpdateListBox(self.slistbox, sneighbors, 1, 1)
-			self.UpdateSearchedTerm(startingrow=self.gui_element_dict[self.SearchedTermUI])
-			self.entryWidget.delete(0, END)
-
-	def ConceptsListPressed(self, event=0):
-		selected_index = self.dlistbox.curselection()
-		selected_concept = self.dlistbox.get(selected_index)
-		self.SearchEntrySubmitted(list_clicked=True, selected_concept=selected_concept)
-		self.ListFocus = "Concepts"
-
-	def SymptomListPressed(self, event=0):
-		selected_index = self.slistbox.curselection()
-		selected_concept = self.slistbox.get(selected_index)
-		self.SearchEntrySubmitted(list_clicked=True, selected_concept=selected_concept)
+	def NeighborListPressed(self, event=0):
+		selected_index = self.nlistbox.curselection()
+		self.selected_neighbor = self.nlistbox.get(selected_index).split(' ')[0]
 		self.ListFocus = "symptom"
+		try:
+			self.NeighborsLabel2["text"] = self.selected_neighbor
+			self.NeighborsLabel2.grid_forget()
+			self.NeighborsLabel2.grid(row=2, column=1)
+		except AttributeError:
+			pass
+		self.nlistbox.bind("<ButtonRelease-1>", self.NeighborListPressed)
 
 	def ButtonsUI(self, startingrow=None):
 		self.bottom_buttons_frame = Frame(self.root)
 		button_labels = [
-			"Forward/Reverse",
+			"View Brain Overlay",
+			"Forward/Reverse Mode",
 			"View Graph",
-			"Import",
 			"Merge Items",
 			"Debug Mode", 
 			"Delete Item"
 			]
 
 		button_commands = [ 
+			self.ViewBrainOverlayButtonPressed,
 			self.ForwardReverseButtonPressed,
 			self.ViewGraphButtonPressed,
-			self.ImportButtonPressed,
 			self.MergeButtonPressed,
 			self.DebugModeButtonPressed, 
 			self.DeleteItem
@@ -214,8 +213,30 @@ class MainWindow:
 		self.DB.g.write_svg("graph.svg", labels = "name", layout = self.DB.g.layout_kamada_kawai())
 		os.system("open "+self.DB.save_path+os.sep+"graph.svg")
 
-	def ImportButtonPressed(self):
-		self.id.executeimport(self)
+	def ViewBrainOverlayButtonPressed(self):
+		image_maindir = os.sep.join(['/Volumes', 'huettel', 'KBE.01',  'Analysis', 'Neurosynth', 'neurosynthgit', 'results'])
+		image_dir = os.sep.join([image_maindir, self.DB.graph_mode+'_inference_unthresh_z'])
+		if self.DB.graph_mode == 'Forward':
+			image_name1 = '_%s_pAgF_z.nii.gz' % self.selected_concept
+			image_name2 = '_%s_pAgF_z.nii.gz' % self.selected_neighbor
+		elif self.DB.graph_mode == 'Reverse':
+			image_name1 = '_%s_pFgA_z.nii.gz' % self.selected_concept
+			image_name2 = '_%s_pFgA_z.nii.gz' % self.selected_neighbor
+
+		standard_brain_path = 'fslview ${FSLDIR}/data/standard/MNI152_T1_2mm_brain.nii.gz'
+
+		image_path1 = os.sep.join([image_dir, image_name1])
+		image_path2 = os.sep.join([image_dir, image_name2])
+		lookup_table1 = '-l "Red-Yellow"'
+		lookup_table2 = '-l "Blue-Lightblue"'
+
+		shell_command = '%s %s %s %s %s' %(standard_brain_path, image_path1, lookup_table1, image_path2, lookup_table2)
+		print shell_command
+
+		
+		event = Popen(shell_command, shell=True, stdin=PIPE, stdout=PIPE, stderr=STDOUT)
+		output = event.communicate()
+
 
 	def MergeButtonPressed(self):
 		self.mw.ExecuteMerge(self)

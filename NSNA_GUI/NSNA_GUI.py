@@ -89,12 +89,12 @@ class MainWindow:
 			self.searched_term_label.grid_forget()
 		except:
 			pass
-		self.searched_term_label = Label(self.root, text=self.entrystring)
+		self.searched_term_label = Label(self.root, text=self.DB.graph_mode)
 		self.searched_term_label.grid(row=startingrow, columnspan=2)
 
 	def SearchedTermUI(self, startingrow=None):
 		self.SearchTermUI_startingrow=startingrow
-		self.searched_term_label = Label(self.root, text="")
+		self.searched_term_label = Label(self.root, text=self.DB.graph_mode)
 		self.searched_term_label.grid(row=startingrow, columnspan=2)
 
 	def ConceptsListBox(self, startingrow=None):
@@ -179,7 +179,7 @@ class MainWindow:
 	def ButtonsUI(self, startingrow=None):
 		self.bottom_buttons_frame = Frame(self.root)
 		button_labels = [
-			"Reset",
+			"Forward/Reverse",
 			"View Graph",
 			"Import",
 			"Merge Items",
@@ -188,7 +188,7 @@ class MainWindow:
 			]
 
 		button_commands = [ 
-			self.ResetButtonPressed,
+			self.ForwardReverseButtonPressed,
 			self.ViewGraphButtonPressed,
 			self.ImportButtonPressed,
 			self.MergeButtonPressed,
@@ -201,13 +201,14 @@ class MainWindow:
 
 		self.bottom_buttons_frame.grid(row=startingrow, columnspan=2)
 
-
-	def ResetButtonPressed(self):
-		self.ConceptsLabel.grid_forget()
-		self.NeighborsLabel.grid_forget()
-		self.dlistbox.grid_forget()
-		self.slistbox.grid_forget()
-		self.Listboxes()
+	def ForwardReverseButtonPressed(self):
+		if self.DB.graph_mode == 'Forward':
+			self.DB.graph_mode = 'Reverse' 
+		elif self.DB.graph_mode == 'Reverse':
+			self.DB.graph_mode = 'Forward'
+		self.DB.LoadGraph()
+		self.UpdateSearchedTerm()
+		self.UpdateListboxes()
 
 	def ViewGraphButtonPressed(self):
 		self.DB.g.write_svg("graph.svg", labels = "name", layout = self.DB.g.layout_kamada_kawai())
@@ -229,10 +230,17 @@ class MainWindow:
 			vertex_index = self.DB.g.vs.find(name=selected_concept).index
 			self.DB.g.delete_vertices(vertex_index)
 			self.DB.SaveGraph()
-			self.ResetButtonPressed()
+			self.UpdateListboxes()
 			tkMessageBox.showinfo("Term deleted", "%s has been deleted." %selected_concept)
 		else:
 			pass
+
+	def UpdateListboxes(self):
+		self.clistbox.pack_forget()
+		self.nlistbox.pack_forget()
+		self.lbframe.grid_forget()
+		self.Listboxes(startingrow=self.gui_element_dict[self.Listboxes]) # This is the combination of forming both boxes in one function.
+
 
 def main():
 	

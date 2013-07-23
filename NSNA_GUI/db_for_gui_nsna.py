@@ -12,6 +12,7 @@ class DataBaseForGUI:
 	def __init__(self, mainwindow):
 		self.mainwindow = mainwindow
 		self.LoadUserSettings()
+		self.graph_mode = 'Forward'
 		try:
 			self.LoadGraph()
 		except (cPickle.UnpicklingError):
@@ -31,7 +32,11 @@ class DataBaseForGUI:
 			self.SetPath()
 
 	def LoadGraph(self):
-		self.g = Graph.Read_Pickle(os.sep.join([self.save_path, "forward_graph.p"]))
+		if self.graph_mode == 'Forward':
+			self.g = Graph.Read_Pickle(os.sep.join([self.save_path, "forward_graph.p"]))
+		elif self.graph_mode == 'Reverse':
+			self.g = Graph.Read_Pickle(os.sep.join([self.save_path, "reverse_graph.p"]))
+		
 
 	def AddNode(self, item, type):
 		try:

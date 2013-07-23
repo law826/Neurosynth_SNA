@@ -135,6 +135,11 @@ def LoadGraph(pickle_path):
 	graph = Graph.Read_Pickle(pickle_path)
 	return graph
 
+def LoadPickle(pickle_path):
+	# In contrast to the above function, this just loads a pickle that does not have to be a graph.
+	loaded_pickle = cPickle.load(open(pickle_path, 'rb'))
+	return loaded_pickle
+
 def StripName(graph, rawterms): 
 	"""
 	input: nameless graph, nonstripped list of terms(separated by underscores)

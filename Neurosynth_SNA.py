@@ -146,6 +146,49 @@ def StripName(graph, rawterms):
 	graph.vs["term"]=[x.split('_')[1] for x in graph.vs["term"]]
 	return graph
 
+def ModifySubGraph(graph):
+	"""
+	input: graph of analysis (fg or rg)
+	output: network image
+	modifies graph into subgraph given a list (sub_list_concept) and creates network image
+	"""
+	if graph == fg:
+		sub_list_concept= ["face", "novelty", "episodic", "retrieval", "semantic", "word", "emotion", "sequence", "category", "memory", "encoding", "load", "social", "cognition",
+		"motor", "learning", "representation", "executive", "control", "object", "recognition", "inhibition", "target", "top-down", "attention", "selection", "vision",
+		"auditory", "detection", "motion", "spatial", "information", "perception", "shape", "speech", "sensory", "prediction", "error", "risk", "reward", "future", "anticipation",
+		"working memory", "verbal", "action", "observation", "movement", "priming", "repetition", "suppression"]
+		sfgc = database.IsolateSubGraph(graph, sub_list_concept, "term") # creates sub graph from main graph rg
+		index_to_delete = [edge.index for edge in sfgc.es.select(weight_lt=0.8)] # creates threshold by selecting edges lower than a certain weight
+		sfgc.delete_edges(index_to_delete) #deletes selected edges
+		visual_style = {} #sets method of modifying graph characteristics
+		visual_style ["vertex_label"]= sfgc.vs["term"] # labels the vertices
+		visual_style ["vertex_label_dist"] = 2 # specifies the distance between the labels and the vertices
+		visual_style ["vertex_size"] = 10 # specifies size of vertex_size
+		visual_style["bbox"] = (700,700) #sets dimensions for the box layout
+		visual_style["margin"] = 60
+		plot (sfgc, **visual_style) # creates the changes
+		#plot (sfgc, outdir+os.sep+ "forward_sub_graph_concept", **visual_style) # creates the changes
+		#SaveGraph(srgc, outdir+os.sep+"sub_reverse_graph_concept") #saves graph in outdir
+	elif graph == rg:
+		sub_list_concept= ["face", "novelty", "episodic", "retrieval", "semantic", "word", "emotion", "sequence", "category", "memory", "encoding", "load", "social", "cognition",
+		"motor", "learning", "representation", "executive", "control", "object", "recognition", "inhibition", "target", "top-down", "attention", "selection", "vision",
+		"auditory", "detection", "motion", "spatial", "information", "perception", "shape", "speech", "sensory", "prediction", "error", "risk", "reward", "future", "anticipation",
+		"working memory", "verbal", "action", "observation", "movement", "priming", "repetition", "suppression"]
+		srgc = database.IsolateSubGraph(graph, sub_list_concept, "term") # creates sub graph from main graph rg
+		index_to_delete = [edge.index for edge in srgc.es.select(weight_lt=0.2)] # creates threshold by selecting edges lower than a certain weight
+		srgc.delete_edges(index_to_delete) #deletes selected edges
+		visual_style = {} #sets method of modifying graph characteristics
+		visual_style ["vertex_label"]= srgc.vs["term"] # labels the vertices
+		visual_style ["vertex_label_dist"] = 1.2 # specifies the distance between the labels and the vertices
+		visual_style ["vertex_size"] = 10 # specifies size of vertex_size
+		visual_style["bbox"] = (750,750) #sets dimensions for the box layout
+		visual_style["margin"] = 60
+		plot (srgc, **visual_style) # creates the changes
+		#plot (sfgc, outdir+os.sep+ "forward_sub_graph_concept", **visual_style) # creates the changes
+		#SaveGraph(srgc, outdir+os.sep+"sub_reverse_graph_concept") #saves graph in outdir
+
+
+
 ####### Statistics
 def VisualizeGraph(graph, outpath):
 	graph.write_svg(outpath, labels = "term", layout = graph.layout_kamada_kawai())
@@ -162,17 +205,6 @@ def CalculateBetweennessCentrality(graph):
 Start of specific user commands.
 
 To do list:
-[] refine names to get rid of underscores and keep only first part (hint: string.sep('_'))
-refine graphs fg and rg to get rid of loops and undirected using commands:
-	graph.to_undirected() to get rid of undirected 
-	database.StripLoops
-	graph.summary()
-	(to get summary of edges, use fg.es["weight"])
-	to create list of edges [edge.is_loop() for edge in fg.es]
-	[edge.tuple for edge in fg.es]
-	to return loops [edge.is_loop() for edge in fg.es if edge.is_loop() == True]
-	to calculate number, use len([edge.is_loop() for edge in fg.es if edge.is_loop() ==True])
-
 
 
 """	
@@ -192,7 +224,32 @@ if __name__ == '__main__':
 	# "sensorimotor", "language", "frontal", "semantic", "LIFG", "M1", "motor", "premortor cortex", "V5", "motion", "MTA"]
 	
 
+set_trace()
 
+
+
+
+
+
+
+"""
+Old commands:
+file_names = GetFileNamesInDirectory(maindir)
+CreateEdgelist(maindir, file_names, outdir, 'forward_inference')
+graph = ImportNcol(outdir+os.sep+'reverse_inference.txt')
+fg.vs["term"]=file_names # Set the names of the vertices.
+rg.vs["term"]=file_names # Set the names of the vertices.
+SaveGraph(fg, f_pickle_path) # Pickle the forward graph.
+SaveGraph(rg, r_pickle_path) # Pickle the reverse graph.
+os.system("start "+ "test_graph") #opens igraph in browser for windows
+fg.to_undirected(mode="collapse", combine_edges= "max") #makes graph without direction, thus A to B is same as B to A
+rg.to_undirected(mode="collapse", combine_edges= "max")
+fg = database.StripLoops(fg) # Removes loops (values with itself such as A to A, etc.)
+rg = database.StripLoops(rg)
+"""
+
+"""
+# Create forward_sub_graph_concept
 
 sub_list_concept = ["face", "novelty", "episodic", "retrieval", "semantic", "word", "emotion", "sequence", "category", "memory", "encoding", "load", "social", "cognition",
 	"motor", "learning", "representation", "executive", "control", "object", "recognition", "inhibition", "target", "top-down", "attention", "selection", "vision",
@@ -208,17 +265,19 @@ visual_style = {} #sets method of modifying graph characteristics
 visual_style ["vertex_label"]= sfgc.vs["term"] # labels the vertices
 visual_style ["vertex_label_dist"] = 2 # specifies the distance between the labels and the vertices
 visual_style ["vertex_size"] = 10 # specifies size of vertex_size
+visual_style["bbox"] = (700,700) #sets dimensions for the box layout
+visual_style["margin"] = 60
 plot (sfgc, **visual_style) # creates the changes
- 
-#plot (sfgc, outdir+os.sep+ "forward_sub_graph_concept", **visual_style) # creates the changes
 set_trace()
+#plot (sfgc, outdir+os.sep+ "forward_sub_graph_concept", **visual_style) # creates the changes
+
 SaveGraph(srgc, outdir+os.sep+"sub_reverse_graph_concept") #saves graph in outdir
-	
-	
+
+"""
 	
 	
 """
-to create sub graph for rg:
+#to create sub graph for rg:
 
 sub_list_concept = ["face", "novelty", "episodic", "retrieval", "semantic", "word", "emotion", "sequence", "category", "memory", "encoding", "load", "social", "cognition",
 	"motor", "learning", "representation", "executive", "control", "object", "recognition", "inhibition", "target", "top-down", "attention", "selection", "vision",
@@ -232,48 +291,12 @@ srgc.delete_edges(index_to_delete) #deletes selected edges
 VisualizeGraph(srgc, "test_graph_rg") #creates graphs with layout_kamada_kawai
 visual_style = {} #sets method of modifying graph characteristics
 visual_style ["vertex_label"]= srgc.vs["term"] # labels the vertices
-visual_style ["vertex_label_dist"] = 1.8 # specifies the distance between the labels and the vertices
+visual_style ["vertex_label_dist"] = 1.2 # specifies the distance between the labels and the vertices
 visual_style ["vertex_size"] = 10 # specifies size of vertex_size
+visual_style["bbox"] = (750, 750)
+visual_style["margin"] = 60
 plot (srgc, **visual_style) # creates the changes
-SaveGraph(srgc, outdir+os.sep+"sub_reverse_graph_concept") #saves graph in outdir
+set_trace()
+#SaveGraph(srgc, outdir+os.sep+"sub_reverse_graph_concept") #saves graph in outdir
 
-"""
-"""
-to create sub graph for fg concept
-
-sub_list_concept = ["face", "novelty", "episodic", "retrieval", "semantic", "word", "emotion", "sequence", "category", "memory", "encoding", "load", "social", "cognition",
-	"motor", "learning", "representation", "executive", "control", "object", "recognition", "inhibition", "target", "top-down", "attention", "selection", "vision",
-	"auditory", "detection", "motion", "spatial", "information", "perception", "shape", "speech", "sensory", "prediction", "error", "risk", "reward", "future", "anticipation",
-	"working memory", "verbal", "action", "observation", "movement", "priming", "repetition", "suppression"]
-
-sfgc = database.IsolateSubGraph(fg, sub_list_concept, "term") # creates sub graph from main graph rg
-index_to_delete = [edge.index for edge in sfgc.es.select(weight_lt=0.8)] # creates threshold by selecting edges lower than a certain weight
-sfgc.delete_edges(index_to_delete) #deletes selected edges
-
-
-visual_style = {} #sets method of modifying graph characteristics
-visual_style ["vertex_label"]= sfgc.vs["term"] # labels the vertices
-visual_style ["vertex_label_dist"] = 2 # specifies the distance between the labels and the vertices
-visual_style ["vertex_size"] = 10 # specifies size of vertex_size
-plot (sfgc, **visual_style) # creates the changes
- 
-SaveGraph(srgc, outdir+os.sep+"sub_reverse_graph_concept") #saves graph in outdir
-
-"""	
-
-
-"""
-Old commands:
-file_names = GetFileNamesInDirectory(maindir)
-CreateEdgelist(maindir, file_names, outdir, 'forward_inference')
-graph = ImportNcol(outdir+os.sep+'reverse_inference.txt')
-fg.vs["names"]=file_names # Set the names of the vertices.
-rg.vs["names"]=file_names # Set the names of the vertices.
-SaveGraph(fg, f_pickle_path) # Pickle the forward graph.
-SaveGraph(rg, r_pickle_path) # Pickle the reverse graph.
-os.system("start "+ "test_graph") #opens igraph in browser for windows
-fg.to_undirected(mode="collapse", combine_edges= "max") #makes graph without direction, thus A to B is same as B to A
-rg.to_undirected(mode="collapse", combine_edges= "max")
-fg = database.StripLoops(fg) # Removes loops (values with itself such as A to A, etc.)
-rg = database.StripLoops(rg)
 """

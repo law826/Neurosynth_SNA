@@ -181,13 +181,21 @@ def NodesInOrderOfCentrality(graph, type):
 	"""
 	Takes: (1) graph (2) type of centrality desired.
 	Returns: A list of tuples of node name and centrality statistic.
+
+	
 	"""
 	if type == 'degree':
-
-		pre_list_of_tuples = [(node["name"], node.degree()) for node in graph.vs]
+		pre_list_of_tuples = [(node["term"], node.strength(loops=False, weights="weight")) for node in graph.vs]
 
 	elif type == 'betweenness':
-		pre_list_of_tuples = [(node["name"], node.betweenness()) for node in graph.vs]
+		pre_list_of_tuples = [(node["term"], node.betweenness(directed=False, weights="weight")) for node in graph.vs]
+
+	elif type == 'eigenvector':
+		ec = graph.eigenvector_centrality(weights="weight")	
+		pre_list_of_tuples = [(nodeterm, ec[i]) for i, nodeterm in enumerate(graph.vs["term"])]
+
+	elif type == 'closeness':
+		pre_list_of_tuples = [(node["term"], node.closeness(weights="weight")) for node in graph.vs]
 
 	list_of_tuples = sorted(pre_list_of_tuples, key=lambda pair: pair[1])
 	list_of_tuples.reverse()

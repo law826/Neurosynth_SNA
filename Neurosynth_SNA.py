@@ -1,16 +1,16 @@
 #!/usr/bin/env python
 # encoding: utf-8
 """
+[] encode number of studies
+[] research page rank
 [] get cairo working
 [] make all data go into the data folder
 [] make functionality for starting from the beginning again.
 [] test whether current import protocol works
 [] add functionality for windows
-[] encode number of studies
-[] make the margins of the picture fit
 [] perform centrality measures on the data
 [] incorporate new data
-[] look at correlations between similar items
+[] look at correlations between similar items and figure out merging
 """
 from __future__ import division
 import database

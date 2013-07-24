@@ -34,8 +34,10 @@ class TestDatabase(unittest.TestCase):
 			self.assertEqual(len(graph.es), number_of_edges)
 			self.assertEqual(all(graph.is_loop()), False)
 
-	def test_subgraphs(self):
-		pass
+	def test_Beam_sub_reverse_graph_concept(self):
+		srg_path = '/Volumes/huettel/KBE.01/Analysis/Neurosynth/SNAFiles/sub_reverse_graph_concept.p'
+		srg = cPickle.load(open(srg_path, 'r'))
+		import pdb; pdb.set_trace()
 
 	def tearDown(self):
 		"""

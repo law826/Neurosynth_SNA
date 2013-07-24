@@ -1,10 +1,11 @@
 #!/usr/bin/env python
 # encoding: utf-8
 """
+[] make all data go into the data folder
 [] encode number of studies
+[] dump long lists into a class object
 [] research page rank
 [] get cairo working
-[] make all data go into the data folder
 [] make functionality for starting from the beginning again.
 [] test whether current import protocol works
 [] add functionality for windows
@@ -202,28 +203,26 @@ if __name__ == '__main__':
 
 
 
-sub_list_concept = ["face", "novelty", "episodic", "retrieval", "semantic", "word", "emotion", "sequence", "category", "memory", "encoding", "load", "social", "cognition",
-	"motor", "learning", "representation", "executive", "control", "object", "recognition", "inhibition", "target", "top-down", "attention", "selection", "vision",
-	"auditory", "detection", "motion", "spatial", "information", "perception", "shape", "speech", "sensory", "prediction", "error", "risk", "reward", "future", "anticipation",
-	"working memory", "verbal", "action", "observation", "movement", "priming", "repetition", "suppression"]
+	sub_list_concept = ["face", "novelty", "episodic", "retrieval", "semantic", "word", "emotion", "sequence", "category", "memory", "encoding", "load", "social", "cognition",
+		"motor", "learning", "representation", "executive", "control", "object", "recognition", "inhibition", "target", "top-down", "attention", "selection", "vision",
+		"auditory", "detection", "motion", "spatial", "information", "perception", "shape", "speech", "sensory", "prediction", "error", "risk", "reward", "future", "anticipation",
+		"working memory", "verbal", "action", "observation", "movement", "priming", "repetition", "suppression"]
 
-sfgc = database.IsolateSubGraph(fg, sub_list_concept, "term") # creates sub graph from main graph rg
-index_to_delete = [edge.index for edge in sfgc.es.select(weight_lt=0.8)] # creates threshold by selecting edges lower than a certain weight
-sfgc.delete_edges(index_to_delete) #deletes selected edges
+	sfgc = database.IsolateSubGraph(fg, sub_list_concept, "term") # creates sub graph from main graph rg
+	index_to_delete = [edge.index for edge in sfgc.es.select(weight_lt=0.8)] # creates threshold by selecting edges lower than a certain weight
+	sfgc.delete_edges(index_to_delete) #deletes selected edges
 
-#VisualizeGraph(sfgc, "sub_forward_graph_concept.svg")#creates graphs with layout_kamada_kawai
-visual_style = {} #sets method of modifying graph characteristics
-visual_style ["vertex_label"]= sfgc.vs["term"] # labels the vertices
-visual_style ["vertex_label_dist"] = 2 # specifies the distance between the labels and the vertices
-visual_style ["vertex_size"] = 10 # specifies size of vertex_size
-plot (sfgc, **visual_style) # creates the changes
- 
-#plot (sfgc, outdir+os.sep+ "forward_sub_graph_concept", **visual_style) # creates the changes
-set_trace()
-SaveGraph(srgc, outdir+os.sep+"sub_reverse_graph_concept") #saves graph in outdir
-	
-	
-	
+	#VisualizeGraph(sfgc, "sub_forward_graph_concept.svg")#creates graphs with layout_kamada_kawai
+	visual_style = {} #sets method of modifying graph characteristics
+	visual_style ["vertex_label"]= sfgc.vs["term"] # labels the vertices
+	visual_style ["vertex_label_dist"] = 2 # specifies the distance between the labels and the vertices
+	visual_style ["vertex_size"] = 10 # specifies size of vertex_size
+	plot (sfgc, **visual_style) # creates the changes
+	 
+	#plot (sfgc, outdir+os.sep+ "forward_sub_graph_concept", **visual_style) # creates the changes
+	set_trace()
+	SaveGraph(srgc, outdir+os.sep+"sub_reverse_graph_concept") #saves graph in outdir
+
 	
 """
 to create sub graph for rg:

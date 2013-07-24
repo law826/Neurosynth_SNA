@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # encoding: utf-8
 """
+[] get cairo working
+[] make all data go into the data folder
 [] make functionality for starting from the beginning again.
 [] test whether current import protocol works
 [] add functionality for windows
@@ -8,6 +10,7 @@
 [] make the margins of the picture fit
 [] perform centrality measures on the data
 [] incorporate new data
+[] look at correlations between similar items
 """
 from __future__ import division
 import database

@@ -1,13 +1,17 @@
 #!/usr/bin/env python
 # encoding: utf-8
 """
+[] make all data go into the data folder
+[] encode number of studies
+[] dump long lists into a class object
+[] research page rank
+[] get cairo working
 [] make functionality for starting from the beginning again.
 [] test whether current import protocol works
 [] add functionality for windows
-[] encode number of studies
-[] make the margins of the picture fit
 [] perform centrality measures on the data
 [] incorporate new data
+[] look at correlations between similar items and figure out merging
 """
 from __future__ import division
 import database
@@ -135,6 +139,11 @@ def LoadGraph(pickle_path):
 	graph = Graph.Read_Pickle(pickle_path)
 	return graph
 
+def LoadPickle(pickle_path):
+	# In contrast to the above function, this just loads a pickle that does not have to be a graph.
+	loaded_pickle = cPickle.load(open(pickle_path, 'rb'))
+	return loaded_pickle
+
 def StripName(graph, rawterms): 
 	"""
 	input: nameless graph, nonstripped list of terms(separated by underscores)
@@ -187,6 +196,18 @@ def ModifySubGraph(graph):
 		#plot (sfgc, outdir+os.sep+ "forward_sub_graph_concept", **visual_style) # creates the changes
 		#SaveGraph(srgc, outdir+os.sep+"sub_reverse_graph_concept") #saves graph in outdir
 
+def SaveCentrality(graph, type, file_name):
+'''
+saves a list of tuples to csv file
+graph- graph used to calculate centrality
+type- what type of centrality being calculated (degree, eigenvector, betweenness, distance)
+file_name- the name of the file you would like created
+'''
+	import csv
+	list= database.NodesInOrderOfCentrality(graph, type)
+	with open(outdir+os.sep+file_name+'.csv', 'wb') as result:
+		writer = csv.writer(result, dialect= 'excel')
+		writer.writerows(list)
 
 
 ####### Statistics
@@ -212,7 +233,11 @@ if __name__ == '__main__':
 	maindir, outdir, importdir, forward_inference_edgelist, reverse_inference_edgelist, f_pickle_path, r_pickle_path = SetPaths()
 	fg = LoadGraph(f_pickle_path)
 	rg = LoadGraph(r_pickle_path)
-	
+
+
+
+
+
 	
 	# sub_list_brain = ["intraparietal sulcus", "PSTS", "cingulate cortex", "temporal sulcus", "precuneus", "STS", "PCC", "frontal", "premotor cortex", "STG", "PCC", "mPFC", 
 	# "DmPFC", "DlPFC", "OFC", "parietal cortex", "temporal cortex", "PFC", "thalamus", "ACC", "Pre-SMA", "PPC", "MTL", "amygdala", "anterior insula", "insula", "hippocampus", 
@@ -229,7 +254,19 @@ set_trace()
 
 
 
+# import csv, itertools
+# test_list= database.NodesInOrderOfCentrality(fg, "degree")
+# with open('newfile.csv', 'wb') as result:
+# 	writer = csv.writer(result, dialect= 'excel')
+# 	writer.writerows(test_list)
+# test_file = open('file.txt', 'w')
+# for t in test_list:
+# 		line=''.join(str(x) for x in t)
+# 		test_file.write(line+'\n')
 
+# result = open("testfile.csv", 'wb')
+# writer = csv.writer(result, dialect = 'excel')
+# writer.writerows(test_list)
 
 
 """
@@ -246,20 +283,39 @@ fg.to_undirected(mode="collapse", combine_edges= "max") #makes graph without dir
 rg.to_undirected(mode="collapse", combine_edges= "max")
 fg = database.StripLoops(fg) # Removes loops (values with itself such as A to A, etc.)
 rg = database.StripLoops(rg)
+
+save functions for list of tuples to csv:
+# import csv
+# test_list= database.NodesInOrderOfCentrality(fg, "degree")
+# result = open("testfile.csv", 'wb')
+# writer = csv.writer(result, dialect = 'excel')
+# writer.writerows(test_list)
 """
 
 """
 # Create forward_sub_graph_concept
 
-sub_list_concept = ["face", "novelty", "episodic", "retrieval", "semantic", "word", "emotion", "sequence", "category", "memory", "encoding", "load", "social", "cognition",
-	"motor", "learning", "representation", "executive", "control", "object", "recognition", "inhibition", "target", "top-down", "attention", "selection", "vision",
-	"auditory", "detection", "motion", "spatial", "information", "perception", "shape", "speech", "sensory", "prediction", "error", "risk", "reward", "future", "anticipation",
-	"working memory", "verbal", "action", "observation", "movement", "priming", "repetition", "suppression"]
+	sub_list_concept = ["face", "novelty", "episodic", "retrieval", "semantic", "word", "emotion", "sequence", "category", "memory", "encoding", "load", "social", "cognition",
+		"motor", "learning", "representation", "executive", "control", "object", "recognition", "inhibition", "target", "top-down", "attention", "selection", "vision",
+		"auditory", "detection", "motion", "spatial", "information", "perception", "shape", "speech", "sensory", "prediction", "error", "risk", "reward", "future", "anticipation",
+		"working memory", "verbal", "action", "observation", "movement", "priming", "repetition", "suppression"]
 
-sfgc = database.IsolateSubGraph(fg, sub_list_concept, "term") # creates sub graph from main graph rg
-index_to_delete = [edge.index for edge in sfgc.es.select(weight_lt=0.8)] # creates threshold by selecting edges lower than a certain weight
-sfgc.delete_edges(index_to_delete) #deletes selected edges
+	sfgc = database.IsolateSubGraph(fg, sub_list_concept, "term") # creates sub graph from main graph rg
+	index_to_delete = [edge.index for edge in sfgc.es.select(weight_lt=0.8)] # creates threshold by selecting edges lower than a certain weight
+	sfgc.delete_edges(index_to_delete) #deletes selected edges
 
+	#VisualizeGraph(sfgc, "sub_forward_graph_concept.svg")#creates graphs with layout_kamada_kawai
+	visual_style = {} #sets method of modifying graph characteristics
+	visual_style ["vertex_label"]= sfgc.vs["term"] # labels the vertices
+	visual_style ["vertex_label_dist"] = 2 # specifies the distance between the labels and the vertices
+	visual_style ["vertex_size"] = 10 # specifies size of vertex_size
+	plot (sfgc, **visual_style) # creates the changes
+	 
+	#plot (sfgc, outdir+os.sep+ "forward_sub_graph_concept", **visual_style) # creates the changes
+	set_trace()
+	SaveGraph(srgc, outdir+os.sep+"sub_reverse_graph_concept") #saves graph in outdir
+
+<<<<<<< HEAD
 #VisualizeGraph(sfgc, "sub_forward_graph_concept.svg")#creates graphs with layout_kamada_kawai
 visual_style = {} #sets method of modifying graph characteristics
 visual_style ["vertex_label"]= sfgc.vs["term"] # labels the vertices
@@ -274,7 +330,7 @@ set_trace()
 SaveGraph(srgc, outdir+os.sep+"sub_reverse_graph_concept") #saves graph in outdir
 
 """
-	
+
 	
 """
 #to create sub graph for rg:

@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 # encoding: utf-8
 """
-radiology_diagnoser.py
+NSNA_GUI
 
+[] query item properties
 [] handle import file and merging
 [] handle old matches from the merge window
 [] connect higher order term to everything
@@ -100,7 +101,7 @@ class MainWindow:
 		self.ConceptsLabel.grid(row=0,column=0)
 
 		# Listbox.
-		self.clistbox = Listbox(self.lbframe, width=40)
+		self.clistbox = Listbox(self.lbframe, width=40, selectmode=EXTENDED)
 		self.clistbox.grid(row=1,column=0)
 		try: 
 			for concept in self.DB.g.vs:
@@ -121,7 +122,7 @@ class MainWindow:
 		self.NeighborsLabel = Label(self.lbframe)
 		self.NeighborsLabel["text"] = "Neighbors"
 		self.NeighborsLabel.grid(row=0,column=1)
-		self.nlistbox = Listbox(self.lbframe, width=40)
+		self.nlistbox = Listbox(self.lbframe, width=40, selectmode=EXTENDED)
 		self.nlistbox.grid(row=1,column=1)
 		self.lbframe.grid(row=startingrow, column=0)
 		self.NeighborsLabel2 = Label(self.lbframe)

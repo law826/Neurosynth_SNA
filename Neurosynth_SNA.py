@@ -1,9 +1,8 @@
 #!/usr/bin/env python
 # encoding: utf-8
 """
-[] make all data go into the data folder
+[] clean up code from listclass migration
 [] encode number of studies
-[] dump long lists into a class object
 [] research page rank
 [] get cairo working
 [] make functionality for starting from the beginning again.
@@ -13,10 +12,16 @@
 [] incorporate new data
 [] look at correlations between similar items and figure out merging
 """
+
+
+
 from __future__ import division
 import database
 from pdb import *
 import os, sys, getpass, random as rand, cPickle, numpy as np
+
+from ListClass import ListClass
+
 try:
 	from igraph import *
 except ImportError:
@@ -162,10 +167,8 @@ def ModifySubGraph(graph):
 	modifies graph into subgraph given a list (sub_list_concept) and creates network image
 	"""
 	if graph == fg:
-		sub_list_concept= ["face", "novelty", "episodic", "retrieval", "semantic", "word", "emotion", "sequence", "category", "memory", "encoding", "load", "social", "cognition",
-		"motor", "learning", "representation", "executive", "control", "object", "recognition", "inhibition", "target", "top-down", "attention", "selection", "vision",
-		"auditory", "detection", "motion", "spatial", "information", "perception", "shape", "speech", "sensory", "prediction", "error", "risk", "reward", "future", "anticipation",
-		"working memory", "verbal", "action", "observation", "movement", "priming", "repetition", "suppression"]
+		listclass = ListClass()
+		sub_list_concept = listclass.sub_Beam_concepts
 		sfgc = database.IsolateSubGraph(graph, sub_list_concept, "term") # creates sub graph from main graph rg
 		index_to_delete = [edge.index for edge in sfgc.es.select(weight_lt=0.8)] # creates threshold by selecting edges lower than a certain weight
 		sfgc.delete_edges(index_to_delete) #deletes selected edges

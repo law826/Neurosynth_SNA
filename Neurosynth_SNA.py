@@ -182,10 +182,8 @@ def ModifySubGraph(graph):
 		#plot (sfgc, outdir+os.sep+ "forward_sub_graph_concept", **visual_style) # creates the changes
 		#SaveGraph(srgc, outdir+os.sep+"sub_reverse_graph_concept") #saves graph in outdir
 	elif graph == rg:
-		sub_list_concept= ["face", "novelty", "episodic", "retrieval", "semantic", "word", "emotion", "sequence", "category", "memory", "encoding", "load", "social", "cognition",
-		"motor", "learning", "representation", "executive", "control", "object", "recognition", "inhibition", "target", "top-down", "attention", "selection", "vision",
-		"auditory", "detection", "motion", "spatial", "information", "perception", "shape", "speech", "sensory", "prediction", "error", "risk", "reward", "future", "anticipation",
-		"working memory", "verbal", "action", "observation", "movement", "priming", "repetition", "suppression"]
+		listclass = ListClass()
+		sub_list_concept = listclass.sub_Beam_concepts
 		srgc = database.IsolateSubGraph(graph, sub_list_concept, "term") # creates sub graph from main graph rg
 		index_to_delete = [edge.index for edge in srgc.es.select(weight_lt=0.2)] # creates threshold by selecting edges lower than a certain weight
 		srgc.delete_edges(index_to_delete) #deletes selected edges
@@ -200,18 +198,18 @@ def ModifySubGraph(graph):
 		#SaveGraph(srgc, outdir+os.sep+"sub_reverse_graph_concept") #saves graph in outdir
 
 def SaveCentrality(graph, type, file_name):
-'''
-saves a list of tuples to csv file
-graph- graph used to calculate centrality
-type- what type of centrality being calculated (degree, eigenvector, betweenness, distance)
-file_name- the name of the file you would like created
-'''
 	import csv
 	list= database.NodesInOrderOfCentrality(graph, type)
 	with open(outdir+os.sep+file_name+'.csv', 'wb') as result:
 		writer = csv.writer(result, dialect= 'excel')
 		writer.writerows(list)
 
+"""
+saves a list of tuples to csv file
+graph- graph used to calculate centrality
+type- what type of centrality being calculated (degree, eigenvector, betweenness, distance)
+file_name- the name of the file you would like created
+"""
 
 ####### Statistics
 def VisualizeGraph(graph, outpath):
@@ -242,14 +240,7 @@ if __name__ == '__main__':
 
 
 	
-	# sub_list_brain = ["intraparietal sulcus", "PSTS", "cingulate cortex", "temporal sulcus", "precuneus", "STS", "PCC", "frontal", "premotor cortex", "STG", "PCC", "mPFC", 
-	# "DmPFC", "DlPFC", "OFC", "parietal cortex", "temporal cortex", "PFC", "thalamus", "ACC", "Pre-SMA", "PPC", "MTL", "amygdala", "anterior insula", "insula", "hippocampus", 
-	# "fusiform", "FFA", "putamen", "caudate", "S2", "S1", "M1", "cingulate", "SMA", "cerebellum", "somatosensory cortex", "basal ganglia", "LIFG", "RIFG", "IFG", "IPL", "MTA",
-	# "V5", "extrastriate", "visual cortex", "V1", "V2", "V3"]
-	# sub_list_brain_concept["decision making", "frontoparietal cortex", "occipital cortex", "fusiform", "FEF", "emotion", "sensitivity", "fear", "ACC", "attention", "cognition", "amygdala", "FFA", 
-	# "prediction", "OFC", "observation", "control", "brainstem", "executive", "PFC", "parietal cortex", "novelty", "retrieval", "memory", "hippocampus", "selection", "vision", "information", "active", 
-	# "top-down", "cerebellum", "extrastriate", "learning", "encoding", "MTL", "parahippocampus", "visual cortex", "object", "representation", "V1", "somatosensory", "S2", 
-	# "sensorimotor", "language", "frontal", "semantic", "LIFG", "M1", "motor", "premortor cortex", "V5", "motion", "MTA"]
+	
 	
 
 set_trace()
@@ -257,19 +248,6 @@ set_trace()
 
 
 
-# import csv, itertools
-# test_list= database.NodesInOrderOfCentrality(fg, "degree")
-# with open('newfile.csv', 'wb') as result:
-# 	writer = csv.writer(result, dialect= 'excel')
-# 	writer.writerows(test_list)
-# test_file = open('file.txt', 'w')
-# for t in test_list:
-# 		line=''.join(str(x) for x in t)
-# 		test_file.write(line+'\n')
-
-# result = open("testfile.csv", 'wb')
-# writer = csv.writer(result, dialect = 'excel')
-# writer.writerows(test_list)
 
 
 """
@@ -293,69 +271,7 @@ save functions for list of tuples to csv:
 # result = open("testfile.csv", 'wb')
 # writer = csv.writer(result, dialect = 'excel')
 # writer.writerows(test_list)
-"""
-
-"""
-# Create forward_sub_graph_concept
-
-	sub_list_concept = ["face", "novelty", "episodic", "retrieval", "semantic", "word", "emotion", "sequence", "category", "memory", "encoding", "load", "social", "cognition",
-		"motor", "learning", "representation", "executive", "control", "object", "recognition", "inhibition", "target", "top-down", "attention", "selection", "vision",
-		"auditory", "detection", "motion", "spatial", "information", "perception", "shape", "speech", "sensory", "prediction", "error", "risk", "reward", "future", "anticipation",
-		"working memory", "verbal", "action", "observation", "movement", "priming", "repetition", "suppression"]
-
-	sfgc = database.IsolateSubGraph(fg, sub_list_concept, "term") # creates sub graph from main graph rg
-	index_to_delete = [edge.index for edge in sfgc.es.select(weight_lt=0.8)] # creates threshold by selecting edges lower than a certain weight
-	sfgc.delete_edges(index_to_delete) #deletes selected edges
-
-	#VisualizeGraph(sfgc, "sub_forward_graph_concept.svg")#creates graphs with layout_kamada_kawai
-	visual_style = {} #sets method of modifying graph characteristics
-	visual_style ["vertex_label"]= sfgc.vs["term"] # labels the vertices
-	visual_style ["vertex_label_dist"] = 2 # specifies the distance between the labels and the vertices
-	visual_style ["vertex_size"] = 10 # specifies size of vertex_size
-	plot (sfgc, **visual_style) # creates the changes
-	 
-	#plot (sfgc, outdir+os.sep+ "forward_sub_graph_concept", **visual_style) # creates the changes
-	set_trace()
-	SaveGraph(srgc, outdir+os.sep+"sub_reverse_graph_concept") #saves graph in outdir
-
-<<<<<<< HEAD
-#VisualizeGraph(sfgc, "sub_forward_graph_concept.svg")#creates graphs with layout_kamada_kawai
-visual_style = {} #sets method of modifying graph characteristics
-visual_style ["vertex_label"]= sfgc.vs["term"] # labels the vertices
-visual_style ["vertex_label_dist"] = 2 # specifies the distance between the labels and the vertices
-visual_style ["vertex_size"] = 10 # specifies size of vertex_size
-visual_style["bbox"] = (700,700) #sets dimensions for the box layout
-visual_style["margin"] = 60
-plot (sfgc, **visual_style) # creates the changes
-set_trace()
-#plot (sfgc, outdir+os.sep+ "forward_sub_graph_concept", **visual_style) # creates the changes
-
-SaveGraph(srgc, outdir+os.sep+"sub_reverse_graph_concept") #saves graph in outdir
 
 """
 
-	
-"""
-#to create sub graph for rg:
 
-sub_list_concept = ["face", "novelty", "episodic", "retrieval", "semantic", "word", "emotion", "sequence", "category", "memory", "encoding", "load", "social", "cognition",
-	"motor", "learning", "representation", "executive", "control", "object", "recognition", "inhibition", "target", "top-down", "attention", "selection", "vision",
-	"auditory", "detection", "motion", "spatial", "information", "perception", "shape", "speech", "sensory", "prediction", "error", "risk", "reward", "future", "anticipation",
-	"working memory", "verbal", "action", "observation", "movement", "priming", "repetition", "suppression"]
-
-srgc = database.IsolateSubGraph(rg, sub_list_concept, "term") # creates sub graph from main graph rg
-index_to_delete = [edge.index for edge in srgc.es.select(weight_lt=0.20)] # creates threshold by selecting edges lower than a certain weight
-srgc.delete_edges(index_to_delete) #deletes selected edges
-
-VisualizeGraph(srgc, "test_graph_rg") #creates graphs with layout_kamada_kawai
-visual_style = {} #sets method of modifying graph characteristics
-visual_style ["vertex_label"]= srgc.vs["term"] # labels the vertices
-visual_style ["vertex_label_dist"] = 1.2 # specifies the distance between the labels and the vertices
-visual_style ["vertex_size"] = 10 # specifies size of vertex_size
-visual_style["bbox"] = (750, 750)
-visual_style["margin"] = 60
-plot (srgc, **visual_style) # creates the changes
-set_trace()
-#SaveGraph(srgc, outdir+os.sep+"sub_reverse_graph_concept") #saves graph in outdir
-
-"""

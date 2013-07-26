@@ -1,6 +1,11 @@
 #!/usr/bin/env python
 # encoding: utf-8
 """
+[] be careful with naming variable "list"
+[] path notation has been changed.
+[] get merge list from everyone
+[] run the new list of merged terms
+[] rerun all the code up to this point
 [] clean up code from listclass migration
 [] encode number of studies
 [] research page rank
@@ -12,8 +17,6 @@
 [] incorporate new data
 [] look at correlations between similar items and figure out merging
 """
-
-
 
 from __future__ import division
 import database
@@ -27,34 +30,34 @@ try:
 except ImportError:
 	raise ImportError, "The igraph module is required to run this program."
 
-def SetPaths():
-	"""
-	Set relevant paths for windows, linux, and mac systems.
-	"""
-	if sys.platform == "darwin":
-		maindir = os.sep.join(['/Volumes', 'huettel', 'KBE.01',  'Analysis', 'Neurosynth', 'ForwardResults'])
-		outdir  = os.sep.join(['/Volumes', 'huettel', 'KBE.01', 'Analysis', 'Neurosynth', 'SNAFiles'])
-		importdir  = os.sep.join(['/Volumes', 'huettel', 'KBE.01', 'Analysis', 'Neurosynth', 'Data'])
-		r_pickle_path = os.sep.join(['/Volumes', 'huettel', 'KBE.01', 'Analysis', 'Neurosynth', 'SNAFiles', 'reverse_graph.p'])
-		f_pickle_path = os.sep.join(['/Volumes', 'huettel', 'KBE.01', 'Analysis', 'Neurosynth', 'SNAFiles', 'forward_graph.p'])
-	elif sys.platform == "win32":
-		maindir = os.sep.join(['M:', 'KBE.01', 'Analysis', 'Neurosynth', 'ForwardResults'])
-		outdir  = os.sep.join(['M:', 'KBE.01', 'Analysis', 'Neurosynth', 'SNAFiles'])
-		importdir  = os.sep.join(['M:', 'KBE.01', 'Analysis', 'Neurosynth', 'Data'])
-		r_pickle_path = os.sep.join(['M:', 'KBE.01', 'Analysis', 'Neurosynth', 'SNAFiles', 'reverse_graph.p'])
-		f_pickle_path = os.sep.join(['M:', 'KBE.01', 'Analysis', 'Neurosynth', 'SNAFiles', 'forward_graph.p'])
-	elif sys.platform == "linux2":
-		username=getpass.getuser()
-		maindir = os.sep.join(['/home', username, 'experiments', 'KBE.01', 'Analysis', 'Neurosynth', 'ForwardResults'])
-		outdir  = os.sep.join(['/home', username, 'experiments', 'KBE.01', 'Analysis', 'Neurosynth', 'SNAFiles'])
-		importdir  = os.sep.join(['/home', username, 'experiments', 'KBE.01', 'Analysis', 'Neurosynth', 'Data'])
-		r_pickle_path = os.sep.join(['/home', username, 'experiments', 'KBE.01', 'Analysis', 'Neurosynth', 'SNAFiles', 'reverse_graph.p'])
-		f_pickle_path = os.sep.join(['/home', username, 'experiments', 'KBE.01', 'Analysis', 'Neurosynth', 'SNAFiles', 'forward_graph.p'])
 
-	forward_inference_edgelist = os.sep.join([outdir, "forward_inference.txt"])
-	reverse_inference_edgelist = os.sep.join([outdir, "reverse_inference.txt"])
+class Paths():
+	def __init__(self):
+		"""
+		Set relevant paths for windows, linux, and mac systems.
+		"""
+		if sys.platform == "darwin":
+			self.maindir = os.sep.join(['/Volumes', 'huettel', 'KBE.01',  'Analysis', 'Neurosynth', 'ForwardResults'])
+			self.outdir  = os.sep.join(['/Volumes', 'huettel', 'KBE.01', 'Analysis', 'Neurosynth', 'SNAFiles'])
+			self.importdir  = os.sep.join(['/Volumes', 'huettel', 'KBE.01', 'Analysis', 'Neurosynth', 'Data'])
+			self.r_pickle_path = os.sep.join(['/Volumes', 'huettel', 'KBE.01', 'Analysis', 'Neurosynth', 'SNAFiles', 'reverse_graph.p'])
+			self.f_pickle_path = os.sep.join(['/Volumes', 'huettel', 'KBE.01', 'Analysis', 'Neurosynth', 'SNAFiles', 'forward_graph.p'])
+		elif sys.platform == "win32":
+			self.maindir = os.sep.join(['M:', 'KBE.01', 'Analysis', 'Neurosynth', 'ForwardResults'])
+			self.outdir  = os.sep.join(['M:', 'KBE.01', 'Analysis', 'Neurosynth', 'SNAFiles'])
+			self.importdir  = os.sep.join(['M:', 'KBE.01', 'Analysis', 'Neurosynth', 'Data'])
+			self.r_pickle_path = os.sep.join(['M:', 'KBE.01', 'Analysis', 'Neurosynth', 'SNAFiles', 'reverse_graph.p'])
+			self.f_pickle_path = os.sep.join(['M:', 'KBE.01', 'Analysis', 'Neurosynth', 'SNAFiles', 'forward_graph.p'])
+		elif sys.platform == "linux2":
+			self.username=getpass.getuser()
+			self.maindir = os.sep.join(['/home', username, 'experiments', 'KBE.01', 'Analysis', 'Neurosynth', 'ForwardResults'])
+			self.outdir  = os.sep.join(['/home', username, 'experiments', 'KBE.01', 'Analysis', 'Neurosynth', 'SNAFiles'])
+			self.importdir  = os.sep.join(['/home', username, 'experiments', 'KBE.01', 'Analysis', 'Neurosynth', 'Data'])
+			self.r_pickle_path = os.sep.join(['/home', username, 'experiments', 'KBE.01', 'Analysis', 'Neurosynth', 'SNAFiles', 'reverse_graph.p'])
+			self.f_pickle_path = os.sep.join(['/home', username, 'experiments', 'KBE.01', 'Analysis', 'Neurosynth', 'SNAFiles', 'forward_graph.p'])
 
-	return maindir, outdir, importdir, forward_inference_edgelist, reverse_inference_edgelist, f_pickle_path, r_pickle_path
+		self.forward_inference_edgelist = os.sep.join([self.outdir, "forward_inference.txt"])
+		self.reverse_inference_edgelist = os.sep.join([self.outdir, "reverse_inference.txt"])
 
 def GetFileNamesInDirectory(directory):
 	"""
@@ -231,22 +234,11 @@ To do list:
 
 """	
 if __name__ == '__main__':
-	maindir, outdir, importdir, forward_inference_edgelist, reverse_inference_edgelist, f_pickle_path, r_pickle_path = SetPaths()
-	fg = LoadGraph(f_pickle_path)
-	rg = LoadGraph(r_pickle_path)
-
-
-
-
-
-	
-	
-	
+	paths = Paths()
+	fg = LoadGraph(paths.f_pickle_path)
+	rg = LoadGraph(paths.r_pickle_path)
 
 set_trace()
-
-
-
 
 
 

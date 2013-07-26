@@ -1,7 +1,15 @@
 #!/usr/bin/env python
 # encoding: utf-8
 """
+<<<<<<< HEAD
 [] import the neurosynth code for counting study numbers
+=======
+[] be careful with naming variable "list"
+[] path notation has been changed.
+[] get merge list from everyone
+[] run the new list of merged terms
+[] rerun all the code up to this point
+>>>>>>> 1dc12bcf1334ded96599c614006b8dd1a4130b3d
 [] clean up code from listclass migration
 [] encode number of studies
 [] research page rank
@@ -13,8 +21,6 @@
 [] incorporate new data
 [] look at correlations between similar items and figure out merging
 """
-
-
 
 from __future__ import division
 import database
@@ -28,34 +34,34 @@ try:
 except ImportError:
 	raise ImportError, "The igraph module is required to run this program."
 
-def SetPaths():
-	"""
-	Set relevant paths for windows, linux, and mac systems.
-	"""
-	if sys.platform == "darwin":
-		maindir = os.sep.join(['/Volumes', 'huettel', 'KBE.01',  'Analysis', 'Neurosynth', 'ForwardResults'])
-		outdir  = os.sep.join(['/Volumes', 'huettel', 'KBE.01', 'Analysis', 'Neurosynth', 'SNAFiles'])
-		importdir  = os.sep.join(['/Volumes', 'huettel', 'KBE.01', 'Analysis', 'Neurosynth', 'Data'])
-		r_pickle_path = os.sep.join(['/Volumes', 'huettel', 'KBE.01', 'Analysis', 'Neurosynth', 'SNAFiles', 'reverse_graph.p'])
-		f_pickle_path = os.sep.join(['/Volumes', 'huettel', 'KBE.01', 'Analysis', 'Neurosynth', 'SNAFiles', 'forward_graph.p'])
-	elif sys.platform == "win32":
-		maindir = os.sep.join(['M:', 'KBE.01', 'Analysis', 'Neurosynth', 'ForwardResults'])
-		outdir  = os.sep.join(['M:', 'KBE.01', 'Analysis', 'Neurosynth', 'SNAFiles'])
-		importdir  = os.sep.join(['M:', 'KBE.01', 'Analysis', 'Neurosynth', 'Data'])
-		r_pickle_path = os.sep.join(['M:', 'KBE.01', 'Analysis', 'Neurosynth', 'SNAFiles', 'reverse_graph.p'])
-		f_pickle_path = os.sep.join(['M:', 'KBE.01', 'Analysis', 'Neurosynth', 'SNAFiles', 'forward_graph.p'])
-	elif sys.platform == "linux2":
-		username=getpass.getuser()
-		maindir = os.sep.join(['/home', username, 'experiments', 'KBE.01', 'Analysis', 'Neurosynth', 'ForwardResults'])
-		outdir  = os.sep.join(['/home', username, 'experiments', 'KBE.01', 'Analysis', 'Neurosynth', 'SNAFiles'])
-		importdir  = os.sep.join(['/home', username, 'experiments', 'KBE.01', 'Analysis', 'Neurosynth', 'Data'])
-		r_pickle_path = os.sep.join(['/home', username, 'experiments', 'KBE.01', 'Analysis', 'Neurosynth', 'SNAFiles', 'reverse_graph.p'])
-		f_pickle_path = os.sep.join(['/home', username, 'experiments', 'KBE.01', 'Analysis', 'Neurosynth', 'SNAFiles', 'forward_graph.p'])
 
-	forward_inference_edgelist = os.sep.join([outdir, "forward_inference.txt"])
-	reverse_inference_edgelist = os.sep.join([outdir, "reverse_inference.txt"])
+class Paths():
+	def __init__(self):
+		"""
+		Set relevant paths for windows, linux, and mac systems.
+		"""
+		if sys.platform == "darwin":
+			self.maindir = os.sep.join(['/Volumes', 'huettel', 'KBE.01',  'Analysis', 'Neurosynth', 'ForwardResults'])
+			self.outdir  = os.sep.join(['/Volumes', 'huettel', 'KBE.01', 'Analysis', 'Neurosynth', 'SNAFiles'])
+			self.importdir  = os.sep.join(['/Volumes', 'huettel', 'KBE.01', 'Analysis', 'Neurosynth', 'Data'])
+			self.r_pickle_path = os.sep.join(['/Volumes', 'huettel', 'KBE.01', 'Analysis', 'Neurosynth', 'SNAFiles', 'reverse_graph.p'])
+			self.f_pickle_path = os.sep.join(['/Volumes', 'huettel', 'KBE.01', 'Analysis', 'Neurosynth', 'SNAFiles', 'forward_graph.p'])
+		elif sys.platform == "win32":
+			self.maindir = os.sep.join(['M:', 'KBE.01', 'Analysis', 'Neurosynth', 'ForwardResults'])
+			self.outdir  = os.sep.join(['M:', 'KBE.01', 'Analysis', 'Neurosynth', 'SNAFiles'])
+			self.importdir  = os.sep.join(['M:', 'KBE.01', 'Analysis', 'Neurosynth', 'Data'])
+			self.r_pickle_path = os.sep.join(['M:', 'KBE.01', 'Analysis', 'Neurosynth', 'SNAFiles', 'reverse_graph.p'])
+			self.f_pickle_path = os.sep.join(['M:', 'KBE.01', 'Analysis', 'Neurosynth', 'SNAFiles', 'forward_graph.p'])
+		elif sys.platform == "linux2":
+			self.username=getpass.getuser()
+			self.maindir = os.sep.join(['/home', username, 'experiments', 'KBE.01', 'Analysis', 'Neurosynth', 'ForwardResults'])
+			self.outdir  = os.sep.join(['/home', username, 'experiments', 'KBE.01', 'Analysis', 'Neurosynth', 'SNAFiles'])
+			self.importdir  = os.sep.join(['/home', username, 'experiments', 'KBE.01', 'Analysis', 'Neurosynth', 'Data'])
+			self.r_pickle_path = os.sep.join(['/home', username, 'experiments', 'KBE.01', 'Analysis', 'Neurosynth', 'SNAFiles', 'reverse_graph.p'])
+			self.f_pickle_path = os.sep.join(['/home', username, 'experiments', 'KBE.01', 'Analysis', 'Neurosynth', 'SNAFiles', 'forward_graph.p'])
 
-	return maindir, outdir, importdir, forward_inference_edgelist, reverse_inference_edgelist, f_pickle_path, r_pickle_path
+		self.forward_inference_edgelist = os.sep.join([self.outdir, "forward_inference.txt"])
+		self.reverse_inference_edgelist = os.sep.join([self.outdir, "reverse_inference.txt"])
 
 def GetFileNamesInDirectory(directory):
 	"""
@@ -183,10 +189,8 @@ def ModifySubGraph(graph):
 		#plot (sfgc, outdir+os.sep+ "forward_sub_graph_concept", **visual_style) # creates the changes
 		#SaveGraph(srgc, outdir+os.sep+"sub_reverse_graph_concept") #saves graph in outdir
 	elif graph == rg:
-		sub_list_concept= ["face", "novelty", "episodic", "retrieval", "semantic", "word", "emotion", "sequence", "category", "memory", "encoding", "load", "social", "cognition",
-		"motor", "learning", "representation", "executive", "control", "object", "recognition", "inhibition", "target", "top-down", "attention", "selection", "vision",
-		"auditory", "detection", "motion", "spatial", "information", "perception", "shape", "speech", "sensory", "prediction", "error", "risk", "reward", "future", "anticipation",
-		"working memory", "verbal", "action", "observation", "movement", "priming", "repetition", "suppression"]
+		listclass = ListClass()
+		sub_list_concept = listclass.sub_Beam_concepts
 		srgc = database.IsolateSubGraph(graph, sub_list_concept, "term") # creates sub graph from main graph rg
 		index_to_delete = [edge.index for edge in srgc.es.select(weight_lt=0.2)] # creates threshold by selecting edges lower than a certain weight
 		srgc.delete_edges(index_to_delete) #deletes selected edges
@@ -201,18 +205,22 @@ def ModifySubGraph(graph):
 		#SaveGraph(srgc, outdir+os.sep+"sub_reverse_graph_concept") #saves graph in outdir
 
 def SaveCentrality(graph, type, file_name):
+<<<<<<< HEAD
 	"""
 	saves a list of tuples to csv file
 	graph- graph used to calculate centrality
 	type- what type of centrality being calculated (degree, eigenvector, betweenness, distance)
 	file_name- the name of the file you would like created
 	"""
+=======
+>>>>>>> 1dc12bcf1334ded96599c614006b8dd1a4130b3d
 	import csv
 	list= database.NodesInOrderOfCentrality(graph, type)
 	with open(outdir+os.sep+file_name+'.csv', 'wb') as result:
 		writer = csv.writer(result, dialect= 'excel')
 		writer.writerows(list)
 
+<<<<<<< HEAD
 class NeurosynthMerge:
 	def __init__(self, thesaurus, npath, outdir):
 		"""
@@ -262,6 +270,14 @@ class NeurosynthMerge:
 
 
 
+=======
+"""
+saves a list of tuples to csv file
+graph- graph used to calculate centrality
+type- what type of centrality being calculated (degree, eigenvector, betweenness, distance)
+file_name- the name of the file you would like created
+"""
+>>>>>>> 1dc12bcf1334ded96599c614006b8dd1a4130b3d
 
 ####### Statistics
 def VisualizeGraph(graph, outpath):
@@ -283,6 +299,7 @@ To do list:
 
 """	
 if __name__ == '__main__':
+<<<<<<< HEAD
 	maindir, outdir, importdir, forward_inference_edgelist, reverse_inference_edgelist, f_pickle_path, r_pickle_path = SetPaths()
 	fg = LoadGraph(f_pickle_path)
 	rg = LoadGraph(r_pickle_path)
@@ -301,22 +318,11 @@ if __name__ == '__main__':
 	# "top-down", "cerebellum", "extrastriate", "learning", "encoding", "MTL", "parahippocampus", "visual cortex", "object", "representation", "V1", "somatosensory", "S2", 
 	# "sensorimotor", "language", "frontal", "semantic", "LIFG", "M1", "motor", "premortor cortex", "V5", "motion", "MTA"]
 	
-
-
-
-# import csv, itertools
-# test_list= database.NodesInOrderOfCentrality(fg, "degree")
-# with open('newfile.csv', 'wb') as result:
-# 	writer = csv.writer(result, dialect= 'excel')
-# 	writer.writerows(test_list)
-# test_file = open('file.txt', 'w')
-# for t in test_list:
-# 		line=''.join(str(x) for x in t)
-# 		test_file.write(line+'\n')
-
-# result = open("testfile.csv", 'wb')
-# writer = csv.writer(result, dialect = 'excel')
-# writer.writerows(test_list)
+=======
+	paths = Paths()
+	fg = LoadGraph(paths.f_pickle_path)
+	rg = LoadGraph(paths.r_pickle_path)
+>>>>>>> 1dc12bcf1334ded96599c614006b8dd1a4130b3d
 
 
 """
@@ -340,69 +346,7 @@ save functions for list of tuples to csv:
 # result = open("testfile.csv", 'wb')
 # writer = csv.writer(result, dialect = 'excel')
 # writer.writerows(test_list)
-"""
-
-"""
-# Create forward_sub_graph_concept
-
-	sub_list_concept = ["face", "novelty", "episodic", "retrieval", "semantic", "word", "emotion", "sequence", "category", "memory", "encoding", "load", "social", "cognition",
-		"motor", "learning", "representation", "executive", "control", "object", "recognition", "inhibition", "target", "top-down", "attention", "selection", "vision",
-		"auditory", "detection", "motion", "spatial", "information", "perception", "shape", "speech", "sensory", "prediction", "error", "risk", "reward", "future", "anticipation",
-		"working memory", "verbal", "action", "observation", "movement", "priming", "repetition", "suppression"]
-
-	sfgc = database.IsolateSubGraph(fg, sub_list_concept, "term") # creates sub graph from main graph rg
-	index_to_delete = [edge.index for edge in sfgc.es.select(weight_lt=0.8)] # creates threshold by selecting edges lower than a certain weight
-	sfgc.delete_edges(index_to_delete) #deletes selected edges
-
-	#VisualizeGraph(sfgc, "sub_forward_graph_concept.svg")#creates graphs with layout_kamada_kawai
-	visual_style = {} #sets method of modifying graph characteristics
-	visual_style ["vertex_label"]= sfgc.vs["term"] # labels the vertices
-	visual_style ["vertex_label_dist"] = 2 # specifies the distance between the labels and the vertices
-	visual_style ["vertex_size"] = 10 # specifies size of vertex_size
-	plot (sfgc, **visual_style) # creates the changes
-	 
-	#plot (sfgc, outdir+os.sep+ "forward_sub_graph_concept", **visual_style) # creates the changes
-	set_trace()
-	SaveGraph(srgc, outdir+os.sep+"sub_reverse_graph_concept") #saves graph in outdir
-
-<<<<<<< HEAD
-#VisualizeGraph(sfgc, "sub_forward_graph_concept.svg")#creates graphs with layout_kamada_kawai
-visual_style = {} #sets method of modifying graph characteristics
-visual_style ["vertex_label"]= sfgc.vs["term"] # labels the vertices
-visual_style ["vertex_label_dist"] = 2 # specifies the distance between the labels and the vertices
-visual_style ["vertex_size"] = 10 # specifies size of vertex_size
-visual_style["bbox"] = (700,700) #sets dimensions for the box layout
-visual_style["margin"] = 60
-plot (sfgc, **visual_style) # creates the changes
-set_trace()
-#plot (sfgc, outdir+os.sep+ "forward_sub_graph_concept", **visual_style) # creates the changes
-
-SaveGraph(srgc, outdir+os.sep+"sub_reverse_graph_concept") #saves graph in outdir
 
 """
 
-	
-"""
-#to create sub graph for rg:
 
-sub_list_concept = ["face", "novelty", "episodic", "retrieval", "semantic", "word", "emotion", "sequence", "category", "memory", "encoding", "load", "social", "cognition",
-	"motor", "learning", "representation", "executive", "control", "object", "recognition", "inhibition", "target", "top-down", "attention", "selection", "vision",
-	"auditory", "detection", "motion", "spatial", "information", "perception", "shape", "speech", "sensory", "prediction", "error", "risk", "reward", "future", "anticipation",
-	"working memory", "verbal", "action", "observation", "movement", "priming", "repetition", "suppression"]
-
-srgc = database.IsolateSubGraph(rg, sub_list_concept, "term") # creates sub graph from main graph rg
-index_to_delete = [edge.index for edge in srgc.es.select(weight_lt=0.20)] # creates threshold by selecting edges lower than a certain weight
-srgc.delete_edges(index_to_delete) #deletes selected edges
-
-VisualizeGraph(srgc, "test_graph_rg") #creates graphs with layout_kamada_kawai
-visual_style = {} #sets method of modifying graph characteristics
-visual_style ["vertex_label"]= srgc.vs["term"] # labels the vertices
-visual_style ["vertex_label_dist"] = 1.2 # specifies the distance between the labels and the vertices
-visual_style ["vertex_size"] = 10 # specifies size of vertex_size
-visual_style["bbox"] = (750, 750)
-visual_style["margin"] = 60
-plot (srgc, **visual_style) # creates the changes
-set_trace()
-#SaveGraph(srgc, outdir+os.sep+"sub_reverse_graph_concept") #saves graph in outdir
-
-"""

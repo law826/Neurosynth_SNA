@@ -1,15 +1,13 @@
 #!/usr/bin/env python
 # encoding: utf-8
 """
-<<<<<<< HEAD
 [] import the neurosynth code for counting study numbers
-=======
+
 [] be careful with naming variable "list"
 [] path notation has been changed.
 [] get merge list from everyone
 [] run the new list of merged terms
 [] rerun all the code up to this point
->>>>>>> 1dc12bcf1334ded96599c614006b8dd1a4130b3d
 [] clean up code from listclass migration
 [] encode number of studies
 [] research page rank
@@ -205,22 +203,18 @@ def ModifySubGraph(graph):
 		#SaveGraph(srgc, outdir+os.sep+"sub_reverse_graph_concept") #saves graph in outdir
 
 def SaveCentrality(graph, type, file_name):
-<<<<<<< HEAD
 	"""
 	saves a list of tuples to csv file
 	graph- graph used to calculate centrality
 	type- what type of centrality being calculated (degree, eigenvector, betweenness, distance)
 	file_name- the name of the file you would like created
 	"""
-=======
->>>>>>> 1dc12bcf1334ded96599c614006b8dd1a4130b3d
 	import csv
 	list= database.NodesInOrderOfCentrality(graph, type)
 	with open(outdir+os.sep+file_name+'.csv', 'wb') as result:
 		writer = csv.writer(result, dialect= 'excel')
 		writer.writerows(list)
 
-<<<<<<< HEAD
 class NeurosynthMerge:
 	def __init__(self, thesaurus, npath, outdir):
 		"""
@@ -270,14 +264,13 @@ class NeurosynthMerge:
 
 
 
-=======
+
 """
 saves a list of tuples to csv file
 graph- graph used to calculate centrality
 type- what type of centrality being calculated (degree, eigenvector, betweenness, distance)
 file_name- the name of the file you would like created
 """
->>>>>>> 1dc12bcf1334ded96599c614006b8dd1a4130b3d
 
 ####### Statistics
 def VisualizeGraph(graph, outpath):
@@ -285,10 +278,6 @@ def VisualizeGraph(graph, outpath):
 
 def CalculateBetweennessCentrality(graph):
 	pass
-
-
-
-
 
 
 """
@@ -299,30 +288,10 @@ To do list:
 
 """	
 if __name__ == '__main__':
-<<<<<<< HEAD
 	maindir, outdir, importdir, forward_inference_edgelist, reverse_inference_edgelist, f_pickle_path, r_pickle_path = SetPaths()
-	fg = LoadGraph(f_pickle_path)
-	rg = LoadGraph(r_pickle_path)
-	set_trace()
-
-
-
-
-	
-	# sub_list_brain = ["intraparietal sulcus", "PSTS", "cingulate cortex", "temporal sulcus", "precuneus", "STS", "PCC", "frontal", "premotor cortex", "STG", "PCC", "mPFC", 
-	# "DmPFC", "DlPFC", "OFC", "parietal cortex", "temporal cortex", "PFC", "thalamus", "ACC", "Pre-SMA", "PPC", "MTL", "amygdala", "anterior insula", "insula", "hippocampus", 
-	# "fusiform", "FFA", "putamen", "caudate", "S2", "S1", "M1", "cingulate", "SMA", "cerebellum", "somatosensory cortex", "basal ganglia", "LIFG", "RIFG", "IFG", "IPL", "MTA",
-	# "V5", "extrastriate", "visual cortex", "V1", "V2", "V3"]
-	# sub_list_brain_concept["decision making", "frontoparietal cortex", "occipital cortex", "fusiform", "FEF", "emotion", "sensitivity", "fear", "ACC", "attention", "cognition", "amygdala", "FFA", 
-	# "prediction", "OFC", "observation", "control", "brainstem", "executive", "PFC", "parietal cortex", "novelty", "retrieval", "memory", "hippocampus", "selection", "vision", "information", "active", 
-	# "top-down", "cerebellum", "extrastriate", "learning", "encoding", "MTL", "parahippocampus", "visual cortex", "object", "representation", "V1", "somatosensory", "S2", 
-	# "sensorimotor", "language", "frontal", "semantic", "LIFG", "M1", "motor", "premortor cortex", "V5", "motion", "MTA"]
-	
-=======
 	paths = Paths()
 	fg = LoadGraph(paths.f_pickle_path)
 	rg = LoadGraph(paths.r_pickle_path)
->>>>>>> 1dc12bcf1334ded96599c614006b8dd1a4130b3d
 
 
 """

@@ -37,7 +37,24 @@ class TestDatabase(unittest.TestCase):
 	def test_Beam_sub_reverse_graph_concept(self):
 		srg_path = '/Volumes/huettel/KBE.01/Analysis/Neurosynth/SNAFiles/sub_reverse_graph_concept.p'
 		srg = cPickle.load(open(srg_path, 'r'))
-		import pdb; pdb.set_trace()
+		pass
+
+	def test_NeurosynthMerge(self):
+		"""
+		Make sure the number of images matches that predicted by the thesaurus merging.
+		"""
+		from Neurosynth_SNA import NeurosynthMerge
+		thesaurus = [('emotion', 'emotions', 'emotion*'), ('intention', 'intentions', 'intention*')]
+		npath = '/Users/law826/Dropbox/neurosynthgit'
+		outpath = None
+		nsm = NeurosynthMerge(thesaurus, npath, outpath)
+		self.assertEqual(len(nsm.feature_list), 523)
+		self.assertEqual('emotion' in nsm.feature_list, False)
+		self.assertEqual('emotions' in nsm.feature_list, False)
+		self.assertEqual('intention' in nsm.feature_list, False)
+		self.assertEqual('intentions' in nsm.feature_list, False)
+		self.assertEqual('intention*' in nsm.feature_list, True)
+		self.assertEqual('emotion*' in nsm.feature_list, True)
 
 	def tearDown(self):
 		"""

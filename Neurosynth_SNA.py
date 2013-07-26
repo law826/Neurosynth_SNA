@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # encoding: utf-8
 """
+[] import the neurosynth code for counting study numbers
 [] clean up code from listclass migration
 [] encode number of studies
 [] research page rank
@@ -200,17 +201,66 @@ def ModifySubGraph(graph):
 		#SaveGraph(srgc, outdir+os.sep+"sub_reverse_graph_concept") #saves graph in outdir
 
 def SaveCentrality(graph, type, file_name):
-'''
-saves a list of tuples to csv file
-graph- graph used to calculate centrality
-type- what type of centrality being calculated (degree, eigenvector, betweenness, distance)
-file_name- the name of the file you would like created
-'''
+	"""
+	saves a list of tuples to csv file
+	graph- graph used to calculate centrality
+	type- what type of centrality being calculated (degree, eigenvector, betweenness, distance)
+	file_name- the name of the file you would like created
+	"""
 	import csv
 	list= database.NodesInOrderOfCentrality(graph, type)
 	with open(outdir+os.sep+file_name+'.csv', 'wb') as result:
 		writer = csv.writer(result, dialect= 'excel')
 		writer.writerows(list)
+
+class NeurosynthMerge:
+	def __init__(self, thesaurus, npath, outdir):
+		"""
+		Take a thesaurus, create a new list of images
+
+		Args:
+			input: thesaurus is a list of tuples (term1, term2, common_term_root)
+			npath: directory where the neurosynth git repository is
+			outdir: save images in outdir
+
+		"""
+		self.thesaurus = thesaurus
+		self.npath = npath
+		self.outdir = outdir
+
+		self.import_neurosynth_git()
+
+		# Take out first two terms from the feature_list and insert the third term from the tuple.
+		for triplet in thesaurus:
+			self.feature_list = [feature for feature in self.feature_list if feature not in triplet]
+			self.feature_list.append(triplet[2])
+
+		for feature in self.feature_list:
+			self.ids = dataset.get_ids_by_features(feature, threshold=0.001)
+			ma = meta.MetaAnalysis(self.dataset, self.ids)
+			ma.save_results(out)
+
+
+	def import_neurosynth_git(self):
+		# Add the appropriate neurosynth git folder to the python path. 
+		sys.path.append(self.npath)
+		from neurosynth.base.dataset import Dataset
+		from neurosynth.analysis import meta
+
+		# Try to load a pickle if it exists. Create a new dataset instance if it doesn't.
+		try:
+			self.dataset = cPickle.load(open(self.npath+os.sep+'data/dataset.pkl', 'rb'))
+		except IOError:
+		# Create Dataset instance from a database file.
+			self.dataset = Dataset(self.npath+os.sep+'data/database.txt')
+
+		# Load features from file
+		self.dataset.add_features(self.npath+os.sep+'data/features.txt')
+
+		# Get names of features. 
+		self.feature_list = self.dataset.get_feature_names()
+
+
 
 
 ####### Statistics
@@ -236,7 +286,7 @@ if __name__ == '__main__':
 	maindir, outdir, importdir, forward_inference_edgelist, reverse_inference_edgelist, f_pickle_path, r_pickle_path = SetPaths()
 	fg = LoadGraph(f_pickle_path)
 	rg = LoadGraph(r_pickle_path)
-
+	set_trace()
 
 
 
@@ -251,9 +301,6 @@ if __name__ == '__main__':
 	# "top-down", "cerebellum", "extrastriate", "learning", "encoding", "MTL", "parahippocampus", "visual cortex", "object", "representation", "V1", "somatosensory", "S2", 
 	# "sensorimotor", "language", "frontal", "semantic", "LIFG", "M1", "motor", "premortor cortex", "V5", "motion", "MTA"]
 	
-
-set_trace()
-
 
 
 

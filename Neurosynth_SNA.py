@@ -24,6 +24,7 @@ from __future__ import division
 import database
 from pdb import *
 import os, sys, getpass, random as rand, cPickle, numpy as np
+import re
 
 from ListClass import ListClass
 
@@ -86,7 +87,7 @@ def GetFileNamesInDirectory(directory):
 
 def CreateCrossCorrelationTable(maindir, file_names, outdir, outname):
 	"""
-	
+
 	Takes a directory and list of numpy files and horizontally concatenates them all and saves the output in outdir. Labels are also added.
 	"""
 	for number, file_name in enumerate(file_names):
@@ -224,32 +225,45 @@ def SaveCentrality(graph, type, file_name):
 		writer.writerows(list)
 
 class NeurosynthMerge:
-	def __init__(self, thesaurus, npath, outdir):
+	def __init__(self, thesaurus, npath, outdir, test_mode=False):
 		"""
-		Take a thesaurus, create a new list of images
+		Generates a new set of images using the neurosynth repository combining across terms in a thesarus.
 
 		Args:
-			input: thesaurus is a list of tuples (term1, term2, common_term_root)
-			npath: directory where the neurosynth git repository is locally on your machine (https://github.com/neurosynth/neurosynth)
-			outdir: save images in outdir
+			- thesaurus: A list of tuples where:[('term that will be the name of the file', 'the other term', 'expression combining the terms')]
+					- the last expression is alphanumeric and separated by: (& for and) (&~ for andnot) (| for or) 
+			- npath: directory where the neurosynth git repository is locally on your machine (https://github.com/neurosynth/neurosynth)
+			- outdir: directory where the generated images will be saved
+			- test_mode: when true, the code will run an abridged version for test purposes (as implemented by test.Neurosynth.py)
 		"""
 		self.thesaurus = thesaurus
 		self.npath = npath
 		self.outdir = outdir
 
 		self.import_neurosynth_git()
+		from neurosynth.analysis import meta
 
 		# Take out first two terms from the feature_list and insert the third term from the tuple.
 		for triplet in thesaurus:
 			self.feature_list = [feature for feature in self.feature_list if feature not in triplet]
 			self.feature_list.append(triplet[2])
 
+		# This makes an abridged version of feature_list for testing purposes. 
+		if test_mode:
+			self.feature_list = zip(*thesaurus)[2]
+
 		# Run metanalyses on the new features set and save the results to the outdir.
 		for feature in self.feature_list:
-			self.ids = dataset.get_ids_by_features(feature, threshold=0.001)
+			self.ids = self.dataset.get_ids_by_expression(feature, threshold=0.001)
 			ma = meta.MetaAnalysis(self.dataset, self.ids)
-			ma.save_results(outdir)
 
+			# Parse the feature name (to avoid conflicts with illegal characters as file names)
+			regex = re.compile('\W+')
+			split = re.split(regex, feature)
+			feat_fname = split[0] 
+
+			# Save the results (many different types of files)
+			ma.save_results(self.outdir+os.sep+feat_fname)
 
 	def import_neurosynth_git(self):
 		# Add the appropriate neurosynth git folder to the python path. 
@@ -269,6 +283,9 @@ class NeurosynthMerge:
 
 		# Get names of features. 
 		self.feature_list = self.dataset.get_feature_names()
+
+		#ids = self.dataset.get_ids_by_expression('recollection', threshold=0.001); print len(ids)
+		#import pdb; pdb.set_trace()
 
 """
 saves a list of tuples to csv file

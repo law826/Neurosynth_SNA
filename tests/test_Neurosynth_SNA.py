@@ -47,15 +47,15 @@ class TestDatabase(unittest.TestCase):
 		from Neurosynth_SNA import NeurosynthMerge
 
 		# Inputs
-		thesaurus = [('emotion', 'emotions', 'emotion*'), ('intention', 'intentions', 'intention*')]
-		npath = '/Users/law826/Dropbox/neurosynthgit'
+		thesaurus = [('emotion', 'emotions', 'emotion|emotions'), ('intention', 'intentions', 'intention|intentions')]
+		npath = '/Users/ln30/Dropbox/neurosynthgit/' # The only difference between two computers is the username. 
 		outdir = '/Volumes/huettel/KBE.01/Analysis/Neurosynth/test'
 
 		# Instantiation
-		nsm = NeurosynthMerge(thesaurus, npath, outdir)
+		nsm = NeurosynthMerge(thesaurus, npath, outdir, test_mode=True)
 
 		# Tests
-		self.assertEqual(len(nsm.feature_list), 523)
+		self.assertEqual(len(nsm.feature_list), 2)
 		self.assertEqual('emotion' in nsm.feature_list, False)
 		self.assertEqual('emotions' in nsm.feature_list, False)
 		self.assertEqual('intention' in nsm.feature_list, False)

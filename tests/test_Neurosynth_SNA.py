@@ -14,7 +14,8 @@ import Neurosynth_SNA as ns
 class TestDatabase(unittest.TestCase):
 
 	def setUp(self):
-		self.maindir, self.outdir, self.importdir, self.forward_inference_edgelist, self.reverse_inference_edgelist, self.f_pickle_path, self.r_pickle_path = ns.SetPaths()
+		# self.paths includes a variety of relevant paths from Neurosynth_SNA.py.
+		self.paths = ns.Paths()
 
 	def test_GetFileNamesInDirectory(self):
 		files = ns.GetFileNamesInDirectory('/Volumes/huettel/KBE.01/Analysis/Neurosynth/ReverseResults/')
@@ -26,8 +27,8 @@ class TestDatabase(unittest.TestCase):
 		number_of_vertices = 525
 		number_of_edges = (275625-525)/2
 
-		fg = ns.LoadGraph(self.f_pickle_path)
-		rg = ns.LoadGraph(self.r_pickle_path)
+		fg = ns.LoadGraph(self.paths.f_pickle_path)
+		rg = ns.LoadGraph(self.paths.r_pickle_path)
 
 		for graph in [fg, rg]:
 			self.assertEqual(len(graph.vs), number_of_vertices)
@@ -44,10 +45,16 @@ class TestDatabase(unittest.TestCase):
 		Make sure the number of images matches that predicted by the thesaurus merging.
 		"""
 		from Neurosynth_SNA import NeurosynthMerge
+
+		# Inputs
 		thesaurus = [('emotion', 'emotions', 'emotion*'), ('intention', 'intentions', 'intention*')]
 		npath = '/Users/law826/Dropbox/neurosynthgit'
-		outpath = None
-		nsm = NeurosynthMerge(thesaurus, npath, outpath)
+		outdir = '/Volumes/huettel/KBE.01/Analysis/Neurosynth/test'
+
+		# Instantiation
+		nsm = NeurosynthMerge(thesaurus, npath, outdir)
+
+		# Tests
 		self.assertEqual(len(nsm.feature_list), 523)
 		self.assertEqual('emotion' in nsm.feature_list, False)
 		self.assertEqual('emotions' in nsm.feature_list, False)

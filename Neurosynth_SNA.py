@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # encoding: utf-8
 """
+[] paths has changed to a class
 [] import the neurosynth code for counting study numbers
-
 [] be careful with naming variable "list"
 [] path notation has been changed.
 [] get merge list from everyone
@@ -36,7 +36,14 @@ except ImportError:
 class Paths():
 	def __init__(self):
 		"""
-		Set relevant paths for windows, linux, and mac systems.
+		Sets the relevant paths for windows, linux, and mac systems.
+
+		Paths (common usages):
+			- maindir: Directory where the numpy save files are (single columns which serve as inputs creating the edgelist found in importdir).
+			- outdir: Main output directory where graph pickles and graphical statistics (e.g. centrality) are stored.
+			- importdir: Where the edgelists are after processing of the single column files from outdir.
+			- *pickle_path: Paths of the forward and reverse pickles.
+			- *edgelist: Exist paths of the edgelists from importdir.
 		"""
 		if sys.platform == "darwin":
 			self.maindir = os.sep.join(['/Volumes', 'huettel', 'KBE.01',  'Analysis', 'Neurosynth', 'ForwardResults'])
@@ -79,6 +86,7 @@ def GetFileNamesInDirectory(directory):
 
 def CreateCrossCorrelationTable(maindir, file_names, outdir, outname):
 	"""
+	
 	Takes a directory and list of numpy files and horizontally concatenates them all and saves the output in outdir. Labels are also added.
 	"""
 	for number, file_name in enumerate(file_names):
@@ -222,9 +230,8 @@ class NeurosynthMerge:
 
 		Args:
 			input: thesaurus is a list of tuples (term1, term2, common_term_root)
-			npath: directory where the neurosynth git repository is
+			npath: directory where the neurosynth git repository is locally on your machine (https://github.com/neurosynth/neurosynth)
 			outdir: save images in outdir
-
 		"""
 		self.thesaurus = thesaurus
 		self.npath = npath
@@ -237,10 +244,11 @@ class NeurosynthMerge:
 			self.feature_list = [feature for feature in self.feature_list if feature not in triplet]
 			self.feature_list.append(triplet[2])
 
+		# Run metanalyses on the new features set and save the results to the outdir.
 		for feature in self.feature_list:
 			self.ids = dataset.get_ids_by_features(feature, threshold=0.001)
 			ma = meta.MetaAnalysis(self.dataset, self.ids)
-			ma.save_results(out)
+			ma.save_results(outdir)
 
 
 	def import_neurosynth_git(self):
@@ -261,9 +269,6 @@ class NeurosynthMerge:
 
 		# Get names of features. 
 		self.feature_list = self.dataset.get_feature_names()
-
-
-
 
 """
 saves a list of tuples to csv file
@@ -289,7 +294,7 @@ To do list:
 """	
 if __name__ == '__main__':
 	maindir, outdir, importdir, forward_inference_edgelist, reverse_inference_edgelist, f_pickle_path, r_pickle_path = SetPaths()
-	paths = Paths()
+	paths = Paths() # Paths is a now a class object, and the way to access to paths is demonstrated below. 
 	fg = LoadGraph(paths.f_pickle_path)
 	rg = LoadGraph(paths.r_pickle_path)
 

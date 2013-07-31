@@ -246,11 +246,11 @@ class NeurosynthMerge:
 		# Take out first two terms from the feature_list and insert the third term from the tuple.
 		for triplet in thesaurus:
 			self.feature_list = [feature for feature in self.feature_list if feature not in triplet]
-			self.feature_list.append(triplet[2])
+			self.feature_list.append(triplet[-1])
 
 		# This makes an abridged version of feature_list for testing purposes. 
 		if test_mode:
-			self.feature_list = zip(*thesaurus)[2]
+			self.feature_list = [triplet[-1] for triplet in thesaurus]
 
 		# Run metanalyses on the new features set and save the results to the outdir.
 		for feature in self.feature_list:

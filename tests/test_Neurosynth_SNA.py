@@ -47,7 +47,9 @@ class TestDatabase(unittest.TestCase):
 		from Neurosynth_SNA import NeurosynthMerge
 
 		# Inputs
-		thesaurus = [('emotion', 'emotions', 'emotion|emotions'), ('intention', 'intentions', 'intention|intentions')]
+		thesaurus = [('emotion', 'emotions', 'emotion|emotions'), 
+					('intention', 'intentions', 'intention|intentions'),
+					('association', 'associations', 'associative', 'association|associations|associative')]
 		npath = '/Users/ln30/Dropbox/neurosynthgit/' # The only difference between two computers is the username. 
 		outdir = '/Volumes/huettel/KBE.01/Analysis/Neurosynth/test'
 
@@ -55,13 +57,17 @@ class TestDatabase(unittest.TestCase):
 		nsm = NeurosynthMerge(thesaurus, npath, outdir, test_mode=True)
 
 		# Tests
-		self.assertEqual(len(nsm.feature_list), 2)
+		self.assertEqual(len(nsm.feature_list), 3)
 		self.assertEqual('emotion' in nsm.feature_list, False)
 		self.assertEqual('emotions' in nsm.feature_list, False)
 		self.assertEqual('intention' in nsm.feature_list, False)
 		self.assertEqual('intentions' in nsm.feature_list, False)
-		self.assertEqual('intention*' in nsm.feature_list, True)
-		self.assertEqual('emotion*' in nsm.feature_list, True)
+		self.assertEqual('association' in nsm.feature_list, False)
+		self.assertEqual('associations' in nsm.feature_list, False)
+		self.assertEqual('associative' in nsm.feature_list, False)
+		self.assertEqual('intention|intentions' in nsm.feature_list, True)
+		self.assertEqual('emotion|emotions' in nsm.feature_list, True)
+		self.assertEqual('association|associations|associative' in nsm.feature_list, True)
 
 	def tearDown(self):
 		"""

@@ -293,10 +293,10 @@ To do list:
 
 """	
 if __name__ == '__main__':
-	maindir, outdir, importdir, forward_inference_edgelist, reverse_inference_edgelist, f_pickle_path, r_pickle_path = SetPaths()
 	paths = Paths() # Paths is a now a class object, and the way to access to paths is demonstrated below. 
 	fg = LoadGraph(paths.f_pickle_path)
 	rg = LoadGraph(paths.r_pickle_path)
+	
 
 
 """
@@ -313,6 +313,14 @@ fg.to_undirected(mode="collapse", combine_edges= "max") #makes graph without dir
 rg.to_undirected(mode="collapse", combine_edges= "max")
 fg = database.StripLoops(fg) # Removes loops (values with itself such as A to A, etc.)
 rg = database.StripLoops(rg)
+
+saves as list of terms
+list= fg.vs["term"]
+	with open('list_term.csv', 'wb') as result:
+		writer = csv.writer(result, dialect= 'excel')
+		for x in list:
+			writer.writerow([x])
+	
 
 save functions for list of tuples to csv:
 # import csv

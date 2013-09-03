@@ -314,15 +314,16 @@ if __name__ == '__main__':
 	fg = LoadGraph(paths.f_pickle_path)
 	rg = LoadGraph(paths.r_pickle_path)
 	srgc = LoadPickle('M:/KBE.01/Analysis/Neurosynth/graph_analysis_data/pickles/sub_reverse_graph_concept.p')
-	lng= srgc
-	lng.es["weight"] = [x+5 for x in lng.es["weight"]]
-	set_trace()
-	blng= database.NodesInOrderOfCentrality(lng, 'betweenness')
+	ng= srgc
+	ng.es["weight"] = [x+1 for x in ng.es["weight"]]
+	bng= database.NodesInOrderOfCentrality(ng, 'betweenness')
 	import csv
-	five_list= blng
-	with open('betweenness_five.csv', 'wb') as result:
+	one_list= bng
+	with open('betweenness_one.csv', 'wb') as result:
 		writer = csv.writer(result, dialect= 'excel')
-		writer.writerow(five_list)
+		for x in one_list:
+			writer.writerow([x])
+	set_trace()
 	
 	
 

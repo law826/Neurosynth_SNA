@@ -313,6 +313,7 @@ if __name__ == '__main__':
 	paths = Paths() # Paths is a now a class object, and the way to access to paths is demonstrated below. 
 	fg = LoadGraph(paths.f_pickle_path)
 	rg = LoadGraph(paths.r_pickle_path)
+	pdb.set_trace()
 	
 
 

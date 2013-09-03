@@ -1,0 +1,573 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"Insert",
+				"InsertNewTopic"
+			],
+			[
+				"questio",
+				"question_box"
+			],
+			[
+				"answer",
+				"answer_phrase"
+			],
+			[
+				"Inse",
+				"InsertBlank"
+			],
+			[
+				"ins",
+				"insert_text"
+			],
+			[
+				"ques",
+				"question_box"
+			],
+			[
+				"sent",
+				"sentence_box"
+			],
+			[
+				"sen",
+				"sentence_box"
+			],
+			[
+				"selec",
+				"selection_text"
+			],
+			[
+				"cursor_",
+				"cursor_end"
+			],
+			[
+				"strat",
+				"stratlist"
+			],
+			[
+				"Neigh",
+				"NeighborsListBox"
+			],
+			[
+				"ConceptsL",
+				"ConceptsLabel"
+			],
+			[
+				"NeighborsLi",
+				"UpdateNeighborsListBox"
+			],
+			[
+				"ConceptsList",
+				"ConceptsListBox"
+			],
+			[
+				"Update",
+				"UpdateSearchedTerm"
+			],
+			[
+				"All",
+				"AllListBox"
+			],
+			[
+				"Re",
+				"ResetButtonPressed"
+			],
+			[
+				"gui_",
+				"gui_element_dict"
+			],
+			[
+				"node",
+				"node_to_eval"
+			],
+			[
+				"Save",
+				"SaveTupleFile"
+			],
+			[
+				"MergeInput",
+				"MergeInputBoxSubmitted"
+			],
+			[
+				"Diagnosis",
+				"DiagnosisCharacterizationSubmitted"
+			],
+			[
+				"random",
+				"random_unconnected_vertex"
+			],
+			[
+				"between",
+				"betweenness_max_vertex_search"
+			],
+			[
+				"forward",
+				"forward_inference_edgelist"
+			],
+			[
+				"if",
+				"ifmain	if __name__ == '__main__'"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "Neurosynth_SNA.py",
+			"settings":
+			{
+				"buffer_size": 14768,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 392.0,
+		"selected_items":
+		[
+			[
+				"packa",
+				"Preferences: Browse Packages"
+			],
+			[
+				"package",
+				"Package Control: Enable Package"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"function",
+				"Snippet: Function"
+			],
+			[
+				"side",
+				"View: Toggle Side Bar"
+			],
+			[
+				"sidebar",
+				"View: Toggle Open Files in Side Bar"
+			],
+			[
+				"if_",
+				"Snippet: if __name__ == '__main__'"
+			],
+			[
+				"prefe",
+				"Preferences: Settings - User"
+			]
+		],
+		"width": 593.0
+	},
+	"console":
+	{
+		"height": 139.0
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/Volumes/huettel/KBE.01/Analysis/Neurosynth/correlations_raw_data/forward_inference.txt",
+		"/Volumes/huettel/KBE.01/Analysis/Neurosynth/correlations_raw_data/reverse_inference.txt",
+		"/Volumes/huettel/KBE.01/Scripts/Neurosynth_Correlations/correlate_different_types.py",
+		"/Users/ln30/Dropbox/dissertation/Chapter4/NS__Main.tex",
+		"/Users/ln30/Dropbox/dissertation/dissertation.tex",
+		"/Users/ln30/Dropbox/dissertation/Bibliography/Neuroscience.bib",
+		"/Users/ln30/Dropbox/dissertation/Chapter4/NS_Introduction.tex",
+		"/Users/ln30/Dropbox/dissertation/Chapter4/NS_Results.tex",
+		"/Users/ln30/Dropbox/dissertation/Chapter4/NS_Methods.tex",
+		"/Users/ln30/Git/Neurosynth_SNA/Neurosynth_SNA.py",
+		"/Users/ln30/Dropbox/dissertation/Chapter1/introduction.tex",
+		"/Users/ln30/Dropbox/dissertation/Chapter2/COI_Intro.tex",
+		"/Volumes/huettel/KBE.01/Scripts/Neurosynth_Correlations/calculate_overlap_cluster.py",
+		"/Users/ln30/Dropbox/dissertation/Chapter2/COI_Intro",
+		"/Users/ln30/Dropbox/dissertation/Chapter4/NS_Discussion.tex",
+		"/Users/ln30/Dropbox/dissertation/Chapter3/chRegularLook.tex",
+		"/Users/ln30/Dropbox/dissertation/Bibliography/old/References copy.bib",
+		"/Users/ln30/Git/Neurosynth_SNA/get_study_numbers.py",
+		"/Users/ln30/Dropbox/neurosynthgit/neurosynth/analysis/meta.py",
+		"/Volumes/huettel/KBE.01/Scripts/Neurosynth_Correlations/test",
+		"/Users/ln30/Dropbox/dissertation/dissertation.synctex.gz(busy)",
+		"/Users/ln30/Dropbox/dissertation/Chapter4/NS_Main.tex",
+		"/Users/ln30/Dropbox/dissertation/dukedissertation.cls",
+		"/Users/ln30/Dropbox/dissertation/dissertation.toc",
+		"/Users/ln30/Dropbox/dissertation/Chapter4/NS.aux",
+		"/Users/ln30/Dropbox/dissertation/dissertation.log",
+		"/Users/ln30/Dropbox/dissertation/Bibliography/jasa.bst",
+		"/Users/ln30/Dropbox/dissertation/Bibliography/mybib.bib",
+		"/Users/ln30/Dropbox/dissertation/Bibliography/References.bib",
+		"/Users/ln30/Dropbox/dissertation/Chapter5/NS.aux",
+		"/Users/ln30/Dropbox/dissertation/Chapter4/chLorem.tex",
+		"/Users/ln30/Library/Application Support/Sublime Text 2/Packages/User/Preferences.sublime-settings",
+		"/Users/ln30/Downloads/DissertationTemplate 2/Chapter1/introduction.tex",
+		"/Users/ln30/Downloads/DissertationTemplate/Chapter1/introduction.tex",
+		"/Users/ln30/Git/problem_solver/probsol.py",
+		"/Users/ln30/Git/radiology_diagnoser/question_generator/question_generator.py",
+		"/Users/ln30/Git/radiology_diagnoser/question_generator/question_generator_old.py",
+		"/Users/ln30/Dropbox/question_generator/input.txt",
+		"/Users/ln30/Git/radiology_diagnoser/question_generator/filechooser.py",
+		"/Users/ln30/Git/radiology_diagnoser/question_generator/editor.kv",
+		"/Users/ln30/Git/radiology_diagnoser/question_generator/test1.jpg",
+		"/Users/ln30/Dropbox/Research Assistants/Projects/Neuroimaging/Scripts/behavioral_simulation/linguistic_simulation.py",
+		"/Volumes/huettel/KBE.01/Analysis/FSL/Templates/ST_01_L1/ST_01_L1.fsf",
+		"/Volumes/huettel/KBE.01/Scripts/ST_01/ST_01_L1_analysis.sh",
+		"/Volumes/huettel/KBE.01/Scripts/ST_01/submit_ST_01_L1_analysis.py",
+		"/Volumes/huettel/KBE.01/Scripts/ST_01/feat_query/featquery_summary.sh",
+		"/Volumes/huettel/KBE.01/Scripts/ST_01/feat_query/featquery_runner.sh",
+		"/Volumes/huettel/KBE.01/Scripts/ST_01/feat_query/submit_featquery_runner.py",
+		"/Users/ln30/Dropbox/Research Assistants/Projects/Neuroimaging/KBE.01/Results/followup.py",
+		"/Users/ln30/Library/Application Support/Sublime Text 2/Packages/Default/Preferences.sublime-settings",
+		"/Volumes/huettel/KBE.01/Analysis/FSL/Templates/ST_01_L1/renamer.sh",
+		"/Volumes/huettel/KBE.01/Scripts/single_trial/ST_wrapper.py",
+		"/Volumes/huettel/KBE.01/Scripts/single_trial/test_ST_wrapper.py",
+		"/Volumes/huettel/COI.01/Scripts/analysis_scripts/single_trial/ST_wrapper.py",
+		"/Users/ln30/Git/problem_solver/probsol.sh",
+		"/Users/ln30/Git/problem_solver/probsol.kv",
+		"/Users/ln30/Git/Neurosynth_SNA/tests/test_Neurosynth_SNA.py",
+		"/Users/ln30/Git/kivy/examples/widgets/lists/list_cascade.py",
+		"/Users/ln30/Git/radiology_diagnoser/SearchReplace/SearchReplaceGUI.py",
+		"/Users/ln30/Git/problem_solver/list_cascade.py",
+		"/Users/ln30/Git/problem_solver/fixtures.py",
+		"/Users/ln30/Dropbox/Research Assistants/Projects/Neurosynth/neurosynthgit/neurosynth/base/lexparser.py",
+		"/Users/ln30/Git/Neurosynth_SNA/ListClass.py",
+		"/Volumes/huettel/COI.01/Scripts/analysis_scripts/ST_02/feat_query/daemon.log",
+		"/Volumes/huettel/KBE.01/Scripts/Neurosynth_Correlations/submit_calculate_overlap.py",
+		"/Volumes/huettel/KBE.01/Scripts/Neurosynth_Correlations/calculate_overlap_cluster.sh",
+		"/Users/ln30/Desktop/Ideas.sh",
+		"/Users/ln30/Git/Neurosynth_SNA/Neurosynth_SNA.R",
+		"/Users/ln30/Git/Neurosynth_SNA/NSNA_GUI/NSNA_GUI.py",
+		"/Users/ln30/Desktop/clipboard_bridge.py",
+		"/Users/ln30/Dropbox/Research Assistants/Projects/Neurosynth/neurosynthgit/examples/get_study_numbers.py",
+		"/Users/ln30/Git/Neurosynth_SNA/NSNA_GUI/mergewindow.py",
+		"/Users/ln30/Git/Neurosynth_SNA/CategorizeNodes.py",
+		"/Users/ln30/Git/Neurosynth_SNA/NSNA_GUI/db_for_gui_nsna.py",
+		"/Users/ln30/Git/Neurosynth_SNA/NSNA_GUI/basefunctions.py",
+		"/Users/ln30/Git/Neurosynth_SNA/database.py",
+		"/Users/ln30/Git/Neurosynth_SNA/test_CategorizeNodes.py",
+		"/Users/ln30/Git/Neurosynth_SNA/NSNA_GUI/importdata.py",
+		"/Users/ln30/Git/Neurosynth_SNA/tests/test_database.py",
+		"/Users/ln30/Git/Neurosynth_SNA/tests/test_CategorizeNodes.py",
+		"/Users/ln30/Git/Neurosynth_SNA/test_database.py",
+		"/Users/ln30/Git/Neurosynth_SNA/test_Neurosynth_SNA.py",
+		"/Users/ln30/Git/Neurosynth_SNA/db_for_gui_nsna.py",
+		"/Users/ln30/Git/Neurosynth_SNA/NSNA_GUI.py",
+		"/Users/ln30/Git/Neurosynth_SNA/basefunctions.py",
+		"/Users/ln30/Git/ideas_generator/IG.py",
+		"/Users/ln30/Library/Application Support/Sublime Text 2/Packages/User/assertequals.sublime-snippet",
+		"/Users/ln30/Git/radiology_diagnoser/importdata.py",
+		"/Users/ln30/Git/radiology_diagnoser/test_database.py",
+		"/Users/ln30/Git/other/physicians.py",
+		"/Users/ln30/Git/other/test_physicians.py",
+		"/Users/ln30/Git/radiology_diagnoser/database.py",
+		"/Users/ln30/Git/radiology_diagnoser/basefunctions.py",
+		"/Users/ln30/Git/radiology_diagnoser/test/test_database.py",
+		"/Users/ln30/Git/radiology_diagnoser/database_for_gui.py",
+		"/Users/ln30/Git/radiology_diagnoser/tests/test_database.py",
+		"/Users/ln30/Git/radiology_diagnoser/mergewindow.py",
+		"/Users/ln30/Git/radiology_diagnoser/radiology_diagnoser.py",
+		"/Volumes/huettel/KBE.01/Notes/Neurosynth_Correlations/Scripts/concatenate_data.py"
+	],
+	"find":
+	{
+		"height": 35.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+			""
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"CreateCrossCorrelationTable",
+			"yarkoni",
+			"def",
+			"hello",
+			"results",
+			"ReverseResults",
+			"ForwardResults",
+			"maindir",
+			"Data",
+			"data",
+			"Analysis",
+			"SNAFiles",
+			"forward_graph",
+			"forward_graph.p",
+			"SNAFiles",
+			"SNAFile",
+			"SNAFiles",
+			"subgraph",
+			"sub_graph",
+			"sub_graph_concept",
+			"N.",
+			"ANALYSIS",
+			"analysis",
+			"1689",
+			"Oxford",
+			"Locke1689",
+			"list",
+			"beam",
+			"prior",
+			"posterior",
+			"task",
+			"young",
+			"haxby",
+			"#",
+			"poldrack",
+			"beam",
+			"poldrack",
+			"yarkoni",
+			"\\tableofcontents",
+			"contents",
+			"table",
+			"toc",
+			"chapter",
+			"chapter.1",
+			"chapter1",
+			"toc",
+			"bib",
+			"Neuro",
+			"nature",
+			"yark",
+			"bib",
+			"bibliography",
+			"/member",
+			"member",
+			"\\cite",
+			"mybib",
+			"yarkoni",
+			"\\cite",
+			"cite",
+			"yarkoni",
+			".\n",
+			"ss",
+			"MyPopup",
+			"popup",
+			"text_input",
+			"answer_box_focused",
+			"focus_status",
+			"text",
+			"db.sd.sentence_counter",
+			"sentence_counter",
+			"'",
+			"ProbSol",
+			"add_button",
+			"settings_screen",
+			"SettingsScreen",
+			"bind",
+			"strat",
+			"theme",
+			"Theme",
+			"theme",
+			"root.theme",
+			"theme",
+			"prep_indices",
+			"first_verb_index",
+			"sp",
+			"sp_fragments",
+			"element",
+			"phrase",
+			"phrases",
+			"subject_",
+			"subject_grammar",
+			">?<",
+			"first_verb_index",
+			"blame_ratings",
+			"fin",
+			"put lines ",
+			"fin",
+			"feel_re",
+			"feel",
+			"harm_",
+			"block",
+			"BLOCK",
+			"block",
+			"BLOCK",
+			"block",
+			"BLOCK",
+			"block",
+			"blocks",
+			"BLOCK",
+			"SUB_BLOCK_SUB",
+			"RUN",
+			"BLOCK",
+			"block",
+			"BLOCK",
+			"block",
+			"main_matrix",
+			"blocks",
+			"block",
+			"FSFTEMPLATENAME",
+			"st_01",
+			"st_02",
+			"Go",
+			"os.sep.join",
+			"epoch2",
+			"epoch1",
+			"main_dir",
+			"dir",
+			"main_dir"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"np"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "Neurosynth_SNA.py",
+					"settings":
+					{
+						"buffer_size": 14768,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 34.0
+	},
+	"input":
+	{
+		"height": 33.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 100.0
+	},
+	"replace":
+	{
+		"height": 0.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+			[
+				"ns_",
+				"dissertation/Chapter4/NS__Main.tex"
+			],
+			[
+				"que",
+				"question_generator/question_generator.py"
+			],
+			[
+				"fea",
+				"ST_01/feat_query/featquery_runner.sh"
+			],
+			[
+				"sub",
+				"ST_01/submit_ST_01_L1_analysis.py"
+			],
+			[
+				"submi",
+				"ST_01/feat_query/submit_featquery_runner.py"
+			],
+			[
+				"gm",
+				"Neurosynth_SNA/NSNA_GUI/mergewindow.py"
+			],
+			[
+				"neu",
+				"Neurosynth_SNA.py"
+			],
+			[
+				"data",
+				"database_for_gui.py"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"selected_items":
+		[
+		],
+		"width": 380.0
+	},
+	"show_minimap": true,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 219.0,
+	"status_bar_visible": true
+}

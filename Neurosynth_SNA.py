@@ -50,20 +50,20 @@ class Paths():
 			self.maindir = os.sep.join(['/Volumes', 'huettel', 'KBE.01',  'Analysis', 'Neurosynth', 'correlations_raw_data', 'ForwardResults'])
 			self.outdir  = os.sep.join(['/Volumes', 'huettel', 'KBE.01', 'Analysis', 'Neurosynth', 'graph_analysis_data'])
 			self.importdir  = os.sep.join(['/Volumes', 'huettel', 'KBE.01', 'Analysis', 'Neurosynth', 'correlations_raw_data'])
-			self.r_pickle_path = os.sep.join(['/Volumes', 'huettel', 'KBE.01', 'Analysis', 'Neurosynth', 'graph_analysis_data', 'reverse_graph.p'])
+			self.r_pickle_path = os.sep.join(['/Volumes', 'huettel', 'KBE.01', 'Analysis', 'Neurosynth', 'graph_analysis_data', 'pickles', 'reverse_graph.p'])
 			self.f_pickle_path = os.sep.join(['/Volumes', 'huettel', 'KBE.01', 'Analysis', 'Neurosynth', 'graph_analysis_data', 'pickles', 'forward_graph.p'])
 		elif sys.platform == "win32":
 			self.maindir = os.sep.join(['M:', 'KBE.01', 'Analysis', 'Neurosynth', 'correlations_raw_data', 'ForwardResults'])
 			self.outdir  = os.sep.join(['M:', 'KBE.01', 'Analysis', 'Neurosynth', 'Analysis', 'Neurosynth', 'graph_analysis_data'])
 			self.importdir  = os.sep.join(['M:', 'KBE.01', 'Analysis', 'Neurosynth', 'Data'])
-			self.r_pickle_path = os.sep.join(['M:', 'KBE.01', 'Analysis', 'Neurosynth', 'graph_analysis_data', 'reverse_graph.p'])
+			self.r_pickle_path = os.sep.join(['M:', 'KBE.01', 'Analysis', 'Neurosynth', 'graph_analysis_data','pickles', 'reverse_graph.p'])
 			self.f_pickle_path = os.sep.join(['M:', 'KBE.01', 'Analysis', 'Neurosynth', 'graph_analysis_data', 'pickles', 'forward_graph.p'])
 		elif sys.platform == "linux2":
 			self.username=getpass.getuser()
 			self.maindir = os.sep.join(['/home', username, 'experiments', 'KBE.01', 'Analysis', 'Neurosynth', 'correlations_raw_data', 'ForwardResults'])
 			self.outdir  = os.sep.join(['/home', username, 'experiments', 'KBE.01', 'Analysis', 'Neurosynth', 'graph_analysis_data'])
 			self.importdir  = os.sep.join(['/home', username, 'experiments', 'KBE.01', 'Analysis', 'Neurosynth', 'correlations_raw_data'])
-			self.r_pickle_path = os.sep.join(['/home', username, 'experiments', 'KBE.01', 'Analysis', 'Neurosynth', 'graph_analysis_data', 'reverse_graph.p'])
+			self.r_pickle_path = os.sep.join(['/home', username, 'experiments', 'KBE.01', 'Analysis', 'Neurosynth', 'graph_analysis_data','pickles', 'reverse_graph.p'])
 			self.f_pickle_path = os.sep.join(['/home', username, 'experiments', 'KBE.01', 'Analysis', 'Neurosynth', 'graph_analysis_data', 'pickles', 'forward_graph.p'])
 
 		self.forward_inference_edgelist = os.sep.join([self.outdir, "forward_inference.txt"])
@@ -192,7 +192,7 @@ def ModifySubGraph(graph):
 		visual_style ["vertex_size"] = 10 # specifies size of vertex_size
 		visual_style["bbox"] = (700,700) #sets dimensions for the box layout
 		visual_style["margin"] = 60
-		plot (sfgc, **visual_style) # creates the changes
+		plot(sfgc, **visual_style) # creates the changes
 		#plot (sfgc, outdir+os.sep+ "forward_sub_graph_concept", **visual_style) # creates the changes
 		#SaveGraph(srgc, outdir+os.sep+"sub_reverse_graph_concept") #saves graph in outdir
 	elif graph == rg:
@@ -207,7 +207,7 @@ def ModifySubGraph(graph):
 		visual_style ["vertex_size"] = 10 # specifies size of vertex_size
 		visual_style["bbox"] = (750,750) #sets dimensions for the box layout
 		visual_style["margin"] = 60
-		plot (srgc, **visual_style) # creates the changes
+		plot(srgc, **visual_style) # creates the changes
 		#plot (sfgc, outdir+os.sep+ "forward_sub_graph_concept", **visual_style) # creates the changes
 		#SaveGraph(srgc, outdir+os.sep+"sub_reverse_graph_concept") #saves graph in outdir
 
@@ -313,7 +313,17 @@ if __name__ == '__main__':
 	paths = Paths() # Paths is a now a class object, and the way to access to paths is demonstrated below. 
 	fg = LoadGraph(paths.f_pickle_path)
 	rg = LoadGraph(paths.r_pickle_path)
-	pdb.set_trace()
+	sfgc = LoadPickle('M:/KBE.01/Analysis/Neurosynth/graph_analysis_data/pickles/reverse_graph.p')
+	lng= sfgc
+	lng.es["weight"] = [x+5 for x in lng.es["weight"]]
+	set_trace()
+	blng= database.NodesInOrderOfCentrality(lng, 'betweenness')
+	import csv
+	five_list= blng
+	with open('betweenness_five.csv', 'wb') as result:
+		writer = csv.writer(result, dialect= 'excel')
+		writer.writerow(five_list)
+	
 	
 
 

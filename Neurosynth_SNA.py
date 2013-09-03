@@ -313,8 +313,8 @@ if __name__ == '__main__':
 	paths = Paths() # Paths is a now a class object, and the way to access to paths is demonstrated below. 
 	fg = LoadGraph(paths.f_pickle_path)
 	rg = LoadGraph(paths.r_pickle_path)
-	sfgc = LoadPickle('M:/KBE.01/Analysis/Neurosynth/graph_analysis_data/pickles/reverse_graph.p')
-	lng= sfgc
+	srgc = LoadPickle('M:/KBE.01/Analysis/Neurosynth/graph_analysis_data/pickles/sub_reverse_graph_concept.p')
+	lng= srgc
 	lng.es["weight"] = [x+5 for x in lng.es["weight"]]
 	set_trace()
 	blng= database.NodesInOrderOfCentrality(lng, 'betweenness')

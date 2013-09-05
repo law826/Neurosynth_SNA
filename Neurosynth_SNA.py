@@ -87,7 +87,6 @@ def GetFileNamesInDirectory(directory):
 
 def CreateCrossCorrelationTable(maindir, file_names, outdir, outname):
 	"""
-
 	Takes a directory and list of numpy files and horizontally concatenates them all and saves the output in outdir. Labels are also added.
 	"""
 	for number, file_name in enumerate(file_names):

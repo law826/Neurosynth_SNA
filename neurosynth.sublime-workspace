@@ -115,14 +115,6 @@
 	},
 	"buffers":
 	[
-		{
-			"file": "Neurosynth_SNA.py",
-			"settings":
-			{
-				"buffer_size": 14768,
-				"line_ending": "Unix"
-			}
-		}
 	],
 	"build_system": "",
 	"command_palette":
@@ -180,9 +172,14 @@
 	},
 	"file_history":
 	[
+		"/Users/ln30/Git/Neurosynth_SNA/Neurosynth_SNA.py",
+		"/Volumes/huettel/KBE.01/Scripts/Neurosynth_Correlations/submit_calculate_overlap.py",
 		"/Volumes/huettel/KBE.01/Scripts/Neurosynth_Correlations/calculate_overlap_cluster.py",
 		"/Volumes/huettel/KBE.01/Scripts/Neurosynth_Correlations/calculate_overlap_cluster.sh",
-		"/Volumes/huettel/KBE.01/Scripts/Neurosynth_Correlations/submit_calculate_overlap.py",
+		"/Volumes/huettel/COI.01/Analysis/FSL/Results/model_07/12624/block2.feat/custom_timing_files/ev9.txt",
+		"/Users/ln30/Dropbox/COI/test_pd.py",
+		"/Volumes/huettel/COI.01/Analysis/FSL/Results/model_07/12624/block1.feat/custom_timing_files/ev9.txt",
+		"/Volumes/huettel/COI.01/Analysis/FSL/Results/model_07/12422/block1.feat/custom_timing_files/ev9.txt",
 		"/Volumes/huettel/KBE.01/Analysis/Neurosynth/correlations_raw_data/forward_inference.txt",
 		"/Volumes/huettel/KBE.01/Analysis/Neurosynth/correlations_raw_data/reverse_inference.txt",
 		"/Volumes/huettel/KBE.01/Scripts/Neurosynth_Correlations/correlate_different_types.py",
@@ -192,7 +189,6 @@
 		"/Users/ln30/Dropbox/dissertation/Chapter4/NS_Introduction.tex",
 		"/Users/ln30/Dropbox/dissertation/Chapter4/NS_Results.tex",
 		"/Users/ln30/Dropbox/dissertation/Chapter4/NS_Methods.tex",
-		"/Users/ln30/Git/Neurosynth_SNA/Neurosynth_SNA.py",
 		"/Users/ln30/Dropbox/dissertation/Chapter1/introduction.tex",
 		"/Users/ln30/Dropbox/dissertation/Chapter2/COI_Intro.tex",
 		"/Users/ln30/Dropbox/dissertation/Chapter2/COI_Intro",
@@ -443,36 +439,8 @@
 	"groups":
 	[
 		{
-			"selected": 0,
 			"sheets":
 			[
-				{
-					"buffer": 0,
-					"file": "Neurosynth_SNA.py",
-					"settings":
-					{
-						"buffer_size": 14768,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Python/Python.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				}
 			]
 		}
 	],

@@ -86,8 +86,7 @@ def GetFileNamesInDirectory(directory):
 	return file_names
 
 def CreateCrossCorrelationTable(maindir, file_names, outdir, outname):
-	"""
-	Takes a directory and list of numpy files and horizontally concatenates them all and saves the output in outdir. Labels are also added.
+	"""Takes a directory and list of numpy files and horizontally concatenates them all and saves the output in outdir. Labels are also added.
 	"""
 	for number, file_name in enumerate(file_names):
 		database_brain = np.load(maindir+os.sep+file_name) # Loading the correlation column.
@@ -309,10 +308,9 @@ To do list:
 
 """	
 if __name__ == '__main__':
-	paths = Paths() # Paths is a now a class object, and the way to access to paths is demonstrated below. 
-	fg = LoadGraph(paths.f_pickle_path)
-	rg = LoadGraph(paths.r_pickle_path)
-	pdb.set_trace()
+	#paths = Paths() # Paths is a now a class object, and the way to access to paths is demonstrated below. 
+	#fg = LoadGraph(paths.f_pickle_path)
+	#rg = LoadGraph(paths.r_pickle_path)
 	
 
 

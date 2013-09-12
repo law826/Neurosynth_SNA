@@ -1,6 +1,0 @@
-In elucidating the semantic structure of cognitive neuroscience, previous work has analyzed how key terms co-occur within the literature. Such analyses retroactively describe the current structure of a research field and its sub-fields, while also prosspectively providing clues for predictions of future research trends. 
-
-Much of the enterprise of cognitive neuroscience involves the connection of neurobiological structures with psychological processes. For example, researchers found the medial prefrontal cortex to be involved during the rest state, while other researchers have found a similar area to be activated during socially engaging tasks (CITE). 
-
-
-and the previous study produced "conceptual maps," which described the structure of how such entities fit together. 

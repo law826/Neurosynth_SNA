@@ -35,7 +35,6 @@ except ImportError:
 
 
 class Paths():
-<<<<<<< HEAD
 	def __init__(self):
 		"""
 		Sets the relevant paths for windows, linux, and mac systems.
@@ -69,8 +68,9 @@ class Paths():
 
 		self.forward_inference_edgelist = os.sep.join([self.outdir, "forward_inference.txt"])
 		self.reverse_inference_edgelist = os.sep.join([self.outdir, "reverse_inference.txt"])
-=======
+    
     def __init__(self):
+
         """
         Sets the relevant paths for windows, linux, and mac systems.
 
@@ -185,7 +185,7 @@ class ArticleAnalysis():
     def SetNumberofArticles(self):
         self.ids = self.dataset.get_ids_by_features(self.term, threshold=0.001)
         self.num_ids = len(self.ids)
->>>>>>> upstream/master
+
 
 def GetFileNamesInDirectory(directory):
     """
@@ -291,7 +291,6 @@ def StripName(graph, rawterms):
     return graph
 
 def ModifySubGraph(graph):
-<<<<<<< HEAD
 	"""
 	input: graph of analysis (fg or rg)
 	output: network image
@@ -306,6 +305,7 @@ def ModifySubGraph(graph):
 		visual_style = {} #sets method of modifying graph characteristics
 		visual_style ["vertex_label"]= sfgc.vs["term"] # labels the vertices
 		visual_style ["vertex_label_dist"] = 2 # specifies the distance between the labels and the vertices
+		node_size
 		visual_style ["vertex_size"] = 10 # specifies size of vertex_size
 		visual_style["bbox"] = (700,700) #sets dimensions for the box layout
 		visual_style["margin"] = 60
@@ -327,7 +327,7 @@ def ModifySubGraph(graph):
 		plot(srgc, **visual_style) # creates the changes
 		#plot (sfgc, outdir+os.sep+ "forward_sub_graph_concept", **visual_style) # creates the changes
 		#SaveGraph(srgc, outdir+os.sep+"sub_reverse_graph_concept") #saves graph in outdir
-=======
+
     """
     input: graph of analysis (fg or rg)
     output: network image
@@ -363,7 +363,7 @@ def ModifySubGraph(graph):
         plot (srgc, **visual_style) # creates the changes
         #plot (sfgc, outdir+os.sep+ "forward_sub_graph_concept", **visual_style) # creates the changes
         #SaveGraph(srgc, outdir+os.sep+"sub_reverse_graph_concept") #saves graph in outdir
->>>>>>> upstream/master
+
 
 def SaveCentrality(graph, type, file_name):
     """
@@ -403,10 +403,10 @@ To do list:
 
 """ 
 if __name__ == '__main__':
-<<<<<<< HEAD
 	paths = Paths() # Paths is a now a class object, and the way to access to paths is demonstrated below. 
 	fg = LoadGraph(paths.f_pickle_path)
 	rg = LoadGraph(paths.r_pickle_path)
+    set_trace()
 	srgc = LoadPickle('M:/KBE.01/Analysis/Neurosynth/graph_analysis_data/pickles/sub_reverse_graph_concept.p')
 	#ng= srgc
 	#ng.es["weight"] = [x+1 for x in ng.es["weight"]]
@@ -419,16 +419,16 @@ if __name__ == '__main__':
 		writer = csv.writer(result, dialect= 'excel')
 		for x in zero_list:
 			writer.writerow([x])
-	set_trace()
+	
 	
 	
 
-=======
+
     paths = Paths() # Paths is a now a class object, and the way to access to paths is demonstrated below. 
     fg = LoadGraph(paths.f_pickle_path)
     rg = LoadGraph(paths.r_pickle_path)
     
->>>>>>> upstream/master
+
 
 """
 Old commands:

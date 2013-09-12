@@ -1,0 +1,339 @@
+Created by PLY version 3.4 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    CONTRAST
+
+Grammar
+
+Rule 0     S' -> list
+Rule 1     list -> list ANDNOT list
+Rule 2     list -> list AND list
+Rule 3     list -> list OR list
+Rule 4     list -> list LT freq
+Rule 5     list -> list RT freq
+Rule 6     list -> FEATURE
+Rule 7     list -> LPAR list RPAR
+Rule 8     freq -> FLOAT
+
+Terminals, with rules where they appear
+
+AND                  : 2
+ANDNOT               : 1
+CONTRAST             : 
+FEATURE              : 6
+FLOAT                : 8
+LPAR                 : 7
+LT                   : 4
+OR                   : 3
+RPAR                 : 7
+RT                   : 5
+error                : 
+
+Nonterminals, with rules where they appear
+
+freq                 : 4 5
+list                 : 1 1 2 2 3 3 4 5 7 0
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . list
+    (1) list -> . list ANDNOT list
+    (2) list -> . list AND list
+    (3) list -> . list OR list
+    (4) list -> . list LT freq
+    (5) list -> . list RT freq
+    (6) list -> . FEATURE
+    (7) list -> . LPAR list RPAR
+
+    FEATURE         shift and go to state 3
+    LPAR            shift and go to state 1
+
+    list                           shift and go to state 2
+
+state 1
+
+    (7) list -> LPAR . list RPAR
+    (1) list -> . list ANDNOT list
+    (2) list -> . list AND list
+    (3) list -> . list OR list
+    (4) list -> . list LT freq
+    (5) list -> . list RT freq
+    (6) list -> . FEATURE
+    (7) list -> . LPAR list RPAR
+
+    FEATURE         shift and go to state 3
+    LPAR            shift and go to state 1
+
+    list                           shift and go to state 4
+
+state 2
+
+    (0) S' -> list .
+    (1) list -> list . ANDNOT list
+    (2) list -> list . AND list
+    (3) list -> list . OR list
+    (4) list -> list . LT freq
+    (5) list -> list . RT freq
+
+    ANDNOT          shift and go to state 8
+    AND             shift and go to state 5
+    OR              shift and go to state 9
+    LT              shift and go to state 7
+    RT              shift and go to state 6
+
+
+state 3
+
+    (6) list -> FEATURE .
+
+    RPAR            reduce using rule 6 (list -> FEATURE .)
+    ANDNOT          reduce using rule 6 (list -> FEATURE .)
+    AND             reduce using rule 6 (list -> FEATURE .)
+    OR              reduce using rule 6 (list -> FEATURE .)
+    LT              reduce using rule 6 (list -> FEATURE .)
+    RT              reduce using rule 6 (list -> FEATURE .)
+    $end            reduce using rule 6 (list -> FEATURE .)
+
+
+state 4
+
+    (7) list -> LPAR list . RPAR
+    (1) list -> list . ANDNOT list
+    (2) list -> list . AND list
+    (3) list -> list . OR list
+    (4) list -> list . LT freq
+    (5) list -> list . RT freq
+
+    RPAR            shift and go to state 10
+    ANDNOT          shift and go to state 8
+    AND             shift and go to state 5
+    OR              shift and go to state 9
+    LT              shift and go to state 7
+    RT              shift and go to state 6
+
+
+state 5
+
+    (2) list -> list AND . list
+    (1) list -> . list ANDNOT list
+    (2) list -> . list AND list
+    (3) list -> . list OR list
+    (4) list -> . list LT freq
+    (5) list -> . list RT freq
+    (6) list -> . FEATURE
+    (7) list -> . LPAR list RPAR
+
+    FEATURE         shift and go to state 3
+    LPAR            shift and go to state 1
+
+    list                           shift and go to state 11
+
+state 6
+
+    (5) list -> list RT . freq
+    (8) freq -> . FLOAT
+
+    FLOAT           shift and go to state 13
+
+    freq                           shift and go to state 12
+
+state 7
+
+    (4) list -> list LT . freq
+    (8) freq -> . FLOAT
+
+    FLOAT           shift and go to state 13
+
+    freq                           shift and go to state 14
+
+state 8
+
+    (1) list -> list ANDNOT . list
+    (1) list -> . list ANDNOT list
+    (2) list -> . list AND list
+    (3) list -> . list OR list
+    (4) list -> . list LT freq
+    (5) list -> . list RT freq
+    (6) list -> . FEATURE
+    (7) list -> . LPAR list RPAR
+
+    FEATURE         shift and go to state 3
+    LPAR            shift and go to state 1
+
+    list                           shift and go to state 15
+
+state 9
+
+    (3) list -> list OR . list
+    (1) list -> . list ANDNOT list
+    (2) list -> . list AND list
+    (3) list -> . list OR list
+    (4) list -> . list LT freq
+    (5) list -> . list RT freq
+    (6) list -> . FEATURE
+    (7) list -> . LPAR list RPAR
+
+    FEATURE         shift and go to state 3
+    LPAR            shift and go to state 1
+
+    list                           shift and go to state 16
+
+state 10
+
+    (7) list -> LPAR list RPAR .
+
+    RPAR            reduce using rule 7 (list -> LPAR list RPAR .)
+    ANDNOT          reduce using rule 7 (list -> LPAR list RPAR .)
+    AND             reduce using rule 7 (list -> LPAR list RPAR .)
+    OR              reduce using rule 7 (list -> LPAR list RPAR .)
+    LT              reduce using rule 7 (list -> LPAR list RPAR .)
+    RT              reduce using rule 7 (list -> LPAR list RPAR .)
+    $end            reduce using rule 7 (list -> LPAR list RPAR .)
+
+
+state 11
+
+    (2) list -> list AND list .
+    (1) list -> list . ANDNOT list
+    (2) list -> list . AND list
+    (3) list -> list . OR list
+    (4) list -> list . LT freq
+    (5) list -> list . RT freq
+
+  ! shift/reduce conflict for ANDNOT resolved as shift
+  ! shift/reduce conflict for AND resolved as shift
+  ! shift/reduce conflict for OR resolved as shift
+  ! shift/reduce conflict for LT resolved as shift
+  ! shift/reduce conflict for RT resolved as shift
+    RPAR            reduce using rule 2 (list -> list AND list .)
+    $end            reduce using rule 2 (list -> list AND list .)
+    ANDNOT          shift and go to state 8
+    AND             shift and go to state 5
+    OR              shift and go to state 9
+    LT              shift and go to state 7
+    RT              shift and go to state 6
+
+  ! ANDNOT          [ reduce using rule 2 (list -> list AND list .) ]
+  ! AND             [ reduce using rule 2 (list -> list AND list .) ]
+  ! OR              [ reduce using rule 2 (list -> list AND list .) ]
+  ! LT              [ reduce using rule 2 (list -> list AND list .) ]
+  ! RT              [ reduce using rule 2 (list -> list AND list .) ]
+
+
+state 12
+
+    (5) list -> list RT freq .
+
+    RPAR            reduce using rule 5 (list -> list RT freq .)
+    ANDNOT          reduce using rule 5 (list -> list RT freq .)
+    AND             reduce using rule 5 (list -> list RT freq .)
+    OR              reduce using rule 5 (list -> list RT freq .)
+    LT              reduce using rule 5 (list -> list RT freq .)
+    RT              reduce using rule 5 (list -> list RT freq .)
+    $end            reduce using rule 5 (list -> list RT freq .)
+
+
+state 13
+
+    (8) freq -> FLOAT .
+
+    ANDNOT          reduce using rule 8 (freq -> FLOAT .)
+    AND             reduce using rule 8 (freq -> FLOAT .)
+    OR              reduce using rule 8 (freq -> FLOAT .)
+    LT              reduce using rule 8 (freq -> FLOAT .)
+    RT              reduce using rule 8 (freq -> FLOAT .)
+    $end            reduce using rule 8 (freq -> FLOAT .)
+    RPAR            reduce using rule 8 (freq -> FLOAT .)
+
+
+state 14
+
+    (4) list -> list LT freq .
+
+    RPAR            reduce using rule 4 (list -> list LT freq .)
+    ANDNOT          reduce using rule 4 (list -> list LT freq .)
+    AND             reduce using rule 4 (list -> list LT freq .)
+    OR              reduce using rule 4 (list -> list LT freq .)
+    LT              reduce using rule 4 (list -> list LT freq .)
+    RT              reduce using rule 4 (list -> list LT freq .)
+    $end            reduce using rule 4 (list -> list LT freq .)
+
+
+state 15
+
+    (1) list -> list ANDNOT list .
+    (1) list -> list . ANDNOT list
+    (2) list -> list . AND list
+    (3) list -> list . OR list
+    (4) list -> list . LT freq
+    (5) list -> list . RT freq
+
+  ! shift/reduce conflict for ANDNOT resolved as shift
+  ! shift/reduce conflict for AND resolved as shift
+  ! shift/reduce conflict for OR resolved as shift
+  ! shift/reduce conflict for LT resolved as shift
+  ! shift/reduce conflict for RT resolved as shift
+    RPAR            reduce using rule 1 (list -> list ANDNOT list .)
+    $end            reduce using rule 1 (list -> list ANDNOT list .)
+    ANDNOT          shift and go to state 8
+    AND             shift and go to state 5
+    OR              shift and go to state 9
+    LT              shift and go to state 7
+    RT              shift and go to state 6
+
+  ! ANDNOT          [ reduce using rule 1 (list -> list ANDNOT list .) ]
+  ! AND             [ reduce using rule 1 (list -> list ANDNOT list .) ]
+  ! OR              [ reduce using rule 1 (list -> list ANDNOT list .) ]
+  ! LT              [ reduce using rule 1 (list -> list ANDNOT list .) ]
+  ! RT              [ reduce using rule 1 (list -> list ANDNOT list .) ]
+
+
+state 16
+
+    (3) list -> list OR list .
+    (1) list -> list . ANDNOT list
+    (2) list -> list . AND list
+    (3) list -> list . OR list
+    (4) list -> list . LT freq
+    (5) list -> list . RT freq
+
+  ! shift/reduce conflict for ANDNOT resolved as shift
+  ! shift/reduce conflict for AND resolved as shift
+  ! shift/reduce conflict for OR resolved as shift
+  ! shift/reduce conflict for LT resolved as shift
+  ! shift/reduce conflict for RT resolved as shift
+    RPAR            reduce using rule 3 (list -> list OR list .)
+    $end            reduce using rule 3 (list -> list OR list .)
+    ANDNOT          shift and go to state 8
+    AND             shift and go to state 5
+    OR              shift and go to state 9
+    LT              shift and go to state 7
+    RT              shift and go to state 6
+
+  ! ANDNOT          [ reduce using rule 3 (list -> list OR list .) ]
+  ! AND             [ reduce using rule 3 (list -> list OR list .) ]
+  ! OR              [ reduce using rule 3 (list -> list OR list .) ]
+  ! LT              [ reduce using rule 3 (list -> list OR list .) ]
+  ! RT              [ reduce using rule 3 (list -> list OR list .) ]
+
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: shift/reduce conflict for ANDNOT in state 11 resolved as shift
+WARNING: shift/reduce conflict for AND in state 11 resolved as shift
+WARNING: shift/reduce conflict for OR in state 11 resolved as shift
+WARNING: shift/reduce conflict for LT in state 11 resolved as shift
+WARNING: shift/reduce conflict for RT in state 11 resolved as shift
+WARNING: shift/reduce conflict for ANDNOT in state 15 resolved as shift
+WARNING: shift/reduce conflict for AND in state 15 resolved as shift
+WARNING: shift/reduce conflict for OR in state 15 resolved as shift
+WARNING: shift/reduce conflict for LT in state 15 resolved as shift
+WARNING: shift/reduce conflict for RT in state 15 resolved as shift
+WARNING: shift/reduce conflict for ANDNOT in state 16 resolved as shift
+WARNING: shift/reduce conflict for AND in state 16 resolved as shift
+WARNING: shift/reduce conflict for OR in state 16 resolved as shift
+WARNING: shift/reduce conflict for LT in state 16 resolved as shift
+WARNING: shift/reduce conflict for RT in state 16 resolved as shift

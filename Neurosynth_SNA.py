@@ -19,7 +19,6 @@
 [] incorporate new data
 [] look at correlations between similar items and figure out merging
 """
-
 from __future__ import division
 import database
 from pdb import *
@@ -53,7 +52,7 @@ class Paths():
             self.importdir  = os.path.join('/Volumes', 'huettel', 'KBE.01', 'Analysis', 'Neurosynth', 'correlations_raw_data')
             self.r_pickle_path = os.path.join('/Volumes', 'huettel', 'KBE.01', 'Analysis', 'Neurosynth', 'graph_analysis_data', 'pickles', 'reverse_graph.p')
             self.f_pickle_path = os.path.join('/Volumes', 'huettel', 'KBE.01', 'Analysis', 'Neurosynth', 'graph_analysis_data', 'pickles', 'forward_graph.p')
-            self.git_path = os.path.join('/Volumes', 'huettel', 'KBE.01', 'Analysis' 'Neurosynth' 'neurosynthgit')
+            self.git_path = os.path.join('/Volumes', 'huettel', 'KBE.01', 'Analysis', 'Neurosynth', 'neurosynthgit')
         elif sys.platform == "win32":
             self.maindir = os.path.join('M:', 'KBE.01', 'Analysis', 'Neurosynth', 'correlations_raw_data', 'ForwardResults')
             self.outdir  = os.path.join('M:', 'KBE.01', 'Analysis', 'Neurosynth', 'Analysis', 'Neurosynth', 'graph_analysis_data')
@@ -137,21 +136,43 @@ class NeurosynthMerge:
         #import pdb; pdb.set_trace()
 
 class ArticleAnalysis():
-    def __init__(self, npath, term):
-        self.term = term
+    """
+    Performs calcluations related to number of articles associated with a term.
+    [] Write code that will assign the Jaccard to a given edge.
+    """
+    def __init__(self, npath):
+        """
+        Sets the neurosynthgit directory and loads a dataset instance that was previously created.
+        """
+        self.npath = npath
         sys.path.append(self.npath)
         from neurosynth.base.dataset import Dataset
         from neurosynth.analysis import meta
         ns_pickle = os.path.join(self.npath, 'data/dataset.pkl')
         self.dataset = cPickle.load(open(ns_pickle, 'rb'))
-        
-        
-        
-        self.SetNumberofArticles()
 
-    def SetNumberofArticles(self):
-        self.ids = self.dataset.get_ids_by_features(self.term, threshold=0.001)
-        self.num_ids = len(self.ids)
+    def CalculateNumberofArticles(self, term):
+        """
+        Takes in a term and returns the number of studies associated with the term.
+        """
+        self.term = term
+        ids = self.dataset.get_ids_by_expression(self.term, threshold=0.001)
+        num_ids = len(ids)
+        return num_ids
+
+    def CalculateJaccard(self, term1, term2):
+        unique_ex1 = term1 + '&~' + term2
+        unique_ex2 = term2 + '&~' + term1
+        union = term1 + '|' + term2
+        intersection = term1 + '&' + term2
+
+        unique_stud1 = self.CalculateNumberofArticles(unique_ex1)
+        unique_stud2 = self.CalculateNumberofArticles(unique_ex2)
+        union_stud = self.CalculateNumberofArticles(union)
+        intersection_stud = self.CalculateNumberofArticles(intersection)
+
+        jaccard = intersection_stud/union_stud
+        return jaccard
 
 
 def GetFileNamesInDirectory(directory):
@@ -398,7 +419,6 @@ if __name__ == '__main__':
 	paths = Paths() # Paths is a now a class object, and the way to access to paths is demonstrated below. 
 	fg = LoadGraph(paths.f_pickle_path)
 	rg = LoadGraph(paths.r_pickle_path)
-    
 	set_trace()
 	
 """

@@ -17,61 +17,71 @@ class TestDatabase(unittest.TestCase):
 		# self.paths includes a variety of relevant paths from Neurosynth_SNA.py.
 		self.paths = ns.Paths()
 
-	def test_GetFileNamesInDirectory(self):
-		files = ns.GetFileNamesInDirectory('/Volumes/huettel/KBE.01/Analysis/Neurosynth/correlations_raw_data/ReverseResults/')
+	def test_ArticleAnalysis(self):
+		npath = self.paths.git_path
+		term = 'emo*'
+		aa = ns.ArticleAnalysis(npath)
 
-		self.assertEqual(len(files), 525)
-		self.assertNotEqual(files[0], '_DS.Store')
+		number_of_terms = aa.CalculateNumberofArticles(term)
+		self.assertEqual(number_of_terms, 639)
 
-	def test_graph_vertices_and_edges(self):
-		number_of_vertices = 525
-		number_of_edges = (275625-525)/2
+		emo_jaccard = aa.CalculateJaccard('imagery', 'images')
+		self.assertEqual(emo_jaccard, (72/(92+1979+72)))
 
-		fg = ns.LoadGraph(self.paths.f_pickle_path)
-		rg = ns.LoadGraph(self.paths.r_pickle_path)
+	# def test_GetFileNamesInDirectory(self):
+	# 	files = ns.GetFileNamesInDirectory('/Volumes/huettel/KBE.01/Analysis/Neurosynth/correlations_raw_data/ReverseResults/')
 
-		for graph in [fg, rg]:
-			self.assertEqual(len(graph.vs), number_of_vertices)
-			self.assertEqual(len(graph.es), number_of_edges)
-			self.assertEqual(all(graph.is_loop()), False)
+	# 	self.assertEqual(len(files), 525)
+	# 	self.assertNotEqual(files[0], '_DS.Store')
 
-	def test_Beam_sub_reverse_graph_concept(self):
-		srg_path = '/Volumes/huettel/KBE.01/Analysis/Neurosynth/graph_analysis_data/pickles/sub_reverse_graph_concept.p'
-		srg = cPickle.load(open(srg_path, 'r'))
-		pass
+	# def test_graph_vertices_and_edges(self):
+	# 	number_of_vertices = 525
+	# 	number_of_edges = (275625-525)/2
 
-	def test_NeurosynthMerge(self):
-		"""
-		Make sure the number of images matches that predicted by the thesaurus merging.
-		"""
-		from Neurosynth_SNA import NeurosynthMerge
+	# 	fg = ns.LoadGraph(self.paths.f_pickle_path)
+	# 	rg = ns.LoadGraph(self.paths.r_pickle_path)
 
-		# Inputs
-		thesaurus = [('emotion', 'emotions', 'emotion|emotions'), 
-					('intention', 'intentions', 'intention|intentions'),
-					('association', 'associations', 'associative', 'association|associations|associative')]
-		npath = '/Users/ln30/Dropbox/neurosynthgit/' # The only difference between two computers is the username. 
+	# 	for graph in [fg, rg]:
+	# 		self.assertEqual(len(graph.vs), number_of_vertices)
+	# 		self.assertEqual(len(graph.es), number_of_edges)
+	# 		self.assertEqual(all(graph.is_loop()), False)
 
-		outdir = '/Volumes/huettel/KBE.01/Analysis/Neurosynth/test'
-		if not os.path.exists(outdir):
-			os.makedirs(outdir)
+	# def test_Beam_sub_reverse_graph_concept(self):
+	# 	srg_path = '/Volumes/huettel/KBE.01/Analysis/Neurosynth/graph_analysis_data/pickles/sub_reverse_graph_concept.p'
+	# 	srg = cPickle.load(open(srg_path, 'r'))
+	# 	pass
 
+	# def test_NeurosynthMerge(self):
+	# 	"""
+	# 	Make sure the number of images matches that predicted by the thesaurus merging.
+	# 	"""
+	# 	from Neurosynth_SNA import NeurosynthMerge
 
-		# Instantiation
-		nsm = NeurosynthMerge(thesaurus, npath, outdir, test_mode=True)
+	# 	# Inputs
+	# 	thesaurus = [('emotion', 'emotions', 'emotion|emotions'), 
+	# 				('intention', 'intentions', 'intention|intentions'),
+	# 				('association', 'associations', 'associative', 'association|associations|associative')]
+	# 	npath = '/Users/ln30/Dropbox/neurosynthgit/' # The only difference between two computers is the username. 
 
-		# Tests
-		self.assertEqual(len(nsm.feature_list), 3)
-		self.assertEqual('emotion' in nsm.feature_list, False)
-		self.assertEqual('emotions' in nsm.feature_list, False)
-		self.assertEqual('intention' in nsm.feature_list, False)
-		self.assertEqual('intentions' in nsm.feature_list, False)
-		self.assertEqual('association' in nsm.feature_list, False)
-		self.assertEqual('associations' in nsm.feature_list, False)
-		self.assertEqual('associative' in nsm.feature_list, False)
-		self.assertEqual('intention|intentions' in nsm.feature_list, True)
-		self.assertEqual('emotion|emotions' in nsm.feature_list, True)
-		self.assertEqual('association|associations|associative' in nsm.feature_list, True)
+	# 	outdir = '/Volumes/huettel/KBE.01/Analysis/Neurosynth/test'
+	# 	if not os.path.exists(outdir):
+	# 		os.makedirs(outdir)
+
+	# 	# Instantiation
+	# 	nsm = NeurosynthMerge(thesaurus, npath, outdir, test_mode=True)
+
+	# 	# Tests
+	# 	self.assertEqual(len(nsm.feature_list), 3)
+	# 	self.assertEqual('emotion' in nsm.feature_list, False)
+	# 	self.assertEqual('emotions' in nsm.feature_list, False)
+	# 	self.assertEqual('intention' in nsm.feature_list, False)
+	# 	self.assertEqual('intentions' in nsm.feature_list, False)
+	# 	self.assertEqual('association' in nsm.feature_list, False)
+	# 	self.assertEqual('associations' in nsm.feature_list, False)
+	# 	self.assertEqual('associative' in nsm.feature_list, False)
+	# 	self.assertEqual('intention|intentions' in nsm.feature_list, True)
+	# 	self.assertEqual('emotion|emotions' in nsm.feature_list, True)
+	# 	self.assertEqual('association|associations|associative' in nsm.feature_list, True)
 
 	def tearDown(self):
 		"""

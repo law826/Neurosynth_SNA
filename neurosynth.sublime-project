@@ -6,6 +6,9 @@
 		},
 		{
 			"path": "/Volumes/huettel/KBE.01/Scripts/Neurosynth_Correlations"
+		},
+		{
+			"path": "/Volumes/huettel/KBE.01/Analysis/Neurosynth/neurosynthgit"
 		}
 	]
 }

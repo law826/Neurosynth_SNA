@@ -103,7 +103,7 @@ class Paths():
             self.r_pickle_path = os.path.join('/home', username, 'experiments', 'KBE.01', 'Analysis', 'Neurosynth', 'graph_analysis_data', 'pickles', 'reverse_graph.p')
             self.f_pickle_path = os.path.join('/home', username, 'experiments', 'KBE.01', 'Analysis', 'Neurosynth', 'graph_analysis_data', 'pickles', 'forward_graph.p')
             self.git_path = os.path.join('/home', username, 'experiments', 'KBE.01', 'Analysis', 'Neurosynth', 'neurosynthgit')
-            
+
         self.forward_inference_edgelist = os.path.join(self.outdir, "forward_inference.txt")
         self.reverse_inference_edgelist = os.path.join(self.outdir, "reverse_inference.txt")
 
@@ -178,9 +178,9 @@ class ArticleAnalysis():
         from neurosynth.analysis import meta
         ns_pickle = os.path.join(self.npath, 'data/dataset.pkl')
         self.dataset = cPickle.load(open(ns_pickle, 'rb'))
-
+        
+        
         self.SetNumberofArticles()
-
 
     def SetNumberofArticles(self):
         self.ids = self.dataset.get_ids_by_features(self.term, threshold=0.001)

@@ -273,7 +273,6 @@ def ModifySubGraph(graph):
 		visual_style = {} #sets method of modifying graph characteristics
 		visual_style ["vertex_label"]= sfgc.vs["term"] # labels the vertices
 		visual_style ["vertex_label_dist"] = 2 # specifies the distance between the labels and the vertices
-		node_size
 		visual_style ["vertex_size"] = 10 # specifies size of vertex_size
 		visual_style["bbox"] = (700,700) #sets dimensions for the box layout
 		visual_style["margin"] = 60
@@ -398,19 +397,8 @@ if __name__ == '__main__':
 	paths = Paths() # Paths is a now a class object, and the way to access to paths is demonstrated below. 
 	fg = LoadGraph(paths.f_pickle_path)
 	rg = LoadGraph(paths.r_pickle_path)
-    set_trace()
-	srgc = LoadPickle('M:/KBE.01/Analysis/Neurosynth/graph_analysis_data/pickles/sub_reverse_graph_concept.p')
-	#ng= srgc
-	#ng.es["weight"] = [x+1 for x in ng.es["weight"]]
-	#bng= database.NodesInOrderOfCentrality(ng, 'betweenness')
-	srngc= database.NodesInOrderOfCentrality(srgc, 'betweenness')
-	import csv
-	#one_list= bng
-	zero_list= srngc
-	with open('betweenness_test.csv', 'wb') as result:
-		writer = csv.writer(result, dialect= 'excel')
-		for x in zero_list:
-			writer.writerow([x])
+    
+	set_trace()
 	
 """
 Old commands:
@@ -441,6 +429,21 @@ save functions for list of tuples to csv:
 # result = open("testfile.csv", 'wb')
 # writer = csv.writer(result, dialect = 'excel')
 # writer.writerows(test_list)
+
+creating betweenness centrality measures to compare with Beam et al
+srgc = LoadPickle('M:/KBE.01/Analysis/Neurosynth/graph_analysis_data/pickles/sub_reverse_graph_concept.p')
+    ng= srgc
+    ng.es["weight"] = [x+1 for x in ng.es["weight"]]
+    bng= database.NodesInOrderOfCentrality(ng, 'betweenness')
+    srngc= database.NodesInOrderOfCentrality(srgc, 'betweenness')
+    import csv
+    one_list= bng
+    zero_list= srngc
+    with open('betweenness_test.csv', 'wb') as result:
+        writer = csv.writer(result, dialect= 'excel')
+        for x in zero_list:
+            writer.writerow([x])
+    
 
 """
 

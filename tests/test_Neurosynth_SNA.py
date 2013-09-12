@@ -18,7 +18,7 @@ class TestDatabase(unittest.TestCase):
 		self.paths = ns.Paths()
 
 	def test_GetFileNamesInDirectory(self):
-		files = ns.GetFileNamesInDirectory('/Volumes/huettel/KBE.01/Analysis/Neurosynth/ReverseResults/')
+		files = ns.GetFileNamesInDirectory('/Volumes/huettel/KBE.01/Analysis/Neurosynth/correlations_raw_data/ReverseResults/')
 
 		self.assertEqual(len(files), 525)
 		self.assertNotEqual(files[0], '_DS.Store')
@@ -36,7 +36,7 @@ class TestDatabase(unittest.TestCase):
 			self.assertEqual(all(graph.is_loop()), False)
 
 	def test_Beam_sub_reverse_graph_concept(self):
-		srg_path = '/Volumes/huettel/KBE.01/Analysis/Neurosynth/SNAFiles/sub_reverse_graph_concept.p'
+		srg_path = '/Volumes/huettel/KBE.01/Analysis/Neurosynth/graph_analysis_data/pickles/sub_reverse_graph_concept.p'
 		srg = cPickle.load(open(srg_path, 'r'))
 		pass
 
@@ -51,7 +51,11 @@ class TestDatabase(unittest.TestCase):
 					('intention', 'intentions', 'intention|intentions'),
 					('association', 'associations', 'associative', 'association|associations|associative')]
 		npath = '/Users/ln30/Dropbox/neurosynthgit/' # The only difference between two computers is the username. 
+
 		outdir = '/Volumes/huettel/KBE.01/Analysis/Neurosynth/test'
+		if not os.path.exists(outdir):
+			os.makedirs(outdir)
+
 
 		# Instantiation
 		nsm = NeurosynthMerge(thesaurus, npath, outdir, test_mode=True)

@@ -146,6 +146,7 @@ class ArticleAnalysis():
         self.dataset = cPickle.load(open(ns_pickle, 'rb'))
         
         
+        
         self.SetNumberofArticles()
 
     def SetNumberofArticles(self):

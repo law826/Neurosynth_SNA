@@ -174,6 +174,44 @@ class ArticleAnalysis():
         jaccard = intersection_stud/union_stud
         return jaccard
 
+    def AssignJaccardsToGraph(self, graph, gr_out_pth):
+        """
+        Takes a graph and assigns the Neurosynth Jaccard index for the number of studies relevant terms appear in.
+            Args:
+                - graph
+                - gr_out_pth: path for the pickle of the new modified graph.
+        """
+        # Dissection of elements of the graph.
+        edge_tuple_list = [e.tuple for e in graph.es]
+        edge_term_tuple_list = [(graph.vs[pair[0]]['term'], graph.vs[pair[1]]['term']) for pair in edge_tuple_list]
+
+        # Calculation of the jaccards of each edge.
+        jaccard_list = []
+        for i, pair in enumerate(edge_term_tuple_list):
+            jaccard = self.CalculateJaccard(pair[0], pair[1])
+            jaccard_list.append(jaccard)
+
+        # Assigning the jaccards to the graph and saving.
+        graph.es['article_jaccard'] = jaccard_list
+        Graph.write_pickle(graph, gr_out_pth)
+
+    def OutputJaccardsAndWeightsToFiles(self, graph_pickle, directory):
+        """
+        Takes a graph that already has the number of studies jaccard attribute and outputs files appropriate 
+            to create a jaccard vs. weight scatter plot.
+        """
+        graph = Graph.Read_Pickle(graph_pickle)
+        with open(os.path.join(directory, 'jaccard.txt')) as f:
+            for jaccard in graph.es['article_jaccard']:
+                f.write('%s\n' % jaccard)
+        import pdb; pdb.set_trace()
+
+
+
+
+
+
+
 
 def GetFileNamesInDirectory(directory):
 	"""

@@ -19,14 +19,24 @@ class TestDatabase(unittest.TestCase):
 
 	def test_ArticleAnalysis(self):
 		npath = self.paths.git_path
-		term = 'emo*'
+		# term = 'emo*'
 		aa = ns.ArticleAnalysis(npath)
 
-		number_of_terms = aa.CalculateNumberofArticles(term)
-		self.assertEqual(number_of_terms, 639)
+		directory = '/Volumes/huettel/KBE.01/Analysis/Neurosynth/graph_analysis_data/graph_stats/num_articles/'
+		graph_pickle = '/Volumes/huettel/KBE.01/Analysis/Neurosynth/graph_analysis_data/pickles/sub_reverse_graph_concept_with_Jaccards.p' 
+		ns.OutputJaccardsAndWeightsToFiles(graph_pickle, directory)		
 
-		emo_jaccard = aa.CalculateJaccard('imagery', 'images')
-		self.assertEqual(emo_jaccard, (72/(92+1979+72)))
+		# number_of_terms = aa.CalculateNumberofArticles(term)
+#    def OutputJaccardsAndWeightsToFiles(self, graph_pickle, directory):
+		# self.assertEqual(number_of_terms, 639)
+
+		# emo_jaccard = aa.CalculateJaccard('imagery', 'images')
+		# self.assertEqual(emo_jaccard, (72/(92+1979+72)))
+
+		# There are no tests for the following!
+		# Beam_sub_graph = ns.LoadGraph('/Volumes/huettel/KBE.01/Analysis/Neurosynth/graph_analysis_data/pickles/sub_reverse_graph_concept.p')
+		# aa.AssignJaccardsToGraph(Beam_sub_graph)
+
 
 	# def test_GetFileNamesInDirectory(self):
 	# 	files = ns.GetFileNamesInDirectory('/Volumes/huettel/KBE.01/Analysis/Neurosynth/correlations_raw_data/ReverseResults/')

@@ -333,7 +333,7 @@ def ModifySubGraph(graph):
         visual_style = {} #sets method of modifying graph characteristics
         visual_style ["vertex_label"]= sfgc.vs["term"] # labels the vertices
         visual_style ["vertex_label_dist"] = 2 # specifies the distance between the labels and the vertices
-        visual_style ["vertex_size"] = [sfgc.vs["numberofstudies"]] # specifies size of vertex_size
+        visual_style ["vertex_size"] = sfgc.vs["numberofstudies"] # specifies size of vertex_size
         visual_style["bbox"] = (700,700) #sets dimensions for the box layout
         visual_style["margin"] = 60
         plot(sfgc, **visual_style) # creates the changes
@@ -347,10 +347,11 @@ def ModifySubGraph(graph):
         srgc.delete_edges(index_to_delete) #deletes selected edges
         visual_style = {} #sets method of modifying graph characteristics
         visual_style ["vertex_label"]= srgc.vs["term"] # labels the vertices
-        visual_style ["vertex_label_dist"] = 1.2 # specifies the distance between the labels and the vertice
-        visual_style ["vertex_size"] = 10 # specifies size of vertex_size
+        visual_style ["vertex_label_dist"] = 1.0 # specifies the distance between the labels and the vertice
+        visual_style ["vertex_size"] = srgc.vs["zscore"] # specifies size of vertex_size
         visual_style["bbox"] = (750,750) #sets dimensions for the box layout
         visual_style["margin"] = 60
+        
         plot(srgc, **visual_style) # creates the changes
         #plot (sfgc, outdir+os.sep+ "forward_sub_graph_concept", **visual_style) # creates the changes
         #SaveGraph(srgc, outdir+os.sep+"sub_reverse_graph_concept") #saves graph in outdir
@@ -455,13 +456,40 @@ To do list:
 
 """ 
 if __name__ == '__main__':
+<<<<<<< HEAD
+=======
+
+    paths = Paths() # Paths is a now a class object, and the way to access to paths is demonstrated below. 
+    fg = LoadGraph(paths.f_pickle_path)
+    rg = LoadGraph(paths.r_pickle_path)
+
+    
+
+>>>>>>> f979eb5b7cf82584c31580c6b3fc738c17de3d50
     paths = Paths() # Paths is a now a class object, and the way to access to paths is demonstrated below. 
     fg = LoadGraph(paths.f_pickle_path)
     rg = LoadGraph(paths.r_pickle_path)
     ns = LoadPickle('M:/KBE.01/Analysis/Neurosynth/graph_analysis_data/pickles/number_of_studies.p')
-    fg.vs["numberofstudies"] = [ns]
+    rg.vs["numberofstudies"] = ns
+    npns = np.array(ns)
+    nsmean= np.mean(npns)
+    nsstd= np.std(npns)
+    rg.vs["zscore"] = [(((x-nsmean)/nsstd)*10) for x in rg.vs["numberofstudies"]]
+    ModifySubGraph(rg)
     set_trace()
+<<<<<<< HEAD
     ModifySubGraph(fg)
+=======
+
+ 
+    
+
+
+
+
+
+
+>>>>>>> f979eb5b7cf82584c31580c6b3fc738c17de3d50
 """
 Old commands:
 file_names = GetFileNamesInDirectory(maindir)

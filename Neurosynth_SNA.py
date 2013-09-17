@@ -325,7 +325,6 @@ def ModifySubGraph(graph):
     modifies graph into subgraph given a list (sub_list_concept) and creates network image
     """
     if graph == fg:
-        
         listclass = ListClass()
         sub_list_concept = listclass.sub_Beam_concepts
         sfgc = database.IsolateSubGraph(graph, sub_list_concept, "term") # creates sub graph from main graph rg
@@ -456,13 +455,6 @@ To do list:
 
 """ 
 if __name__ == '__main__':
-<<<<<<< HEAD
-	paths = Paths() # Paths is a now a class object, and the way to access to paths is demonstrated below. 
-	fg = LoadGraph(paths.f_pickle_path)
-	rg = LoadGraph(paths.r_pickle_path)
-	set_trace()
-	
-=======
     paths = Paths() # Paths is a now a class object, and the way to access to paths is demonstrated below. 
     fg = LoadGraph(paths.f_pickle_path)
     rg = LoadGraph(paths.r_pickle_path)
@@ -470,16 +462,6 @@ if __name__ == '__main__':
     fg.vs["numberofstudies"] = [ns]
     set_trace()
     ModifySubGraph(fg)
-    
-
- 
-    
-
-
-
-
-
->>>>>>> 1bd04ea8aa81a889b0cfcd73deb4019ca59b0b8a
 """
 Old commands:
 file_names = GetFileNamesInDirectory(maindir)

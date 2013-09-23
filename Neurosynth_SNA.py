@@ -456,16 +456,6 @@ To do list:
 
 """ 
 if __name__ == '__main__':
-<<<<<<< HEAD
-=======
-
-    paths = Paths() # Paths is a now a class object, and the way to access to paths is demonstrated below. 
-    fg = LoadGraph(paths.f_pickle_path)
-    rg = LoadGraph(paths.r_pickle_path)
-
-    
-
->>>>>>> f979eb5b7cf82584c31580c6b3fc738c17de3d50
     paths = Paths() # Paths is a now a class object, and the way to access to paths is demonstrated below. 
     fg = LoadGraph(paths.f_pickle_path)
     rg = LoadGraph(paths.r_pickle_path)
@@ -477,20 +467,7 @@ if __name__ == '__main__':
     rg.vs["zscore"] = [(((x-nsmean)/nsstd)*10) for x in rg.vs["numberofstudies"]]
     ModifySubGraph(rg)
     set_trace()
-<<<<<<< HEAD
-    ModifySubGraph(fg)
-=======
-
- 
-    
-
-
-
-
-
-
->>>>>>> f979eb5b7cf82584c31580c6b3fc738c17de3d50
-"""
+ """
 Old commands:
 file_names = GetFileNamesInDirectory(maindir)
 CreateEdgelist(maindir, file_names, outdir, 'forward_inference')

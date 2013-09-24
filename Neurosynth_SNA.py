@@ -201,10 +201,15 @@ class ArticleAnalysis():
             to create a jaccard vs. weight scatter plot.
         """
         graph = Graph.Read_Pickle(graph_pickle)
-        with open(os.path.join(directory, 'jaccard.txt')) as f:
-            for jaccard in graph.es['article_jaccard']:
-                f.write('%s\n' % jaccard)
-        import pdb; pdb.set_trace()
+        with open(os.path.join(directory, 'jaccard.txt'), 'w') as f:
+            for i, jaccard in enumerate(graph.es['article_jaccard']):
+                tuple_index = graph.es[i].tuple # This is the indexed term of the relevant vertices of the given edge.
+                first_vertex = graph.vs[tuple_index[0]]["term"]
+                second_vertex = graph.vs[tuple_index[1]]["term"]
+                brain_weight = graph.es[i]["weight"]
+                f.write('%s-%s,%s,%s\n' % (first_vertex, second_vertex, brain_weight, jaccard))
+
+
 
 
 
@@ -327,13 +332,18 @@ def ModifySubGraph(graph):
     if graph == fg:
         listclass = ListClass()
         sub_list_concept = listclass.sub_Beam_concepts
+        ns = LoadPickle('M:/KBE.01/Analysis/Neurosynth/graph_analysis_data/pickles/number_of_studies.p')
+        graph.vs["numberofstudies"] = ns #creates attribute for number of studies
+        npns = np.array(ns) #creates array of number of studies
+        nsl = np.log10(npns) #calculates log of number of studies
+        graph.vs["log"] = nsl*8 #multiplies constant to create attribute "log"
         sfgc = database.IsolateSubGraph(graph, sub_list_concept, "term") # creates sub graph from main graph rg
         index_to_delete = [edge.index for edge in sfgc.es.select(weight_lt=0.8)] # creates threshold by selecting edges lower than a certain weight
         sfgc.delete_edges(index_to_delete) #deletes selected edges
         visual_style = {} #sets method of modifying graph characteristics
         visual_style ["vertex_label"]= sfgc.vs["term"] # labels the vertices
         visual_style ["vertex_label_dist"] = 2 # specifies the distance between the labels and the vertices
-        visual_style ["vertex_size"] = sfgc.vs["numberofstudies"] # specifies size of vertex_size
+        visual_style ["vertex_size"] = sfgc.vs["log"] # specifies size of vertex_size
         visual_style["bbox"] = (700,700) #sets dimensions for the box layout
         visual_style["margin"] = 60
         plot(sfgc, **visual_style) # creates the changes
@@ -342,16 +352,20 @@ def ModifySubGraph(graph):
     elif graph == rg:
         listclass = ListClass()
         sub_list_concept = listclass.sub_Beam_concepts
+        ns = LoadPickle('M:/KBE.01/Analysis/Neurosynth/graph_analysis_data/pickles/number_of_studies.p')
+        graph.vs["numberofstudies"] = ns #creates attribute for number of studies
+        npns = np.array(ns) #creates array of number of studies
+        nsl = np.log10(npns) #calculates log of number of studies
+        graph.vs["log"] = nsl*8 #multiplies constant to create attribute "log"
         srgc = database.IsolateSubGraph(graph, sub_list_concept, "term") # creates sub graph from main graph rg
         index_to_delete = [edge.index for edge in srgc.es.select(weight_lt=0.2)] # creates threshold by selecting edges lower than a certain weight
         srgc.delete_edges(index_to_delete) #deletes selected edges
         visual_style = {} #sets method of modifying graph characteristics
         visual_style ["vertex_label"]= srgc.vs["term"] # labels the vertices
         visual_style ["vertex_label_dist"] = 1.0 # specifies the distance between the labels and the vertice
-        visual_style ["vertex_size"] = srgc.vs["percentile"] # specifies size of vertex_size
+        visual_style ["vertex_size"] = srgc.vs["log"] # specifies size of vertex_size
         visual_style["bbox"] = (750,750) #sets dimensions for the box layout
         visual_style["margin"] = 60
-        
         plot(srgc, **visual_style) # creates the changes
         #plot (sfgc, outdir+os.sep+ "forward_sub_graph_concept", **visual_style) # creates the changes
         #SaveGraph(srgc, outdir+os.sep+"sub_reverse_graph_concept") #saves graph in outdir
@@ -459,13 +473,12 @@ if __name__ == '__main__':
     paths = Paths() # Paths is a now a class object, and the way to access to paths is demonstrated below. 
     fg = LoadGraph(paths.f_pickle_path)
     rg = LoadGraph(paths.r_pickle_path)
-    ns = LoadPickle('M:/KBE.01/Analysis/Neurosynth/graph_analysis_data/pickles/number_of_studies.p')
-    rg.vs["numberofstudies"] = ns
-    npns = np.array(ns)
-    nsp = np.percentile(ns)
-    rg.vs["percentile"] = [nsp]
-    ModifySubGraph(rg)
+    
+   
+    
+    
     set_trace()
+
 
 """
 Old commands:
@@ -510,6 +523,15 @@ srgc = LoadPickle('M:/KBE.01/Analysis/Neurosynth/graph_analysis_data/pickles/sub
         writer = csv.writer(result, dialect= 'excel')
         for x in zero_list:
             writer.writerow([x])
+
+
+creating nodes that are different sizes based on numberofstudies
+ ns = LoadPickle('M:/KBE.01/Analysis/Neurosynth/graph_analysis_data/pickles/number_of_studies.p')
+ rg.vs["numberofstudies"] = ns #creates attribute for number of studies
+ npns = np.array(ns) #creates array of number of studies
+ nsl = np.log10(npns) #calculates log of number of studies
+ rg.vs["log"] = nsl*8 #multiplies constant to create attribute "log"
+ ModifySubGraph(rg)
     
 
 """

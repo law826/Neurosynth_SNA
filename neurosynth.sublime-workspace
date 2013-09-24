@@ -127,6 +127,50 @@
 	},
 	"buffers":
 	[
+		{
+			"file": "/Volumes/huettel/KBE.01/Analysis/Neurosynth/graph_analysis_data/graph_stats/num_articles/num_articles_README.txt",
+			"settings":
+			{
+				"buffer_size": 170,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/Volumes/huettel/KBE.01/Analysis/Neurosynth/graph_analysis_data/pickles/sub_reverse_graph_concept_with_Jaccards_README.txt",
+			"settings":
+			{
+				"buffer_size": 41,
+				"line_ending": "Unix",
+				"name": "sub_reverse_graph_concept_with_Jaccards.p"
+			}
+		},
+		{
+			"file": "tests/test_Neurosynth_SNA.py",
+			"settings":
+			{
+				"buffer_size": 3909,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Neurosynth_SNA.py",
+			"settings":
+			{
+				"buffer_size": 23538,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "jaccard.xlsx\n\nThis is derived from Ellie's subgraph.\nBrain weight is the correlation between brain images.\nJaccard is the number of intersecting articles divided by union of articles. \n\n",
+			"file": "/Volumes/huettel/KBE.01/Analysis/Neurosynth/graph_analysis_data/graph_stats/num_articles/jaccard_README.txt",
+			"file_size": 184,
+			"file_write_time": 1379971339000000,
+			"settings":
+			{
+				"buffer_size": 186,
+				"line_ending": "Unix"
+			}
+		}
 	],
 	"build_system": "",
 	"command_palette":
@@ -312,6 +356,7 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"jaccard.txt",
 			"CreateCrossCorrelationTable",
 			"OutputJaccardsAndWeightsToFiles",
 			"\n    ",
@@ -438,8 +483,7 @@
 			"feel",
 			"harm_",
 			"block",
-			"BLOCK",
-			"block"
+			"BLOCK"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -459,8 +503,150 @@
 	"groups":
 	[
 		{
+			"selected": 2,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "/Volumes/huettel/KBE.01/Analysis/Neurosynth/graph_analysis_data/graph_stats/num_articles/num_articles_README.txt",
+					"settings":
+					{
+						"buffer_size": 170,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								170,
+								170
+							]
+						],
+						"settings":
+						{
+							"auto_name": "",
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "/Volumes/huettel/KBE.01/Analysis/Neurosynth/graph_analysis_data/pickles/sub_reverse_graph_concept_with_Jaccards_README.txt",
+					"settings":
+					{
+						"buffer_size": 41,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								41,
+								41
+							]
+						],
+						"settings":
+						{
+							"auto_name": "sub_reverse_graph_concept_with_Jaccards.p",
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "tests/test_Neurosynth_SNA.py",
+					"settings":
+					{
+						"buffer_size": 3909,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								837,
+								837
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 119.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		},
+		{
+			"selected": 1,
+			"sheets":
+			[
+				{
+					"buffer": 3,
+					"file": "Neurosynth_SNA.py",
+					"settings":
+					{
+						"buffer_size": 23538,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								10724,
+								10724
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 3227.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "/Volumes/huettel/KBE.01/Analysis/Neurosynth/graph_analysis_data/graph_stats/num_articles/jaccard_README.txt",
+					"settings":
+					{
+						"buffer_size": 186,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								185,
+								185
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
 			]
 		}
 	],
@@ -481,6 +667,12 @@
 				0,
 				1,
 				1
+			],
+			[
+				0,
+				1,
+				1,
+				2
 			]
 		],
 		"cols":
@@ -491,6 +683,7 @@
 		"rows":
 		[
 			0.0,
+			0.5,
 			1.0
 		]
 	},
@@ -580,6 +773,6 @@
 	"show_open_files": true,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 219.0,
+	"side_bar_width": 388.0,
 	"status_bar_visible": true
 }

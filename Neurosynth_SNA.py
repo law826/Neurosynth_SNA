@@ -348,7 +348,7 @@ def ModifySubGraph(graph):
         visual_style = {} #sets method of modifying graph characteristics
         visual_style ["vertex_label"]= srgc.vs["term"] # labels the vertices
         visual_style ["vertex_label_dist"] = 1.0 # specifies the distance between the labels and the vertice
-        visual_style ["vertex_size"] = srgc.vs["zscore"] # specifies size of vertex_size
+        visual_style ["vertex_size"] = srgc.vs["percentile"] # specifies size of vertex_size
         visual_style["bbox"] = (750,750) #sets dimensions for the box layout
         visual_style["margin"] = 60
         
@@ -462,12 +462,12 @@ if __name__ == '__main__':
     ns = LoadPickle('M:/KBE.01/Analysis/Neurosynth/graph_analysis_data/pickles/number_of_studies.p')
     rg.vs["numberofstudies"] = ns
     npns = np.array(ns)
-    nsmean= np.mean(npns)
-    nsstd= np.std(npns)
-    rg.vs["zscore"] = [(((x-nsmean)/nsstd)*10) for x in rg.vs["numberofstudies"]]
+    nsp = np.percentile(ns)
+    rg.vs["percentile"] = [nsp]
     ModifySubGraph(rg)
     set_trace()
- """
+
+"""
 Old commands:
 file_names = GetFileNamesInDirectory(maindir)
 CreateEdgelist(maindir, file_names, outdir, 'forward_inference')

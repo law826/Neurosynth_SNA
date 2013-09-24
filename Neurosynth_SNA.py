@@ -201,10 +201,15 @@ class ArticleAnalysis():
             to create a jaccard vs. weight scatter plot.
         """
         graph = Graph.Read_Pickle(graph_pickle)
-        with open(os.path.join(directory, 'jaccard.txt')) as f:
-            for jaccard in graph.es['article_jaccard']:
-                f.write('%s\n' % jaccard)
-        import pdb; pdb.set_trace()
+        with open(os.path.join(directory, 'jaccard.txt'), 'w') as f:
+            for i, jaccard in enumerate(graph.es['article_jaccard']):
+                tuple_index = graph.es[i].tuple # This is the indexed term of the relevant vertices of the given edge.
+                first_vertex = graph.vs[tuple_index[0]]["term"]
+                second_vertex = graph.vs[tuple_index[1]]["term"]
+                brain_weight = graph.es[i]["weight"]
+                f.write('%s-%s,%s,%s\n' % (first_vertex, second_vertex, brain_weight, jaccard))
+
+
 
 
 
@@ -467,7 +472,7 @@ if __name__ == '__main__':
     rg.vs["zscore"] = [(((x-nsmean)/nsstd)*10) for x in rg.vs["numberofstudies"]]
     ModifySubGraph(rg)
     set_trace()
- """
+"""
 Old commands:
 file_names = GetFileNamesInDirectory(maindir)
 CreateEdgelist(maindir, file_names, outdir, 'forward_inference')

@@ -19,13 +19,12 @@ class TestDatabase(unittest.TestCase):
 
 	def test_ArticleAnalysis(self):
 		npath = self.paths.git_path
-		# term = 'emo*'
+		# # term = 'emo*'
 		aa = ns.ArticleAnalysis(npath)
 
 		directory = '/Volumes/huettel/KBE.01/Analysis/Neurosynth/graph_analysis_data/graph_stats/num_articles/'
 		graph_pickle = '/Volumes/huettel/KBE.01/Analysis/Neurosynth/graph_analysis_data/pickles/sub_reverse_graph_concept_with_Jaccards.p' 
-		import pdb; pdb.set_trace()
-		ns.OutputJaccardsAndWeightsToFiles(graph_pickle, directory)		
+		aa.OutputJaccardsAndWeightsToFiles(graph_pickle, directory)		
 
 		# number_of_terms = aa.CalculateNumberofArticles(term)
 #    def OutputJaccardsAndWeightsToFiles(self, graph_pickle, directory):

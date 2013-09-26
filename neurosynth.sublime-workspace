@@ -128,46 +128,10 @@
 	"buffers":
 	[
 		{
-			"file": "/Volumes/huettel/KBE.01/Analysis/Neurosynth/graph_analysis_data/graph_stats/num_articles/num_articles_README.txt",
+			"file": "/Volumes/huettel/KBE.01/Analysis/Neurosynth/neurosynthgit/examples/decode_images.py",
 			"settings":
 			{
-				"buffer_size": 170,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/Volumes/huettel/KBE.01/Analysis/Neurosynth/graph_analysis_data/pickles/sub_reverse_graph_concept_with_Jaccards_README.txt",
-			"settings":
-			{
-				"buffer_size": 41,
-				"line_ending": "Unix",
-				"name": "sub_reverse_graph_concept_with_Jaccards.p"
-			}
-		},
-		{
-			"file": "tests/test_Neurosynth_SNA.py",
-			"settings":
-			{
-				"buffer_size": 3909,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "Neurosynth_SNA.py",
-			"settings":
-			{
-				"buffer_size": 23538,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"contents": "jaccard.xlsx\n\nThis is derived from Ellie's subgraph.\nBrain weight is the correlation between brain images.\nJaccard is the number of intersecting articles divided by union of articles. \n\n",
-			"file": "/Volumes/huettel/KBE.01/Analysis/Neurosynth/graph_analysis_data/graph_stats/num_articles/jaccard_README.txt",
-			"file_size": 184,
-			"file_write_time": 1379971339000000,
-			"settings":
-			{
-				"buffer_size": 186,
+				"buffer_size": 1195,
 				"line_ending": "Unix"
 			}
 		}
@@ -228,13 +192,17 @@
 	},
 	"file_history":
 	[
-		"/Users/ln30/Git/Neurosynth_SNA/ListClass.py",
 		"/Users/ln30/Git/Neurosynth_SNA/Neurosynth_SNA.py",
+		"/Users/ln30/Git/Neurosynth_SNA/tests/test_Neurosynth_SNA.py",
+		"/Volumes/huettel/KBE.01/Analysis/Neurosynth/graph_analysis_data/pickles/sub_reverse_graph_concept_with_Jaccards_README.txt",
+		"/Volumes/huettel/KBE.01/Analysis/Neurosynth/graph_analysis_data/graph_stats/num_articles/num_articles_README.txt",
+		"/Volumes/huettel/KBE.01/Analysis/Neurosynth/graph_analysis_data/graph_stats/num_articles/scatterplot.py",
+		"/Volumes/huettel/KBE.01/Analysis/Neurosynth/graph_analysis_data/graph_stats/num_articles/jaccard_README.txt",
+		"/Users/ln30/Git/Neurosynth_SNA/ListClass.py",
 		"/Users/ln30/Dropbox/Random/dissertation_text",
 		"/Users/ln30/Git/Neurosynth_SNA/tests/finish making the scatter plot",
 		"/Volumes/huettel/KBE.01/Analysis/Neurosynth/neurosynthgit/neurosynth/base/dataset.py",
 		"/Volumes/huettel/KBE.01/Analysis/Neurosynth/neurosynthgit/neurosynth/base/lexparser.py",
-		"/Users/ln30/Git/Neurosynth_SNA/tests/test_Neurosynth_SNA.py",
 		"/Users/ln30/Git/Neurosynth_SNA/.gitignore",
 		"/Volumes/huettel/KBE.01/Analysis/Neurosynth/neurosynthgit/neurosynth/analysis/meta.py",
 		"/Volumes/huettel/KBE.01/Analysis/Neurosynth/neurosynthgit/examples/create_a_full_set_of_meta_analysis_images.py",
@@ -503,143 +471,28 @@
 	"groups":
 	[
 		{
-			"selected": 2,
+			"selected": 0,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "/Volumes/huettel/KBE.01/Analysis/Neurosynth/graph_analysis_data/graph_stats/num_articles/num_articles_README.txt",
+					"file": "/Volumes/huettel/KBE.01/Analysis/Neurosynth/neurosynthgit/examples/decode_images.py",
 					"settings":
 					{
-						"buffer_size": 170,
+						"buffer_size": 1195,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								170,
-								170
+								1021,
+								1021
 							]
 						],
 						"settings":
 						{
-							"auto_name": "",
-							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "/Volumes/huettel/KBE.01/Analysis/Neurosynth/graph_analysis_data/pickles/sub_reverse_graph_concept_with_Jaccards_README.txt",
-					"settings":
-					{
-						"buffer_size": 41,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								41,
-								41
-							]
-						],
-						"settings":
-						{
-							"auto_name": "sub_reverse_graph_concept_with_Jaccards.p",
-							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "tests/test_Neurosynth_SNA.py",
-					"settings":
-					{
-						"buffer_size": 3909,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								837,
-								837
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Python/Python.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 119.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				}
-			]
-		},
-		{
-			"selected": 1,
-			"sheets":
-			[
-				{
-					"buffer": 3,
-					"file": "Neurosynth_SNA.py",
-					"settings":
-					{
-						"buffer_size": 23538,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								10724,
-								10724
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Python/Python.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 3227.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "/Volumes/huettel/KBE.01/Analysis/Neurosynth/graph_analysis_data/graph_stats/num_articles/jaccard_README.txt",
-					"settings":
-					{
-						"buffer_size": 186,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								185,
-								185
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Text/Plain text.tmLanguage"
+							"syntax": "Packages/Python/Python.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -667,12 +520,6 @@
 				0,
 				1,
 				1
-			],
-			[
-				0,
-				1,
-				1,
-				2
 			]
 		],
 		"cols":
@@ -683,7 +530,6 @@
 		"rows":
 		[
 			0.0,
-			0.5,
 			1.0
 		]
 	},
@@ -702,6 +548,10 @@
 		"height": 0.0,
 		"selected_items":
 		[
+			[
+				"decod",
+				"Neurosynth/neurosynthgit/examples/decode_images.py"
+			],
 			[
 				"dataset",
 				"neurosynthgit/neurosynth/base/dataset.py"
@@ -766,6 +616,10 @@
 		"height": 500.0,
 		"selected_items":
 		[
+			[
+				"",
+				"/Users/ln30/Git/Neurosynth_SNA/neurosynth.sublime-project"
+			]
 		],
 		"width": 380.0
 	},

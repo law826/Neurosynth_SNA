@@ -50,6 +50,7 @@ class Paths():
             self.maindir = os.path.join('/Volumes', 'huettel', 'KBE.01',  'Analysis', 'Neurosynth', 'correlations_raw_data', 'ForwardResults')
             self.outdir  = os.path.join('/Volumes', 'huettel', 'KBE.01', 'Analysis', 'Neurosynth', 'graph_analysis_data')
             self.importdir  = os.path.join('/Volumes', 'huettel', 'KBE.01', 'Analysis', 'Neurosynth', 'correlations_raw_data')
+            self.pickle_path = os.path.join('/Volumes', 'huettel', 'KBE.01', 'Analysis', 'Neurosynth', 'graph_analysis_data', 'pickles')
             self.r_pickle_path = os.path.join('/Volumes', 'huettel', 'KBE.01', 'Analysis', 'Neurosynth', 'graph_analysis_data', 'pickles', 'reverse_graph.p')
             self.f_pickle_path = os.path.join('/Volumes', 'huettel', 'KBE.01', 'Analysis', 'Neurosynth', 'graph_analysis_data', 'pickles', 'forward_graph.p')
             self.git_path = os.path.join('/Volumes', 'huettel', 'KBE.01', 'Analysis', 'Neurosynth', 'neurosynthgit')
@@ -57,6 +58,7 @@ class Paths():
             self.maindir = os.path.join('M:', 'KBE.01', 'Analysis', 'Neurosynth', 'correlations_raw_data', 'ForwardResults')
             self.outdir  = os.path.join('M:', 'KBE.01', 'Analysis', 'Neurosynth', 'graph_analysis_data')
             self.importdir  = os.path.join('M:', 'KBE.01', 'Analysis', 'Neurosynth', 'Data')
+            self.pickle_path = os.path.join('M:', 'KBE.01', 'Analysis', 'Neurosynth', 'graph_analysis_data', 'pickles')
             self.r_pickle_path = os.path.join('M:', 'KBE.01', 'Analysis', 'Neurosynth', 'graph_analysis_data', 'pickles', 'reverse_graph.p')
             self.f_pickle_path = os.path.join('M:', 'KBE.01', 'Analysis', 'Neurosynth', 'graph_analysis_data', 'pickles', 'forward_graph.p')
             self.git_path = os.path.join('M:', 'KBE.01', 'Analysis', 'Neurosynth', 'neurosynthgit')
@@ -65,6 +67,7 @@ class Paths():
             self.maindir = os.path.join('/home', username, 'experiments', 'KBE.01', 'Analysis', 'Neurosynth', 'correlations_raw_data', 'ForwardResults')
             self.outdir  = os.path.join('/home', username, 'experiments', 'KBE.01', 'Analysis', 'Neurosynth', 'graph_analysis_data')
             self.importdir  = os.path.join('/home', username, 'experiments', 'KBE.01', 'Analysis', 'Neurosynth', 'correlations_raw_data')
+            self.pickle_path = os.path.join('/home', username, 'experiments', 'KBE.01', 'Analysis', 'Neurosynth', 'graph_analysis_data', 'pickles')
             self.r_pickle_path = os.path.join('/home', username, 'experiments', 'KBE.01', 'Analysis', 'Neurosynth', 'graph_analysis_data', 'pickles', 'reverse_graph.p')
             self.f_pickle_path = os.path.join('/home', username, 'experiments', 'KBE.01', 'Analysis', 'Neurosynth', 'graph_analysis_data', 'pickles', 'forward_graph.p')
             self.git_path = os.path.join('/home', username, 'experiments', 'KBE.01', 'Analysis', 'Neurosynth', 'neurosynthgit')
@@ -473,8 +476,9 @@ if __name__ == '__main__':
     paths = Paths() # Paths is a now a class object, and the way to access to paths is demonstrated below. 
     fg = LoadGraph(paths.f_pickle_path)
     rg = LoadGraph(paths.r_pickle_path)
-    
-   
+    srgc = LoadGraph(paths.pickle_path+os.sep+'sub_reverse_graph_concept.p')
+    vsrgc = srgc.community_fastgreedy(weight = "weights")
+    plot(vsrgc)
     
     
     set_trace()

@@ -5,7 +5,7 @@ import random as rand
 import cPickle 
 import numpy as np
 import getpass
-import nltk
+#import nltk
 from pdb import *
 from igraph import *
 import pickle

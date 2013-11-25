@@ -47,30 +47,37 @@ class Paths():
             - *edgelist: Exist paths of the edgelists from importdir.
         """
         if sys.platform == "darwin":
-            self.maindir = os.path.join('/Volumes', 'huettel', 'KBE.01',  'Analysis', 'Neurosynth', 'correlations_raw_data', 'ForwardResults')
+            self.maindir = os.path.join('/Volumes', 'huettel', 'KBE.01',  'Analysis', 'Neurosynth', 'correlations_raw_data', 'run1')
             self.outdir  = os.path.join('/Volumes', 'huettel', 'KBE.01', 'Analysis', 'Neurosynth', 'graph_analysis_data')
             self.importdir  = os.path.join('/Volumes', 'huettel', 'KBE.01', 'Analysis', 'Neurosynth', 'correlations_raw_data')
             self.pickle_path = os.path.join('/Volumes', 'huettel', 'KBE.01', 'Analysis', 'Neurosynth', 'graph_analysis_data', 'pickles')
             self.r_pickle_path = os.path.join('/Volumes', 'huettel', 'KBE.01', 'Analysis', 'Neurosynth', 'graph_analysis_data', 'pickles', 'reverse_graph.p')
             self.f_pickle_path = os.path.join('/Volumes', 'huettel', 'KBE.01', 'Analysis', 'Neurosynth', 'graph_analysis_data', 'pickles', 'forward_graph.p')
             self.git_path = os.path.join('/Volumes', 'huettel', 'KBE.01', 'Analysis', 'Neurosynth', 'neurosynthgit')
+            self.merge_path = os.path.join('/Volumes', 'huettel', 'KBE.01', 'Analysis', 'Neurosynth', 'correlations_raw_data', 'run2', 'Reverse_Inference2')
+            self.rt_pickle_path = os.path.join('/Volumes', 'huettel', 'KBE.01', 'Analysis', 'Neurosynth', 'graph_analysis_data', 'pickles', 'reverse_graph2.p')
+            
         elif sys.platform == "win32":
-            self.maindir = os.path.join('M:', 'KBE.01', 'Analysis', 'Neurosynth', 'correlations_raw_data', 'ForwardResults')
+            self.maindir = os.path.join('M:', 'KBE.01', 'Analysis', 'Neurosynth', 'correlations_raw_data', 'run1')
             self.outdir  = os.path.join('M:', 'KBE.01', 'Analysis', 'Neurosynth', 'graph_analysis_data')
             self.importdir  = os.path.join('M:', 'KBE.01', 'Analysis', 'Neurosynth', 'Data')
             self.pickle_path = os.path.join('M:', 'KBE.01', 'Analysis', 'Neurosynth', 'graph_analysis_data', 'pickles')
             self.r_pickle_path = os.path.join('M:', 'KBE.01', 'Analysis', 'Neurosynth', 'graph_analysis_data', 'pickles', 'reverse_graph.p')
             self.f_pickle_path = os.path.join('M:', 'KBE.01', 'Analysis', 'Neurosynth', 'graph_analysis_data', 'pickles', 'forward_graph.p')
             self.git_path = os.path.join('M:', 'KBE.01', 'Analysis', 'Neurosynth', 'neurosynthgit')
+            self.merge_path = os.path.join('M:', 'KBE.01', 'Analysis', 'Neurosynth', 'correlations_raw_data', 'run2', 'Reverse_Inference2')
+            self.rt_pickle_path = os.path.join('M:', 'KBE.01', 'Analysis', 'Neurosynth', 'graph_analysis_data', 'pickles', 'reverse_graph2.p')
         elif sys.platform == "linux2":
             self.username=getpass.getuser()
-            self.maindir = os.path.join('/home', username, 'experiments', 'KBE.01', 'Analysis', 'Neurosynth', 'correlations_raw_data', 'ForwardResults')
+            self.maindir = os.path.join('/home', username, 'experiments', 'KBE.01', 'Analysis', 'Neurosynth', 'correlations_raw_data', 'run1')
             self.outdir  = os.path.join('/home', username, 'experiments', 'KBE.01', 'Analysis', 'Neurosynth', 'graph_analysis_data')
             self.importdir  = os.path.join('/home', username, 'experiments', 'KBE.01', 'Analysis', 'Neurosynth', 'correlations_raw_data')
             self.pickle_path = os.path.join('/home', username, 'experiments', 'KBE.01', 'Analysis', 'Neurosynth', 'graph_analysis_data', 'pickles')
             self.r_pickle_path = os.path.join('/home', username, 'experiments', 'KBE.01', 'Analysis', 'Neurosynth', 'graph_analysis_data', 'pickles', 'reverse_graph.p')
             self.f_pickle_path = os.path.join('/home', username, 'experiments', 'KBE.01', 'Analysis', 'Neurosynth', 'graph_analysis_data', 'pickles', 'forward_graph.p')
             self.git_path = os.path.join('/home', username, 'experiments', 'KBE.01', 'Analysis', 'Neurosynth', 'neurosynthgit')
+            self.merge_path = os.path.join('/home', username, 'experiments', 'KBE.01', 'Analysis', 'Neurosynth', 'correlations_raw_data', 'run2', 'Reverse_Inference2')
+            self.rt_pickle_path = os.path.join('/home', username, 'experiments', 'KBE.01', 'Analysis', 'Neurosynth', 'graph_analysis_data', 'pickles', 'reverse_graph2.p')
 
         self.forward_inference_edgelist = os.path.join(self.outdir, "forward_inference.txt")
         self.reverse_inference_edgelist = os.path.join(self.outdir, "reverse_inference.txt")
@@ -322,9 +329,15 @@ def StripName(graph, rawterms):
     Ex. list_rawterms = rg.vs["term"]
         rg = StripName(rg, list_rawterms)
     """
-    graph.vs["term"]=rawterms # Set the names of the vertices.
-    graph.vs["term"]=[x.split('_')[1] for x in graph.vs["term"]]
-    return graph
+    if graph == rg:
+        graph.vs["term"]=rawterms # Set the names of the vertices.
+        graph.vs["term"]=[x.split('_')[1] for x in graph.vs["term"]]
+        return graph
+
+    elif graph == tg:
+        graph.vs["term"]=rawterms # Set the names of the vertices.
+        graph.vs["term"]=[x.split('_')[0] for x in graph.vs["term"]]
+        return graph
 
 def ModifySubGraph(graph):
     """
@@ -368,8 +381,28 @@ def ModifySubGraph(graph):
         visual_style ["vertex_label_dist"] = 1.0 # specifies the distance between the labels and the vertice
         visual_style ["vertex_size"] = srgc.vs["log"] # specifies size of vertex_size
         visual_style["bbox"] = (750,750) #sets dimensions for the box layout
-        visual_style["margin"] = 60
+        visual_style ["margin"] = 60
         plot(srgc, **visual_style) # creates the changes
+        #plot (sfgc, outdir+os.sep+ "forward_sub_graph_concept", **visual_style) # creates the changes
+        #SaveGraph(srgc, outdir+os.sep+"sub_reverse_graph_concept") #saves graph in outdir
+    elif graph == tg:
+        listclass = ListClass()
+        sub_list_concept = listclass.sub_Beam_concepts
+        ns = LoadPickle('M:/KBE.01/Analysis/Neurosynth/graph_analysis_data/pickles/number_of_studies.p')
+        graph.vs["numberofstudies"] = ns #creates attribute for number of studies
+        npns = np.array(ns) #creates array of number of studies
+        nsl = np.log10(npns) #calculates log of number of studies
+        graph.vs["log"] = nsl*8 #multiplies constant to create attribute "log"
+        stgc = database.IsolateSubGraph(graph, sub_list_concept, "term") # creates sub graph from main graph rg
+        index_to_delete = [edge.index for edge in stgc.es.select(weight_lt=0.105)] # creates threshold by selecting edges lower than a certain weight
+        stgc.delete_edges(index_to_delete) #deletes selected edges
+        visual_style = {} #sets method of modifying graph characteristics
+        visual_style ["vertex_label"]= stgc.vs["term"] # labels the vertices
+        visual_style ["vertex_label_dist"] = 0.9 # specifies the distance between the labels and the vertice
+        visual_style ["vertex_size"] = stgc.vs["log"] # specifies size of vertex_size
+        visual_style["bbox"] = (800,800) #sets dimensions for the box layout
+        visual_style ["margin"] = 50
+        plot(stgc, **visual_style) # creates the changes
         #plot (sfgc, outdir+os.sep+ "forward_sub_graph_concept", **visual_style) # creates the changes
         #SaveGraph(srgc, outdir+os.sep+"sub_reverse_graph_concept") #saves graph in outdir
 
@@ -382,7 +415,7 @@ def SaveCentrality(graph, type, file_name):
     """
     import csv
     list= database.NodesInOrderOfCentrality(graph, type)
-    with open(outdir+os.sep+file_name+'.csv', 'wb') as result:
+    with open(paths.outdir+os.sep+file_name+'.csv', 'wb') as result:
         writer = csv.writer(result, dialect= 'excel')
         writer.writerows(list)
 
@@ -474,15 +507,24 @@ To do list:
 """ 
 if __name__ == '__main__':
     paths = Paths() # Paths is a now a class object, and the way to access to paths is demonstrated below. 
+    
     fg = LoadGraph(paths.f_pickle_path)
     rg = LoadGraph(paths.r_pickle_path)
-    srgc = LoadGraph(paths.pickle_path+os.sep+'sub_reverse_graph_concept.p')
-    vsrgc = srgc.community_fastgreedy(weight = "weights")
-    plot(vsrgc)
-    
-    
-    set_trace()
+    tg = LoadGraph(paths.rt_pickle_path)
+    tbg= tg
+    tbg.es["weight"] = [x+1 for x in tbg.es["weight"]]
+    tbng= database.NodesInOrderOfCentrality(tbg, 'betweenness')
+    import csv
+    zero_list= tbng
+    with open('betweenness_tbng.csv', 'wb') as result:
+        writer = csv.writer(result, dialect= 'excel')
+        for x in zero_list:
+            writer.writerow([x])
 
+
+    
+    
+    
 
 """
 Old commands:
@@ -536,7 +578,48 @@ creating nodes that are different sizes based on numberofstudies
  nsl = np.log10(npns) #calculates log of number of studies
  rg.vs["log"] = nsl*8 #multiplies constant to create attribute "log"
  ModifySubGraph(rg)
-    
+
+
+Creates ventrodiagram
+srgc = LoadGraph(paths.pickle_path+os.sep+'sub_reverse_graph_concept.p')
+vsrgc = srgc.community_fastgreedy(weights = "weight")
+plot(vsrgc)
+
+Merge thersaurus terms
+    srgc = LoadPickle('M:/KBE.01/Analysis/Neurosynth/graph_analysis_data/pickles/sub_reverse_graph_concept.p')
+    listclass= ListClass()
+    path= Paths()
+    NeurosynthMerge(listclass.thesaurus, path.git_path, path.outdir, test_mode=False)
+
+Creating reverse graph
+file_names = GetFileNamesInDirectory(paths.maindir+os.sep+'ReverseResults')
+    rg = ImportNcol(paths.maindir+os.sep+'reverse_inference.txt')
+    SaveGraph(rg, paths.r_pickle_path)
+    rg = LoadGraph(paths.r_pickle_path) 
+    rg.vs["term"] = file_names
+    list_rawterms = rg.vs["term"]
+    rg = StripName(rg, list_rawterms)
+    rg.to_undirected(mode="collapse", combine_edges= "max")
+    rg = database.StripLoops(rg)
+    ModifySubGraph(rg)
+
+Creating graph for thesaurus terms
+    file_names = GetFileNamesInDirectory(paths.merge_path)
+    merge_list = CreateEdgelist(paths.merge_path, file_names, paths.outdir+os.sep+'merge_edgelist', 'merge_list')
+    merge_graph = ImportNcol(paths.outdir+os.sep+'merge_edgelist'+os.sep+'merge_list.txt')
+    SaveGraph(merge_graph, paths.rt_pickle_path)
+    tg = LoadGraph(paths.rt_pickle_path) 
+    tg.vs["term"] = file_names
+    list_rawterms = tg.vs["term"]
+    tg = StripName(tg, list_rawterms)
+    tg.to_undirected(mode="collapse", combine_edges= "max")
+    tg = database.StripLoops(tg)
+    ModifySubGraph(tg)
+
+Changing color of nodes (work in progress)
+srgc.vs["label"] = srgc.vs["name"]
+color_dict = {"23,4": "blue", "5,8": "pink"}
+srgc.vs["color"] = [color_dict[name] for name in srgc.vs["name"]
 
 """
 

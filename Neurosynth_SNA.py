@@ -2,11 +2,9 @@
 # encoding: utf-8
 """
 [] import the neurosynth code for counting study numbers
-[] be careful with naming variable "list"
 [] path notation has been changed.
 [] get merge list from everyone
 [] run the new list of merged terms
-[] rerun all the code up to this point
 [] clean up code from listclass migration
 [] encode number of studies
 [] research page rank
@@ -168,6 +166,16 @@ class ArticleAnalysis():
         num_ids = len(ids)
         return num_ids
 
+    def CalculateNumberofArticlesForDirectory(self, directory):
+        """
+        Takes a list of terms and employs the above CalculateNumberofArticles function to every term.
+
+        Output: Commas seperated file with file name in as first entry and number of articles 
+        as second entry.
+        """
+        
+        return        
+
     def CalculateJaccard(self, term1, term2):
         unique_ex1 = term1 + '&~' + term2
         unique_ex2 = term2 + '&~' + term1
@@ -184,7 +192,8 @@ class ArticleAnalysis():
 
     def AssignJaccardsToGraph(self, graph, gr_out_pth):
         """
-        Takes a graph and assigns the Neurosynth Jaccard index for the number of studies relevant terms appear in.
+        Takes a graph and assigns the Neurosynth Jaccard index for the number of studies 
+        relevant terms appear in.
             Args:
                 - graph
                 - gr_out_pth: path for the pickle of the new modified graph.
@@ -216,15 +225,6 @@ class ArticleAnalysis():
                 second_vertex = graph.vs[tuple_index[1]]["term"]
                 brain_weight = graph.es[i]["weight"]
                 f.write('%s-%s,%s,%s\n' % (first_vertex, second_vertex, brain_weight, jaccard))
-
-
-
-
-
-
-
-
-
 
 def GetFileNamesInDirectory(directory):
     """

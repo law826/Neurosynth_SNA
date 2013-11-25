@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # encoding: utf-8
 """
-[] paths has changed to a class
 [] import the neurosynth code for counting study numbers
 [] be careful with naming variable "list"
 [] path notation has been changed.
@@ -31,7 +30,6 @@ try:
     from igraph import *
 except ImportError:
     raise ImportError, "The igraph module is required to run this program."
-
 
 class Paths():   
     def __init__(self):

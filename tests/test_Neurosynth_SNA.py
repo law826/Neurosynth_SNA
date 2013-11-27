@@ -22,8 +22,10 @@ class TestDatabase(unittest.TestCase):
 		# # term = 'emo*'
 		aa = ns.ArticleAnalysis(npath)
 
-		directory = '/Volumes/huettel/KBE.01/Analysis/Neurosynth/graph_analysis_data/graph_stats/num_articles/'
-		graph_pickle = '/Volumes/huettel/KBE.01/Analysis/Neurosynth/graph_analysis_data/pickles/sub_reverse_graph_concept_with_Jaccards.p' 
+		directory = '/Volumes/huettel/KBE.01/Analysis/Neurosynth/' \
+		'graph_analysis_data/graph_stats/num_articles/'
+		graph_pickle = '/Volumes/huettel/KBE.01/Analysis/Neurosynth/' \
+		'graph_analysis_data/pickles/sub_reverse_graph_concept_with_Jaccards.p' 
 		aa.OutputJaccardsAndWeightsToFiles(graph_pickle, directory)		
 
 		# number_of_terms = aa.CalculateNumberofArticles(term)
@@ -34,15 +36,18 @@ class TestDatabase(unittest.TestCase):
 		# self.assertEqual(emo_jaccard, (72/(92+1979+72)))
 
 		# There are no tests for the following!
-		# Beam_sub_graph = ns.LoadGraph('/Volumes/huettel/KBE.01/Analysis/Neurosynth/graph_analysis_data/pickles/sub_reverse_graph_concept.p')
+		# Beam_sub_graph = ns.LoadGraph('/Volumes/huettel/KBE.01/Analysis/Neurosynth/' \
+		#	'graph_analysis_data/pickles/sub_reverse_graph_concept.p')
 		# aa.AssignJaccardsToGraph(Beam_sub_graph)
 
 
-	# def test_GetFileNamesInDirectory(self):
-	# 	files = ns.GetFileNamesInDirectory('/Volumes/huettel/KBE.01/Analysis/Neurosynth/correlations_raw_data/ReverseResults/')
-
-	# 	self.assertEqual(len(files), 525)
-	# 	self.assertNotEqual(files[0], '_DS.Store')
+	def test_GetFileNamesInDirectory(self):
+		files = ns.GetFileNamesInDirectory('/Volumes/huettel/KBE.01/Analysis/Neurosynth/' \
+			'graph_analysis_data/NeurosynthMerge/Reverse_Inference2')
+		
+		# Round 2 after merging should only have 414 instead of 525 studies.
+		self.assertEqual(len(files), 414) 
+		self.assertNotEqual(files[0], '_DS.Store')
 
 	# def test_graph_vertices_and_edges(self):
 	# 	number_of_vertices = 525

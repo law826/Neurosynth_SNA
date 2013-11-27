@@ -171,7 +171,7 @@ class NeurosynthMerge:
             ma = meta.MetaAnalysis(self.dataset, self.ids)
 
             # Parse the feature name (to avoid conflicts with illegal 
-                characters as file names)
+                # characters as file names)
             regex = re.compile('\W+')
             split = re.split(regex, feature)
             feat_fname = split[0] 
@@ -349,7 +349,7 @@ def CreateCrossCorrelationTable(maindir, file_names, outdir, outname):
 
     outpath=os.sep.join([outdir, outname])
     np.save(outpath, concatenate_data)
-    np.savetxt(outpath+'.txt', concatenate_data, fmt='%10.3f', delimiter=',')
+    np.savetxt(outpath+'.csv', concatenate_data, fmt='%10.3f', delimiter=',')
         
 def CreateEdgelist(maindir, file_names, outdir, outname):
     """
@@ -373,7 +373,7 @@ def CreateEdgelist(maindir, file_names, outdir, outname):
     outpath=os.sep.join([outdir, outname])
 
     np.save(outpath, concatenate_data)
-    np.savetxt(outpath+'.txt', concatenate_data, fmt='%1.f %1.f %1.3f')
+    np.savetxt(outpath+'.csv', concatenate_data, fmt='%1.f %1.f %1.3f')
     
 def ImportAdjacencyMatrix(file):
     graph = Graph.Read_Adjacency(file)
@@ -432,8 +432,8 @@ def ModifySubGraph(graph):
     if graph == fg:
         listclass = ListClass()
         sub_list_concept = listclass.sub_Beam_concepts
-        ns = LoadPickle('M:/KBE.01/Analysis/Neurosynth/ \
-            graph_analysis_data/pickles/number_of_studies.p')
+        ns = LoadPickle('M:/KBE.01/Analysis/Neurosynth/' \
+            'graph_analysis_data/pickles/number_of_studies.p')
         graph.vs["numberofstudies"] = ns 
         #creates attribute for number of studies
         npns = np.array(ns) #creates array of number of studies
@@ -460,8 +460,8 @@ def ModifySubGraph(graph):
     elif graph == rg:
         listclass = ListClass()
         sub_list_concept = listclass.sub_Beam_concepts
-        ns = LoadPickle('M:/KBE.01/Analysis/Neurosynth/graph_analysis_data/ \
-            pickles/number_of_studies.p')
+        ns = LoadPickle('M:/KBE.01/Analysis/Neurosynth/graph_analysis_data/' \
+            'pickles/number_of_studies.p')
         graph.vs["numberofstudies"] = ns 
         #creates attribute for number of studies
         npns = np.array(ns) #creates array of number of studies
@@ -482,14 +482,14 @@ def ModifySubGraph(graph):
         visual_style ["margin"] = 60
         plot(srgc, **visual_style) # creates the changes
         #plot (sfgc, outdir+os.sep+ "forward_sub_graph_concept", 
-        **visual_style) # creates the changes
+        # **visual_style) # creates the changes
         #SaveGraph(srgc, outdir+os.sep+"sub_reverse_graph_concept") 
         #saves graph in outdir
     elif graph == tg:
         listclass = ListClass()
         sub_list_concept = listclass.sub_Beam_concepts
-        ns = LoadPickle('M:/KBE.01/Analysis/Neurosynth/graph_analysis_data/ \
-            pickles/number_of_studies.p')
+        ns = LoadPickle('M:/KBE.01/Analysis/Neurosynth/graph_analysis_data/' \
+            'pickles/number_of_studies.p')
         graph.vs["numberofstudies"] = ns 
         #creates attribute for number of studies
         npns = np.array(ns) #creates array of number of studies
@@ -602,7 +602,7 @@ class NeurosynthMerge:
         self.feature_list = self.dataset.get_feature_names()
 
         #ids = self.dataset.get_ids_by_expression('recollection', 
-            threshold=0.001); print len(ids)
+        #    threshold=0.001); print len(ids)
         #import pdb; pdb.set_trace()
 
 """
@@ -685,8 +685,8 @@ save functions for list of tuples to csv:
 # writer.writerows(test_list)
 
 creating betweenness centrality measures to compare with Beam et al
-srgc = LoadPickle('M:/KBE.01/Analysis/Neurosynth/graph_analysis_data/pickles/ \
-    sub_reverse_graph_concept.p')
+srgc = LoadPickle('M:/KBE.01/Analysis/Neurosynth/graph_analysis_data/pickles/' \
+    'sub_reverse_graph_concept.p')
     ng= srgc
     ng.es["weight"] = [x+1 for x in ng.es["weight"]]
     bng= database.NodesInOrderOfCentrality(ng, 'betweenness')
@@ -701,8 +701,8 @@ srgc = LoadPickle('M:/KBE.01/Analysis/Neurosynth/graph_analysis_data/pickles/ \
 
 
 creating nodes that are different sizes based on numberofstudies
- ns = LoadPickle('M:/KBE.01/Analysis/Neurosynth/graph_analysis_data/pickles/ \
-    number_of_studies.p')
+ ns = LoadPickle('M:/KBE.01/Analysis/Neurosynth/graph_analysis_data/pickles/' \
+    'number_of_studies.p')
  rg.vs["numberofstudies"] = ns #creates attribute for number of studies
  npns = np.array(ns) #creates array of number of studies
  nsl = np.log10(npns) #calculates log of number of studies
@@ -716,8 +716,8 @@ vsrgc = srgc.community_fastgreedy(weights = "weight")
 plot(vsrgc)
 
 Merge thersaurus terms
-    srgc = LoadPickle('M:/KBE.01/Analysis/Neurosynth/graph_analysis_data/ \
-        pickles/sub_reverse_graph_concept.p')
+    srgc = LoadPickle('M:/KBE.01/Analysis/Neurosynth/graph_analysis_data/' \
+        'pickles/sub_reverse_graph_concept.p')
     listclass= ListClass()
     path= Paths()
     NeurosynthMerge(listclass.thesaurus, path.git_path, path.outdir, 

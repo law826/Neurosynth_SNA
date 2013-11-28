@@ -9,7 +9,7 @@ from __future__ import division
 from pdb import *
 import os, sys, getpass, random as rand, cPickle, numpy as np
 
-sys.path.append(os.path.realpath('..'))
+sys.path.append('/Users/ln30/Git/Neurosynth_SNA/')
 import Neurosynth_SNA as ns
 
 # Import all the relevant paths.

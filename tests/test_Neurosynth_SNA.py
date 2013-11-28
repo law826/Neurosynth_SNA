@@ -7,7 +7,7 @@ try:
 except ImportError:
 	raise ImportError, "The igraph module is required to run this program."
 
-sys.path.append(os.path.realpath('..'))
+sys.path.append('/Users/ln30/Git/Neurosynth_SNA/')
 import Neurosynth_SNA as ns
 
 

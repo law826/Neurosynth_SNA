@@ -6,9 +6,7 @@
 [] get merge list from everyone
 [] run the new list of merged terms
 [] clean up code from listclass migration
-[] encode number of studies
 [] research page rank
-[] get cairo working
 [] make functionality for starting from the beginning again.
 [] test whether current import protocol works
 [] add functionality for windowsj
@@ -21,6 +19,7 @@ import database
 from pdb import *
 import os, sys, getpass, random as rand, cPickle, numpy as np
 import re
+import csv
 
 from ListClass import ListClass
 
@@ -232,7 +231,7 @@ class ArticleAnalysis():
         num_ids = len(ids)
         return num_ids
 
-    def CalculateNumberofArticlesForDirectory(self, directory):
+    def CalculateNumberofArticlesForManyTerms(self, terms):
         """
         Takes a list of terms and employs the above CalculateNumberofArticles 
         function to every term.
@@ -241,8 +240,12 @@ class ArticleAnalysis():
         number of articles 
         as second entry.
         """
-        
-        return        
+        list_num_art = []
+        for term in terms:
+            num_art = self.CalculateNumberofArticles(term)
+            list_num_art.append(num_art)
+
+        return list_num_art
 
     def CalculateJaccard(self, term1, term2):
         unique_ex1 = term1 + '&~' + term2
@@ -412,15 +415,22 @@ def StripName(graph, rawterms):
     Ex. list_rawterms = rg.vs["term"]
         rg = StripName(rg, list_rawterms)
     """
-    if graph == rg:
-        graph.vs["term"]=rawterms # Set the names of the vertices.
-        graph.vs["term"]=[x.split('_')[1] for x in graph.vs["term"]]
-        return graph
+    graph.vs["term"]=rawterms # Set the names of the vertices.
+    graph.vs["term"]=[x.split('_')[0] for x in graph.vs["term"]]
 
-    elif graph == tg:
-        graph.vs["term"]=rawterms # Set the names of the vertices.
-        graph.vs["term"]=[x.split('_')[0] for x in graph.vs["term"]]
-        return graph
+    return graph
+
+
+    # Old scripts
+    # if graph == rg:
+    #     graph.vs["term"]=rawterms # Set the names of the vertices.
+    #     graph.vs["term"]=[x.split('_')[1] for x in graph.vs["term"]]
+    #     return graph
+
+    # elif graph == tg:
+    #     graph.vs["term"]=rawterms # Set the names of the vertices.
+    #     graph.vs["term"]=[x.split('_')[0] for x in graph.vs["term"]]
+    #     return graph
 
 def ModifySubGraph(graph):
     """

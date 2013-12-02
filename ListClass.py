@@ -94,7 +94,7 @@ class ListClass:
                             ('prosody', 'prosodic', 'prosody|prosodic'),
                             ('pseudoword', 'pseudowords', 'pseudoword|pseudowords'),
                             ('rating', 'ratings', 'rating|ratings'),
-                            ('remember, remembered', 'remember|remembered'),
+                            ('remember', 'remembered', 'remember|remembered'),
                             ('repetition', 'repetitions', 'repetition|repetitions'),
                             ('retrieval', 'retrieved', 'retrieval|retrieved'),
                             ('reward', 'rewards', 'reward|rewards'),

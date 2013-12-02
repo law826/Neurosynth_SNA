@@ -197,10 +197,12 @@ def NodesInOrderOfCentrality(graph, type):
 	elif type == 'closeness':
 		pre_list_of_tuples = [(node["term"], node.closeness(weights="weight")) for node in graph.vs]
 
-	list_of_tuples = sorted(pre_list_of_tuples, key=lambda pair: pair[1])
-	list_of_tuples.reverse()
 
-	return list_of_tuples
+	# The following were used to sort the items in order. 
+	# list_of_tuples = sorted(pre_list_of_tuples, key=lambda pair: pair[1])
+	# list_of_tuples.reverse()
+
+	return pre_list_of_tuples
 
 def StripLoops(graph):
 	try:

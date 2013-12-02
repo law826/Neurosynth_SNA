@@ -1,5 +1,3 @@
-#!/bin/python
-
 """
 Making a heatmap from the table of cross correlations from the 
 thesaurus merged data.
@@ -10,6 +8,9 @@ cross_correlation_table = '/Volumes/huettel/KBE.01/Analysis/' \
 	'Neurosynth/graph_analysis_data/NeurosynthMerge/merged_correlation/' \
 	'merged_correlation.csv'
 
+
+outdir = '/Volumes/huettel/KBE.01/Analysis/Neurosynth/graph_analysis_data' \
+		'/graph_stats/visualizations/correlation_table_heatmap'
 
 import numpy
 from matplotlib import pyplot as plt
@@ -25,8 +26,12 @@ data_norm = ((data_only - data_only.mean())/ \
 
 # Draw the heatmap.
 heatmap = plt.pcolor(data_norm, cmap=plt.cm.Blues)
-plt.show()
+axes_limits = [0, 414, 0, 414]
+plt.axis(axes_limits)
+plt.xlabel('Term Number')
+plt.ylabel('Term Number')
 
+
+plt.savefig(outdir)
 
 import pdb; pdb.set_trace()
-

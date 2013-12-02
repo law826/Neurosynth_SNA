@@ -1,3 +1,5 @@
+#!/usr/loca/bin/python
+
 from __future__ import division
 import unittest
 from pdb import *
@@ -28,19 +30,27 @@ class TestDatabase(unittest.TestCase):
 		# There should be 85491 edges.
 		self.assertEqual(len(self.graph.es), 85491)
 		# If it is 171,396, then this means that it includes directed edges.
-		import pdb; pdb.set_trace()
+
+	def test_Directedness(self):
+		self.graph.is_directed() == False
 
 	def test_NodeNames(self):
 		"""
 		Make sure the names of the nodes are correct.
 		"""
-		pass
+		first_five = ['1back', '2back', 'ability', 'acoustic', 'acquisition']
+		last_five = ['word', 'work', 'working', 'writing', 'written']
+		self.assertEqual(self.graph.vs['term'][0:5], first_five)
+		self.assertEqual(self.graph.vs['term'][-5:], last_five)
 
 	def test_NumberOfStudies(self):
 		"""
 		Tests whether the number of studies are correct.
 		"""
-		pass
+		first_five = [37, 84, 220, 106, 304]
+		last_five = [1202, 846, 472, 33, 71]
+		self.assertEqual(first_five, self.graph.vs['numberofstudies'][0:5])
+		self.assertEqual(last_five, self.graph.vs['numberofstudies'][-5:])
 
 	def tearDown(self):
 		"""

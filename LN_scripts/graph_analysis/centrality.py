@@ -29,12 +29,17 @@ graph.es['weight'] = [x+1 for x in graph.es['weight']]
 # Calculate centralities.
 degree_cent = db.NodesInOrderOfCentrality(graph, 'degree')
 betweenness_cent = db.NodesInOrderOfCentrality(graph, 'betweenness')
-
-import pdb; pdb.set_trace()
+eigenvector_cent = db.NodesInOrderOfCentrality(graph, 'eigenvector')
+closeness_cent = db.NodesInOrderOfCentrality(graph, 'closeness')
 
 # Write to a csv.
 with open(csv_output, 'wb') as output:
+	output.write('Term, degree_centrality, betweenness_centrality,' \
+		'eigenvector_centrality, closeness_centrality\n')
 	for i, node in enumerate(graph.vs):	
 		output.write(
-			'%s, %s, %s\n' %(degree_cent[i][0], degree_cent[i][1],
-				betweenness_cent[i][1]))
+			'%s, %s, %s, %s, %s\n' %(degree_cent[i][0], degree_cent[i][1],
+				betweenness_cent[i][1], eigenvector_cent[i][1], 
+				closeness_cent[i][1]))
+
+import pdb; pdb.set_trace()

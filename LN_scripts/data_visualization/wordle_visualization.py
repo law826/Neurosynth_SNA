@@ -4,10 +4,6 @@ Take in a CSV generate a text file that can serve as input into Wordle.
 Right now, it only takes the second column and multiplies based on 
 that count.
 """
-
-import csv
-import math
-
 # Set up.
 from __future__ import division
 import unittest
@@ -19,6 +15,9 @@ sys.path.append('/Users/ln30/Git/Neurosynth_SNA/')
 import Neurosynth_SNA as ns
 import database as db
 import ListClass as lc
+
+import csv
+import math
 
 graph_pth = '/Volumes/huettel/KBE.01/Analysis/Neurosynth/graph_analysis_data/' \
 			'pickles/reverse_graph2.p'
@@ -34,18 +33,49 @@ def wordle_text_generator(terms, weights, outpath):
 	for term in wordle_list:
 		wordle_string += (term[0]+ ' ') * int(term[1])
 
-	with open(output_text_file, 'w') as text_file:
+	with open(outpath, 'w') as text_file:
 		text_file.write(wordle_string)
 
 
-#### Make a list of just all the words as the same size.
-terms = graph.vs['terms']
-weights = np.ones(len(graph.vs['terms']))
-outpath = 
+# #### Make a list of just all the words as the same size.
+# terms = graph.vs['term']
+# weights = np.ones(len(graph.vs['term']))
+# outpath = '/Volumes/huettel/KBE.01/Analysis/Neurosynth/graph_analysis_data/' \
+# 		'graph_stats/visualizations/wordle/all_nodes.txt'
+
+# wordle_text_generator(terms, weights, outpath)
+
+# #### Make a list based on study number.
+# terms = graph.vs['term']
+# weights = graph.vs['numberofstudies']
+# outpath = '/Volumes/huettel/KBE.01/Analysis/Neurosynth/graph_analysis_data/' \
+# 		'graph_stats/visualizations/wordle/nodes_num_studies.txt'
+
+# wordle_text_generator(terms, weights, outpath)
+
+# #### List based on degree centrality.
+# terms = graph.vs['term']
+# weights = graph.strength(loops=False, weights='weight')
+# outpath = '/Volumes/huettel/KBE.01/Analysis/Neurosynth/graph_analysis_data/' \
+# 		'graph_stats/visualizations/wordle/degree_centrality.txt'
+
+# wordle_text_generator(terms, weights, outpath)
+
+#### List based on betweenness centrality.
+terms = graph.vs['term']
+
+# Preprocess the edges.
+graph.es['weight'] = [x+1 for x in graph.es['weight']]
+weights = graph.betweenness(directed=False, weights="weight")
+outpath = '/Volumes/huettel/KBE.01/Analysis/Neurosynth/graph_analysis_data/' \
+		'graph_stats/visualizations/wordle/betweenness_centrality.txt'
 
 wordle_text_generator(terms, weights, outpath)
 
 
+
+
+import pdb; pdb.set_trace()
 
 
 ##

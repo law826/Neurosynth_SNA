@@ -27,29 +27,40 @@ outdir = '/Volumes/huettel/KBE.01/Analysis/Neurosynth/graph_analysis_data/' \
 # Load the graph.
 graph = ns.LoadGraph(graph_pth)
 
-# Histogram of the edge weights.
-P.figure()
-x = graph.es['weight']
-histogram = P.hist(x)
-P.xlabel('Pearson Correlation (R)')
-P.ylabel('Number of Edges')
-P.savefig(os.path.join(outdir, 'edge_weight_histogram'))
+histogram_of_zero_order_correlation = False
+histogram_of_number_of_studies = False
+histogram_of_number_of_studies_lower_range = False
+histogram_of_partial_correlations = False
 
-# Graph a histogram of the number of studies.
-P.figure()
-y = graph.vs['numberofstudies']
-stud_histogram = P.hist(y, bins=100)
-P.xlabel('Number of Studies')
-P.ylabel('Number of Nodes')
-P.savefig(os.path.join(outdir, 'num_studies_histogram'))
+if histogram_of_zero_order_correlation:
+	P.figure()
+	x = graph.es['weight']
+	import pdb; pdb.set_trace()
+	histogram = P.hist(x)
+	P.xlabel('Pearson Correlation (R)')
+	P.ylabel('Number of Edges')
+	P.savefig(os.path.join(outdir, 'edge_weight_histogram'))
 
-# Lower extent of the above
-P.figure()
-y = graph.vs['numberofstudies']
-stud_histogram = P.hist(y, bins=10, range=(0, 1000))
-P.xlabel('Number of Studies')
-P.ylabel('Number of Nodes')
+if histogram_of_number_of_studies:
+	P.figure()
+	y = graph.vs['numberofstudies']
+	stud_histogram = P.hist(y, bins=100)
+	P.xlabel('Number of Studies')
+	P.ylabel('Number of Nodes')
+	P.savefig(os.path.join(outdir, 'num_studies_histogram'))
 
-P.savefig(os.path.join(outdir, 'num_studies_histogram_lower_range'))
+if histogram_of_number_of_studies_lower_range:
+	P.figure()
+	y = graph.vs['numberofstudies']
+	stud_histogram = P.hist(y, bins=10, range=(0, 1000))
+	P.xlabel('Number of Studies')
+	P.ylabel('Number of Nodes')
+	P.savefig(os.path.join(outdir, 'num_studies_histogram_lower_range'))
 
-import pdb; pdb.set_trace()
+if histogram_of_partial_correlations:
+	P.figure()
+	x = graph.es['partialcorrelation']
+	histogram = P.hist(x, bins=100, range=(-0.2, 0.2))
+	P.xlabel('Pearson Correlation (R)')
+	P.ylabel('Number of Edges')
+	P.savefig(os.path.join(outdir, 'partial_correlation_edges'))

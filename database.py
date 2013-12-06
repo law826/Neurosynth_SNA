@@ -181,8 +181,6 @@ def NodesInOrderOfCentrality(graph, type):
 	"""
 	Takes: (1) graph (2) type of centrality desired.
 	Returns: A list of tuples of node name and centrality statistic.
-
-	
 	"""
 	if type == 'degree':
 		pre_list_of_tuples = [(node["term"], node.strength(loops=False, weights="weight")) for node in graph.vs]

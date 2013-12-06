@@ -5,8 +5,10 @@ from pdb import *
 from igraph import *
 
 sys.path.append(os.path.realpath('..'))
-import database as db
 import basefunctions as bf
+
+sys.path.append('/Users/ln30/Git/Neurosynth_SNA/')
+import database as db
 
 class DataBaseForGUI:
 	def __init__(self, mainwindow):

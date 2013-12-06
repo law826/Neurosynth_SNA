@@ -144,6 +144,7 @@ class NeurosynthMerge:
             - test_mode: when true, the code will run an abridged version 
                 for test purposes (as implemented by test.Neurosynth.py)
         """
+        import pdb; pdb.set_trace()
         self.thesaurus = thesaurus
         self.npath = npath
         self.outdir = outdir
@@ -154,6 +155,7 @@ class NeurosynthMerge:
         # Take out first two terms from the feature_list and insert the 
         # third term from the tuple.
         for triplet in thesaurus:
+            import pdb; pdb.set_trace()
             self.feature_list = [feature for feature in self.feature_list \
             if feature not in triplet]
             self.feature_list.append(triplet[-1])
@@ -322,7 +324,6 @@ def GetFileNamesInDirectory(directory):
 
 def CreateCrossCorrelationTable(maindir, file_names, outdir, outname):
     """
-
     Takes a directory and list of numpy files and horizontally concatenates 
     them all and saves the output in outdir. Labels are also added.
     """
@@ -377,6 +378,14 @@ def CreateEdgelist(maindir, file_names, outdir, outname):
 
     np.save(outpath, concatenate_data)
     np.savetxt(outpath+'.csv', concatenate_data, fmt='%1.f %1.f %1.3f')
+
+def Import_Edges_from_Table(graph, table_csv_path, edge_attribute):
+    """
+    Adds edge attributes to an existing graph from a cross correlation table.
+    This was written to import partial correlation values into the graph.
+    """
+    table = np.genfromtxt(table_csv_path, delimiter=',')
+    graph.es[edge_attribute] = [table[x.tuple] for x in graph.es]
     
 def ImportAdjacencyMatrix(file):
     graph = Graph.Read_Adjacency(file)

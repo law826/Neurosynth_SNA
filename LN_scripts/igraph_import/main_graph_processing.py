@@ -1,10 +1,8 @@
 #!/bin/python
 
 """
-This will import an edgelist and save the relevant pickle.
-The graph will be undirected.
-Node attributes will be added.
-Attach number of studies.
+This will import an edgelist and perform many computations
+based on the booleans indicated below.
 """
 
 # Set up.
@@ -22,8 +20,33 @@ import ListClass as lc
 sys.path.append('/Users/ln30/Git/Neurosynth_SNA/LN_scripts/')
 import node_analysis as na
 
+##### Sequences of events.
+create_edgelist_from_columns = True
+import_graph_from_edgelist = True # Will otherwise load a pickle.
+make_graph_undirected = True
+strip_loops_from_graph = True
+add_term_names = True
+add_number_of_studies = True
+add_brain_means = True
+print_node_attributes_to_csv = True
+import_partials_from_table = False
+assign_semantic_Jaccards = False
+save_the_graph = True
+######
+
 edgelist = '/Volumes/huettel/KBE.01/Analysis/Neurosynth/graph_analysis_data/' \
 			'NeurosynthMerge/merged_edgelist/merged_edgelist.csv'
+
+pcorr_table = '/Volumes/huettel/KBE.01/Analysis/Neurosynth/'\
+			'graph_analysis_data/NeurosynthMerge/merged_correlation/'\
+			'merged_pcorrelation.csv'
+
+term_correlation_dir = os.path.join('/Volumes', 'huettel', 'KBE.01', 
+                'Analysis', 'Neurosynth', 'correlations_raw_data', 'run2', 
+                'Reverse_Inference2')
+
+outdir = '/Volumes/huettel/KBE.01/Analysis/Neurosynth/graph_analysis_data/' \
+			'NeurosynthMerge/merged_edgelist/'
 
 outpath = '/Volumes/huettel/KBE.01/Analysis/Neurosynth/graph_analysis_data/' \
 			'pickles/reverse_graph2.p'
@@ -31,13 +54,16 @@ outpath = '/Volumes/huettel/KBE.01/Analysis/Neurosynth/graph_analysis_data/' \
 master_csv_path = '/Volumes/huettel/KBE.01/Analysis/Neurosynth/'\
 			'graph_analysis_data/node_master.csv'
 
-import_graph_from_edgelist = False # Will otherwise load a pickle.
-make_graph_undirected = False
-strip_loops_from_graph = False
-add_term_names = False
-add_number_of_studies = False
-add_brain_means = True
-print_node_attributes_to_csv = True
+git_path = '/Volumes/huettel/KBE.01/Analysis/Neurosynth/neurosynthgit/'
+
+
+
+# Import all the relevant paths.
+if create_edgelist_from_columns:
+	file_names = ns.GetFileNamesInDirectory(term_correlation_dir)
+	ns.CreateEdgelist(term_correlation_dir, file_names, outdir,
+		'merged_edgelist')
+
 
 if import_graph_from_edgelist:
 	graph = ns.ImportNcol(edgelist)
@@ -94,13 +120,21 @@ if add_brain_means:
 	graph.vs['brain_std'] = std
 
 if print_node_attributes_to_csv:
-	with open(master_csv_path) as text_file:
-		for node in graph.vs:
-			text_file.write('%s,%s' %(graph.vs['']))
+	with open(master_csv_path, 'w') as text_file:
+		text_file_write('term,numberofstudies,brain_means,brain_std\n')
+		for i, node in enumerate(graph.vs):
+			text_file.write('%s,%s,%s,%s\n' %(
+				graph.vs['term'][i],
+				graph.vs['numberofstudies'][i],
+				graph.vs['brain_means'][i],
+				graph.vs['brain_std'][i]
+				))
+	os.system('open %s' %master_csv_path)
+
+if import_partials_from_table:
+	ns.Import_Edges_from_Table(graph, pcorr_table, 'partialcorrelation')
+
+if save_the_graph:
+	ns.SaveGraph(graph, outpath)
 
 import pdb; pdb.set_trace()
-
-
-# Save the graph.
-ns.SaveGraph(graph, outpath)
-

@@ -7,7 +7,7 @@ based on the booleans indicated below.
 
 # Set up.
 #from __future__ import division
-#import unittest
+#import unittes
 #from pdb import *
 import os, sys, getpass, random as rand, cPickle, numpy as np
 import igraph
@@ -21,21 +21,26 @@ sys.path.append('/Users/ln30/Git/Neurosynth_SNA/LN_scripts/')
 import node_analysis as na
 
 ##### Sequences of events.
-create_edgelist_from_columns = True
-import_graph_from_edgelist = True # Will otherwise load a pickle.
-make_graph_undirected = True
-strip_loops_from_graph = True
-add_term_names = True
-add_number_of_studies = True
-add_brain_means = True
-print_node_attributes_to_csv = True
+create_edgelist_from_columns = False
+create_cross_corr_table_from_columns = False
+import_graph_from_edgelist = False # Will otherwise load a pickle.
+make_graph_undirected = False
+strip_loops_from_graph = False
+add_term_names = False
+add_number_of_studies = False
+add_brain_means = False
+print_node_attributes_to_csv = False
 import_partials_from_table = False
 assign_semantic_Jaccards = False
-save_the_graph = True
+save_the_graph = False
 ######
 
 edgelist = '/Volumes/huettel/KBE.01/Analysis/Neurosynth/graph_analysis_data/' \
 			'NeurosynthMerge/merged_edgelist/merged_edgelist.csv'
+
+corr_table = '/Volumes/huettel/KBE.01/Analysis/Neurosynth/'\
+			'graph_analysis_data/NeurosynthMerge/merged_correlation/'\
+			'merged_correlation.csv'
 
 pcorr_table = '/Volumes/huettel/KBE.01/Analysis/Neurosynth/'\
 			'graph_analysis_data/NeurosynthMerge/merged_correlation/'\
@@ -43,7 +48,7 @@ pcorr_table = '/Volumes/huettel/KBE.01/Analysis/Neurosynth/'\
 
 term_correlation_dir = os.path.join('/Volumes', 'huettel', 'KBE.01', 
                 'Analysis', 'Neurosynth', 'correlations_raw_data', 'run2', 
-                'Reverse_Inference2')
+                'Reverse_Inference')
 
 outdir = '/Volumes/huettel/KBE.01/Analysis/Neurosynth/graph_analysis_data/' \
 			'NeurosynthMerge/merged_edgelist/'
@@ -64,6 +69,11 @@ if create_edgelist_from_columns:
 	ns.CreateEdgelist(term_correlation_dir, file_names, outdir,
 		'merged_edgelist')
 
+if create_cross_corr_table_from_columns:
+	file_names = ns.GetFileNamesInDirectory(term_correlation_dir)
+	ns.CreateCrossCorrelationTable(term_correlation_dir, 
+		file_names, corr_table)
+	os.system('open %s' %corr_table)
 
 if import_graph_from_edgelist:
 	graph = ns.ImportNcol(edgelist)
@@ -78,7 +88,7 @@ if strip_loops_from_graph:
 
 if add_term_names:
 	neurosynth_dir = '/Volumes/huettel/KBE.01/Analysis/Neurosynth/neurosynthgit/' \
-			'results/run2/Reverse_Inference2/'
+			'results/run2/Reverse_Inference/'
 
 	raw_terms = ns.GetFileNamesInDirectory(neurosynth_dir)
 	graph = ns.StripName(graph, raw_terms)
@@ -121,7 +131,7 @@ if add_brain_means:
 
 if print_node_attributes_to_csv:
 	with open(master_csv_path, 'w') as text_file:
-		text_file_write('term,numberofstudies,brain_means,brain_std\n')
+		text_file.write('term,numberofstudies,brain_means,brain_std\n')
 		for i, node in enumerate(graph.vs):
 			text_file.write('%s,%s,%s,%s\n' %(
 				graph.vs['term'][i],
@@ -137,4 +147,9 @@ if import_partials_from_table:
 if save_the_graph:
 	ns.SaveGraph(graph, outpath)
 
-import pdb; pdb.set_trace()
+try:
+	os.system(
+		"""osascript -e 'tell app "System Events" to display""" \
+		""" dialog "Your script has finished running."'""")
+except:
+	pass

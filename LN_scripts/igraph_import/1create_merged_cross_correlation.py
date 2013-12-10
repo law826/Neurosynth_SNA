@@ -15,7 +15,7 @@ import Neurosynth_SNA as ns
 # Import all the relevant paths.
 term_correlation_dir = os.path.join('/Volumes', 'huettel', 'KBE.01', 
                 'Analysis', 'Neurosynth', 'correlations_raw_data', 'run2', 
-                'Reverse_Inference2')
+                'Reverse_Inference')
 
 outdir = '/Volumes/huettel/KBE.01/Analysis/Neurosynth/graph_analysis_data/' \
 			'NeurosynthMerge/merged_correlation/'

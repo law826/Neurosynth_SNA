@@ -117,7 +117,7 @@ class Analysis3D:
 		cmap_norm = mpl.colors.Normalize(vmin=cmap_min, vmax=cmap_max)
 		cmap =  density_cmap #cm.spectral_r
 		
-		self.ax.hexbin(x.reshape(-1), y.reshape(-1), norm=cmap_norm, cmap=density_cmap, alpha=density_alpha)   #vmin=1, vmax=100,
+		self.ax.hexbin(x.reshape(-1), y.reshape(-1), norm=cmap_norm, cmap=density_cmap, alpha=density_alpha, mincnt=1)   #vmin=1, vmax=100,
 		#self.ax.add_artist(self.ellip)
 		self.cb = mpl.colorbar.ColorbarBase(self.ax_cb, cmap=cmap, norm=cmap_norm, orientation='vertical')
 		    

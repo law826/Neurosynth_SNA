@@ -64,7 +64,7 @@ class Paths():
                 'Analysis', 'Neurosynth', 'neurosynthgit')
             self.merge_path = os.path.join('/Volumes', 'huettel', 'KBE.01', 
                 'Analysis', 'Neurosynth', 'correlations_raw_data', 'run2', 
-                'Reverse_Inference2')
+                'Reverse_Inference')
             self.rt_pickle_path = os.path.join('/Volumes', 'huettel', 'KBE.01', 
                 'Analysis', 'Neurosynth', 'graph_analysis_data', 'pickles', 
                 'reverse_graph2.p')
@@ -88,7 +88,7 @@ class Paths():
                 'Neurosynth', 'neurosynthgit')
             self.merge_path = os.path.join('M:', 'KBE.01', 'Analysis', 
                 'Neurosynth', 'correlations_raw_data', 'run2', 
-                'Reverse_Inference2')
+                'Reverse_Inference')
             self.rt_pickle_path = os.path.join('M:', 'KBE.01', 'Analysis', 
                 'Neurosynth', 'graph_analysis_data', 'pickles', 
                 'reverse_graph2.p')
@@ -115,7 +115,7 @@ class Paths():
                 'neurosynthgit')
             self.merge_path = os.path.join('/home', username, 
                 'experiments', 'KBE.01', 'Analysis', 'Neurosynth', 
-                'correlations_raw_data', 'run2', 'Reverse_Inference2')
+                'correlations_raw_data', 'run2', 'Reverse_Inference')
             self.rt_pickle_path = os.path.join('/home', username, 
                 'experiments', 'KBE.01', 'Analysis', 'Neurosynth', 
                 'graph_analysis_data', 'pickles', 'reverse_graph2.p')
@@ -144,7 +144,6 @@ class NeurosynthMerge:
             - test_mode: when true, the code will run an abridged version 
                 for test purposes (as implemented by test.Neurosynth.py)
         """
-        import pdb; pdb.set_trace()
         self.thesaurus = thesaurus
         self.npath = npath
         self.outdir = outdir
@@ -155,7 +154,6 @@ class NeurosynthMerge:
         # Take out first two terms from the feature_list and insert the 
         # third term from the tuple.
         for triplet in thesaurus:
-            import pdb; pdb.set_trace()
             self.feature_list = [feature for feature in self.feature_list \
             if feature not in triplet]
             self.feature_list.append(triplet[-1])
@@ -322,7 +320,7 @@ def GetFileNamesInDirectory(directory):
 
     return file_names
 
-def CreateCrossCorrelationTable(maindir, file_names, outdir, outname):
+def CreateCrossCorrelationTable(maindir, file_names, outpath):
     """
     Takes a directory and list of numpy files and horizontally concatenates 
     them all and saves the output in outdir. Labels are also added.
@@ -351,9 +349,8 @@ def CreateCrossCorrelationTable(maindir, file_names, outdir, outname):
     concatenate_data = np.concatenate((vert_labels, concatenate_data), axis=1)
     concatenate_data = np.concatenate((horz_labels, concatenate_data), axis=0)
 
-    outpath=os.sep.join([outdir, outname])
     np.save(outpath, concatenate_data)
-    np.savetxt(outpath+'.csv', concatenate_data, fmt='%10.3f', delimiter=',')
+    np.savetxt(outpath, concatenate_data, fmt='%10.3f', delimiter=',')
         
 def CreateEdgelist(maindir, file_names, outdir, outname):
     """

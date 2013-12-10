@@ -21,7 +21,7 @@ class TestDatabase(unittest.TestCase):
 	def test_GetFileNamesInDirectory(self):
 		files = ns.GetFileNamesInDirectory(
 			'/Volumes/huettel/KBE.01/Analysis/Neurosynth/' \
-			'graph_analysis_data/NeurosynthMerge/Reverse_Inference2')
+			'graph_analysis_data/NeurosynthMerge/Reverse_Inference')
 		# Round 2 after merging should only have 414 instead of 525 studies.
 		self.assertEqual(len(files), 414) 
 		self.assertNotEqual(files[0], '_DS.Store')

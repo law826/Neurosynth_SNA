@@ -6,7 +6,7 @@ Created 11/27/13.
 
 cross_correlation_table = '/Volumes/huettel/KBE.01/Analysis/' \
 	'Neurosynth/graph_analysis_data/NeurosynthMerge/merged_correlation/' \
-	'merged_correlation.csv'
+	'merged_pcorrelation.csv'
 
 
 outdir = '/Volumes/huettel/KBE.01/Analysis/Neurosynth/graph_analysis_data' \
@@ -33,5 +33,6 @@ plt.ylabel('Term Number')
 
 
 plt.savefig(outdir)
+
 
 import pdb; pdb.set_trace()

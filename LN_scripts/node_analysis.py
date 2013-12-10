@@ -17,8 +17,8 @@ import Neurosynth_SNA as ns
 import nibabel
 
 def get_brain_means_and_standard_deviation():
-	image_directory = '/Volumes/huettel/KBE.01/Analysis/Neurosynth/' \
-			'graph_analysis_data/NeurosynthMerge/Reverse_Inference2/'
+	image_directory = '/Volumes/huettel/KBE.01/Analysis/Neurosynth/'\
+			'neurosynthgit/results/run2/Reverse_Inference/'
 
 	mask_brain = '/Users/ln30/Git/Neurosynth_SNA/LN_scripts/'\
 			'MNI152_T1_2mm_brain.nii.gz'
@@ -43,4 +43,5 @@ def get_brain_means_and_standard_deviation():
 		std_array.append(masked_image_nump.std())
 	return mean_array, std_array
 
-get_brain_means_and_standard_deviation()
+if __name__ == '__main__':
+	get_brain_means_and_standard_deviation()

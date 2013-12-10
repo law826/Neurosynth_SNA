@@ -38,3 +38,4 @@ x = N.array(corr)
 y = N.array(pcorr)
 
 hexplotting.Analysis3D(x, y, out_pname)
+os.system('open %s.png' % out_pname)

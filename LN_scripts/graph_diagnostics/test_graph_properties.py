@@ -52,6 +52,14 @@ class TestDatabase(unittest.TestCase):
 		self.assertEqual(first_five, self.graph.vs['numberofstudies'][0:5])
 		self.assertEqual(last_five, self.graph.vs['numberofstudies'][-5:])
 
+	def test_is_done(self):
+		try:
+			os.system(
+				"""osascript -e 'tell app "System Events" to display""" \
+				""" dialog "Your script has finished running."'""")
+		except:
+			pass
+
 	def tearDown(self):
 		"""
 		If this method is defined, the test runner will invoke this after 

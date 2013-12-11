@@ -64,12 +64,17 @@ def scatter_with_offset_labels(import_file, outpath, labelcol, xcol, ycol,
 
     plt.savefig(outpath)
 
-### Scatter of Degree vs. Betweenness Centrality.
+degree_vs_betweenness = False
+brain_vs_jaccard = True
 
-import_file = '/Volumes/huettel/KBE.01/Analysis/Neurosynth/' \
-    'graph_analysis_data/graph_stats/merged_centrality/centralities.csv'
+if degree_vs_betweenness:
+    import_file = '/Volumes/huettel/KBE.01/Analysis/Neurosynth/' \
+        'graph_analysis_data/graph_stats/merged_centrality/centralities.csv'
 
-outpath = '/Volumes/huettel/KBE.01/Analysis/Neurosynth/' \
-    'graph_analysis_data/graph_stats/visualizations/x_degree_y_betweenness'
+    outpath = '/Volumes/huettel/KBE.01/Analysis/Neurosynth/' \
+        'graph_analysis_data/graph_stats/visualizations/x_degree_y_betweenness'
 
-scatter_with_offset_labels(import_file, outpath, 0, 1, 2, labels=False)
+    scatter_with_offset_labels(import_file, outpath, 0, 1, 2, labels=False)
+
+if brain_vs_jaccard:
+    

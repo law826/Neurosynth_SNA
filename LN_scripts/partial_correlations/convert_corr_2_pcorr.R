@@ -15,4 +15,4 @@ corr_mat$X0.000 <- NULL
 pcorr_mat <- cor2pcor(corr_mat)
 
 # Save to csv.
-write.csv(pcorr_mat, file=pcorr_output_path)
+write.table(pcorr_mat, file=pcorr_output_path, row.names=FALSE, col.names=FALSE, sep=",")

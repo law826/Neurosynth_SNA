@@ -22,7 +22,7 @@ graph_pth = '/Volumes/huettel/KBE.01/Analysis/Neurosynth/graph_analysis_data/' \
 			'pickles/reverse_graph2.p'
 
 outdir = '/Volumes/huettel/KBE.01/Analysis/Neurosynth/graph_analysis_data/' \
-			'graph_stats/graph_distributions/'
+			'graph_stats/visualizations/'
 
 # Load the graph.
 graph = ns.LoadGraph(graph_pth)
@@ -30,7 +30,7 @@ graph = ns.LoadGraph(graph_pth)
 histogram_of_zero_order_correlation = False
 histogram_of_number_of_studies = False
 histogram_of_number_of_studies_lower_range = False
-histogram_of_partial_correlations = False
+histogram_of_partial_correlations = True
 
 if histogram_of_zero_order_correlation:
 	P.figure()
@@ -61,6 +61,6 @@ if histogram_of_partial_correlations:
 	P.figure()
 	x = graph.es['partialcorrelation']
 	histogram = P.hist(x, bins=100, range=(-0.2, 0.2))
-	P.xlabel('Pearson Correlation (R)')
+	P.xlabel('Partial Correlation')
 	P.ylabel('Number of Edges')
 	P.savefig(os.path.join(outdir, 'partial_correlation_edges'))

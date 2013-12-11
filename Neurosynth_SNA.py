@@ -285,6 +285,54 @@ class ArticleAnalysis():
         graph.es['article_jaccard'] = jaccard_list
         Graph.write_pickle(graph, gr_out_pth)
 
+    def CalculateMergedJaccards(self, graph):
+        """
+        Takes a graph and outputs an array of jaccards coresponding
+        to a graph edgelist based on the thesaurus.
+        """
+        sys.path.append('/Users/ln30/Git/Neurosynth_SNA/')
+        from ListClass import ListClass
+        lc = ListClass()
+
+
+        # All terms in the graph.
+        nodes = graph.vs['term'] 
+
+        # Tuples of the term to use and the merge expression.
+        thesaurus_merge_terms = [(x[0], x[-1]) for x in lc.thesaurus]
+
+        # Dictionary of the above.
+        thesaurus_dict = {key: value for (key, value) in thesaurus_merge_terms}
+
+        # Total list of merge expressions across all nodes.
+        total_merge_list = []
+
+        edge_tuples = [x.tuple for x in graph.es]
+        edge_names = [(graph.vs['term'][pair[0]], graph.vs['term'][pair[1]])
+                        for pair in edge_tuples]
+
+        thesaurus_merger = (lambda node, thesaurus_dict: thesaurus_dict[node] 
+                            if node in thesaurus_dict else
+                            node) 
+
+        thesaurus_raw_terms = [(thesaurus_merger(pair[0], thesaurus_dict), 
+                            thesaurus_merger(pair[1], thesaurus_dict))
+                            for pair in edge_names]
+
+        # This adds on parentheses to account for order of operations of 
+        # Boolean operators. 
+        thesaurus_merge_terms = [('(%s)'%pair[0], '(%s)'%pair[1])
+                                for pair in thesaurus_raw_terms]
+
+        import pdb; pdb.set_trace()
+
+        jaccards = [self.CalculateJaccard(*pair)
+                        for pair in thesaurus_merge_terms]
+
+
+        return jaccards
+
+
     def OutputJaccardsAndWeightsToFiles(self, graph_pickle, directory):
         """
         Takes a graph that already has the number of studies jaccard attribute 

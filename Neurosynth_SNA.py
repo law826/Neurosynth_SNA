@@ -285,15 +285,14 @@ class ArticleAnalysis():
         graph.es['article_jaccard'] = jaccard_list
         Graph.write_pickle(graph, gr_out_pth)
 
-    def CalculateMergedJaccards(self, graph):
+    def RetrieveMergeTerms(self, graph):
         """
-        Takes a graph and outputs an array of jaccards coresponding
-        to a graph edgelist based on the thesaurus.
+        Takes a graph and cross references against a thesaurus to create
+        a list of merge terms.
         """
         sys.path.append('/Users/ln30/Git/Neurosynth_SNA/')
         from ListClass import ListClass
         lc = ListClass()
-
 
         # All terms in the graph.
         nodes = graph.vs['term'] 
@@ -319,13 +318,23 @@ class ArticleAnalysis():
                             thesaurus_merger(pair[1], thesaurus_dict))
                             for pair in edge_names]
 
+        return thesaurus_raw_terms
+
+    def CalculateMergedJaccards(self, graph):
+        """
+        Takes a graph and outputs an array of jaccards coresponding
+        to a graph edgelist based on the thesaurus. It also side steps any 
+        problems that can be caused by 1back and 2back.
+        """
+        # Call the above function.
+        thesaurus_raw_terms = self.RetrieveMergeTerms(graph)
+
         # This adds on parentheses to account for order of operations of 
         # Boolean operators. 
         thesaurus_merge_terms = [('(%s)'%pair[0], '(%s)'%pair[1])
                                 for pair in thesaurus_raw_terms]
 
         import pdb; pdb.set_trace()
-
         jaccards = [self.CalculateJaccard(*pair)
                         for pair in thesaurus_merge_terms]
 

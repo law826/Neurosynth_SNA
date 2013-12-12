@@ -36,44 +36,26 @@ def wordle_text_generator(terms, weights, outpath):
 	with open(outpath, 'w') as text_file:
 		text_file.write(wordle_string)
 
+betweenness_centrality = False
+degree_centrality = True
 
-# #### Make a list of just all the words as the same size.
-# terms = graph.vs['term']
-# weights = np.ones(len(graph.vs['term']))
-# outpath = '/Volumes/huettel/KBE.01/Analysis/Neurosynth/graph_analysis_data/' \
-# 		'graph_stats/visualizations/wordle/all_nodes.txt'
+if betweenness_centrality:
+	terms = graph.vs['term']
+	# Preprocess the edges.
+	graph.es['weight'] = [x+1 for x in graph.es['weight']]
+	weights = graph.betweenness(directed=False, weights="weight")
+	outpath = '/Volumes/huettel/KBE.01/Analysis/Neurosynth/graph_analysis_data/' \
+			'graph_stats/visualizations/wordle/betweenness_centrality.txt'
 
-# wordle_text_generator(terms, weights, outpath)
+	wordle_text_generator(terms, weights, outpath)
 
-# #### Make a list based on study number.
-# terms = graph.vs['term']
-# weights = graph.vs['numberofstudies']
-# outpath = '/Volumes/huettel/KBE.01/Analysis/Neurosynth/graph_analysis_data/' \
-# 		'graph_stats/visualizations/wordle/nodes_num_studies.txt'
+if degree_centrality:
+	terms = graph.vs['term']
+	degree = graph.strength(loops=False, weights='weight')
+	outpath = '/Volumes/huettel/KBE.01/Analysis/Neurosynth/graph_analysis_data/' \
+			'graph_stats/visualizations/wordle/degree_centrality.txt'
 
-# wordle_text_generator(terms, weights, outpath)
-
-# #### List based on degree centrality.
-# terms = graph.vs['term']
-# weights = graph.strength(loops=False, weights='weight')
-# outpath = '/Volumes/huettel/KBE.01/Analysis/Neurosynth/graph_analysis_data/' \
-# 		'graph_stats/visualizations/wordle/degree_centrality.txt'
-
-# wordle_text_generator(terms, weights, outpath)
-
-#### List based on betweenness centrality.
-terms = graph.vs['term']
-
-# Preprocess the edges.
-graph.es['weight'] = [x+1 for x in graph.es['weight']]
-weights = graph.betweenness(directed=False, weights="weight")
-outpath = '/Volumes/huettel/KBE.01/Analysis/Neurosynth/graph_analysis_data/' \
-		'graph_stats/visualizations/wordle/betweenness_centrality.txt'
-
-wordle_text_generator(terms, weights, outpath)
-
-
-
+	wordle_text_generator(terms, degree, outpath)
 
 import pdb; pdb.set_trace()
 
@@ -108,6 +90,30 @@ import pdb; pdb.set_trace()
 # Add a constant so all numbers all positive.
 # Round down the number so that it is an int.
 # Amplify the difference for visualization.
+
+# #### Make a list of just all the words as the same size.
+# terms = graph.vs['term']
+# weights = np.ones(len(graph.vs['term']))
+# outpath = '/Volumes/huettel/KBE.01/Analysis/Neurosynth/graph_analysis_data/' \
+# 		'graph_stats/visualizations/wordle/all_nodes.txt'
+
+# wordle_text_generator(terms, weights, outpath)
+
+# #### Make a list based on study number.
+# terms = graph.vs['term']
+# weights = graph.vs['numberofstudies']
+# outpath = '/Volumes/huettel/KBE.01/Analysis/Neurosynth/graph_analysis_data/' \
+# 		'graph_stats/visualizations/wordle/nodes_num_studies.txt'
+
+# wordle_text_generator(terms, weights, outpath)
+
+# #### List based on degree centrality.
+# terms = graph.vs['term']
+# weights = graph.strength(loops=False, weights='weight')
+# outpath = '/Volumes/huettel/KBE.01/Analysis/Neurosynth/graph_analysis_data/' \
+# 		'graph_stats/visualizations/wordle/degree_centrality.txt'
+
+# wordle_text_generator(terms, weights, outpath)
 
 
 

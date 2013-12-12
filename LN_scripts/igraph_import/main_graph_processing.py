@@ -148,6 +148,7 @@ if assign_semantic_Jaccards:
 	# Get term from thesaurus.
 	aa = ns.ArticleAnalysis(git_path)
 	jaccards = aa.CalculateMergedJaccards(graph)
+	import pdb; pdb.set_trace()
 
 if save_the_graph:
 	ns.SaveGraph(graph, outpath)

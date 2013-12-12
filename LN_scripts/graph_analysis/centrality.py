@@ -18,27 +18,21 @@ graph_pth = '/Volumes/huettel/KBE.01/Analysis/Neurosynth/graph_analysis_data/' \
 			'pickles/reverse_graph2.p'
 
 csv_output = '/Volumes/huettel/KBE.01/Analysis/Neurosynth/' \
-		'graph_analysis_data/graph_stats/merged_centrality/pcentralities.csv'
+		'graph_analysis_data/graph_stats/merged_centrality/centralities.csv'
 
 # Load the graph.
 graph = ns.LoadGraph(graph_pth)
 
 # Add constant to weights to allow for proper centrality calculation.
-graph.es['partialcorrelation'] = [x+2 for x in graph.es['partialcorrelation']]
+graph.es['weight'] = [x+2 for x in graph.es['weight']]
 
 # Calculate centralities.
-<<<<<<< HEAD
 node_names = graph.vs['term']
-degree_cent = graph.strength(loops=False, 
-				weights='partialcorrelation')
-betweenness_cent = graph.betweenness(directed=False,
-				weights='partialcorrelation')
-=======
-degree_cent = db.NodesInOrderOfCentrality(graph, 'degree')
-betweenness_cent = db.NodesInOrderOfCentrality(graph, 'betweenness')
-eigenvector_cent = db.NodesInOrderOfCentrality(graph, 'eigenvector')
-closeness_cent = db.NodesInOrderOfCentrality(graph, 'closeness')
->>>>>>> 5ded8d4234b6136fb526e9fd83c39f5dd588c0d9
+degree_cent = graph.strength(loops=False, weights='weight')
+betweenness_cent = graph.betweenness(directed=False, 
+					weights='weight')
+eigenvector_cent = graph.evcent(directed=False, weights='weight')
+closeness_cent = graph.closeness(weights='weight')
 
 # Write to a csv.
 with open(csv_output, 'wb') as output:
@@ -46,13 +40,6 @@ with open(csv_output, 'wb') as output:
 		'eigenvector_centrality, closeness_centrality\n')
 	for i, node in enumerate(graph.vs):	
 		output.write(
-<<<<<<< HEAD
-			'%s, %s, %s\n' %(node_names[i], degree_cent[i],
-				betweenness_cent[i]))
-=======
-			'%s, %s, %s, %s, %s\n' %(degree_cent[i][0], degree_cent[i][1],
-				betweenness_cent[i][1], eigenvector_cent[i][1], 
-				closeness_cent[i][1]))
-
-import pdb; pdb.set_trace()
->>>>>>> 5ded8d4234b6136fb526e9fd83c39f5dd588c0d9
+			'%s, %s, %s, %s, %s\n' %(graph.vs['term'][i], degree_cent[i],
+				betweenness_cent[i], eigenvector_cent[i], 
+				closeness_cent[i]))

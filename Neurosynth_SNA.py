@@ -512,9 +512,9 @@ def ModifySubGraph(graph):
         sub_list_concept = listclass.sub_Beam_concepts
         ns = LoadPickle('M:/KBE.01/Analysis/Neurosynth/' \
             'graph_analysis_data/pickles/number_of_studies.p')
-        graph.vs["numberofstudies"] = ns 
         #creates attribute for number of studies
-        npns = np.array(ns) #creates array of number of studies
+        npns = np.array(graph.vs['numberofstudies']) 
+        #creates array of number of studies
         nsl = np.log10(npns) #calculates log of number of studies
         graph.vs["log"] = nsl*8 #multiplies constant to create attribute "log"
         sfgc = database.IsolateSubGraph(graph, sub_list_concept, "term") 

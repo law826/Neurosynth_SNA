@@ -1,33 +1,55 @@
 from __future__ import division
 import unittest
-from pdb import *
-import os, sys, getpass, random as rand, cPickle, numpy as np
-try:
-	from igraph import *
-except ImportError:
-	raise ImportError, "The igraph module is required to run this program."
-
+import os, sys
+from igraph import *
 sys.path.append('/Users/ln30/Git/Neurosynth_SNA/')
 import Neurosynth_SNA as ns
-
 
 class TestDatabase(unittest.TestCase):
 
 	def setUp(self):
-		# self.paths includes a variety of relevant paths 
-		# from Neurosynth_SNA.py.
-		self.paths = ns.Paths()
+		self.graph = Graph.Full(3)
+		self.graph.es['weight'] = 1.0
+		self.graph.es['weight'] = [0.9, 0.1, 0.6] # Tuples are (0,1), (0,2), (1,2)
 
-	def test_GetFileNamesInDirectory(self):
-		files = ns.GetFileNamesInDirectory(
-			'/Volumes/huettel/KBE.01/Analysis/Neurosynth/' \
-			'graph_analysis_data/NeurosynthMerge/Reverse_Inference')
-		# Round 2 after merging should only have 414 instead of 525 studies.
-		self.assertEqual(len(files), 414) 
-		self.assertNotEqual(files[0], '_DS.Store')
+	def test_centralities(self):
+		degree_centrality = self.graph.strength(loops=False, weights='weight')
+		betweenness_cent = self.graph.betweenness(directed=False, 
+					weights='weight')
+		eigenvector_cent = self.graph.evcent(directed=False, weights='weight')
+		closeness_cent = self.graph.closeness(weights='weight')
+
+		self.assertEqual(degree_centrality, [1.0, 1.5, 0.7])
+		self.assertEqual(betweenness_cent, [0, 0, 1])
+
+		eigenvector_rounded = [round(x, 2) for x in eigenvector_cent]
+		self.assertEqual(eigenvector_rounded, [0.85, 1.0, 0.61])
+
+		closeness_rounded = [round(x, 2) for x in closeness_cent]
+		self.assertEqual(closeness_rounded, [2.5, 1.54, 2.86])
+
+		import pdb; pdb.set_trace()
 
 
-		
+	def tearDown(self):
+		"""
+		If this method is defined, the test runner will invoke this after 
+		each test. 
+		"""
+		pass
+
+if __name__ == '__main__':
+	unittest.main()
+
+
+#####
+	# def test_GetFileNamesInDirectory(self):
+	# 	files = ns.GetFileNamesInDirectory(
+	# 		'/Volumes/huettel/KBE.01/Analysis/Neurosynth/'
+	# 		'graph_analysis_data/NeurosynthMerge/Reverse_Inference2')
+	# 	# Round 2 after merging should only have 414 instead of 525 studies.
+	# 	self.assertEqual(len(files), 414) 
+	# 	self.assertNotEqual(files[0], '_DS.Store')	
 
 	# def test_ArticleAnalysis(self):
 	# 	npath = self.paths.git_path
@@ -106,13 +128,3 @@ class TestDatabase(unittest.TestCase):
 	# 	self.assertEqual('emotion|emotions' in nsm.feature_list, True)
 	# 	self.assertEqual(
 	#	'association|associations|associative' in nsm.feature_list, True)
-
-	def tearDown(self):
-		"""
-		If this method is defined, the test runner will invoke this after 
-		each test. 
-		"""
-		pass
-
-if __name__ == '__main__':
-	unittest.main()

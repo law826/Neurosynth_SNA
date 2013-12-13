@@ -65,7 +65,6 @@ class TestDatabase(unittest.TestCase):
 
 		
 
-
 	def test_is_done(self):
 		try:
 			os.system(

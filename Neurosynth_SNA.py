@@ -336,8 +336,9 @@ class ArticleAnalysis():
 
         items_to_exclude = ['(1back)', '(2back)']
 
+        import pdb; pdb.set_trace()
         jaccards = ['NA'
-                    if any(i in list(pair) for i in items_to_exclude) 
+                    if any([i in list(pair) for i in items_to_exclude]) 
                     else self.CalculateJaccard(*pair) 
                     for pair in thesaurus_merge_terms]
 

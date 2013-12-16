@@ -39,28 +39,25 @@ def wordle_text_generator(terms, weights, outpath):
 betweenness_centrality = False
 degree_centrality = True
 
-if betweenness_centrality:
-	terms = graph.vs['term']
-	# Preprocess the edges.
-	graph.es['weight'] = [x+1 for x in graph.es['weight']]
-	weights = graph.betweenness(directed=False, weights="weight")
-	outpath = '/Volumes/huettel/KBE.01/Analysis/Neurosynth/graph_analysis_data/' \
-			'graph_stats/visualizations/wordle/betweenness_centrality.txt'
+if __name__ == '__main__':
+	if betweenness_centrality:
+		terms = graph.vs['term']
+		# Preprocess the edges.
+		graph.es['weight'] = [x+1 for x in graph.es['weight']]
+		weights = graph.betweenness(directed=False, weights="weight")
+		outpath = '/Volumes/huettel/KBE.01/Analysis/Neurosynth/graph_analysis_data/' \
+				'graph_stats/visualizations/wordle/betweenness_centrality.txt'
 
-	wordle_text_generator(terms, weights, outpath)
+		wordle_text_generator(terms, weights, outpath)
 
-if degree_centrality:
-	terms = graph.vs['term']
-	degree = graph.strength(loops=False, weights='weight')
-	outpath = '/Volumes/huettel/KBE.01/Analysis/Neurosynth/graph_analysis_data/' \
-			'graph_stats/visualizations/wordle/degree_centrality.txt'
+	if degree_centrality:
+		terms = graph.vs['term']
+		degree = graph.strength(loops=False, weights='weight')
+		outpath = '/Volumes/huettel/KBE.01/Analysis/Neurosynth/graph_analysis_data/' \
+				'graph_stats/visualizations/wordle/degree_centrality.txt'
 
-	wordle_text_generator(terms, degree, outpath)
+		wordle_text_generator(terms, degree, outpath)
 
-import pdb; pdb.set_trace()
-
-
-##
 
 # # Input file.
 # merged_master_path = '/Volumes/huettel/KBE.01/Analysis/Neurosynth/' \

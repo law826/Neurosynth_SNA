@@ -500,6 +500,12 @@ def StripName(graph, rawterms):
     #     graph.vs["term"]=[x.split('_')[0] for x in graph.vs["term"]]
     #     return graph
 
+def ThresholdGraph(graph, threshold):
+    indices_to_delete = [edge.index 
+                        for edge in sfgc.es.select(weight_lt=threshold)]
+    graph.delete_edges(indices_to_delete)
+    return graph
+
 def ModifySubGraph(graph):
     """
     input: graph of analysis (fg or rg)

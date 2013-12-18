@@ -19,7 +19,7 @@ graph_pth = '/Volumes/huettel/KBE.01/Analysis/Neurosynth/graph_analysis_data/' \
 			'pickles/reverse_graph2.p'
 
 outdir = '/Volumes/Huettel/KBE.01/Analysis/Neurosynth/graph_analysis_data/'\
-			'graph_stats/visualizations/'
+			'graph_stats/visualizations/wordle'
 
 # Load the graph.
 graph = ns.LoadGraph(graph_pth)
@@ -32,23 +32,27 @@ for threshold in thresholds:
 
 	# Calculate centralities.
 	node_names = graph.vs['term']
-	degree_cent = graph.strength(loops=False, weights='weight')
-	betweenness_cent = graph.betweenness(directed=False, 
+	degree_cents = graph.strength(loops=False, weights='weight')
+	eigenvector_cents = graph.evcent(directed=False, weights='weight')
+	closeness_cents = graph.closeness(weights='weight')
+
+	# Fix edges so that betweenness works.
+	graph.es['weight'] = [x+1 for x in graph.es['weight']]
+	betweenness_cents = graph.betweenness(directed=False, 
 						weights='weight')
-	eigenvector_cent = graph.evcent(directed=False, weights='weight')
-	closeness_cent = graph.closeness(weights='weight')
 
-	centralities = [degree_cent, betweenness_cent, 
-	eigenvector_cent, closeness_cent]
+	centralities = [degree_cents, betweenness_cents, 
+	eigenvector_cents, closeness_cents]
+	centrality_names = ['degree', 'betweenness', 'eigenvector', 'closeness']
 
-	for centrality in centrality:
-		
-		with open()
+	# Output wordle documents.
+	for j, degree_cent in enumerate(degree_cents):
+		outname = '%s_%s.txt' %(centrality_names[i], str(threshold)[-1])
+		with open(os.path.join(outdir, outname), 'wb') as outfile:
+			for i, centrality in enumerate(centralities):
+				outfile.write('%s: %s\n' %(node_names[i], degree_cent))	
 
-
-
-
-import pdb; pdb.set_trace()
+	import pdb; pdb.set_trace()
 
 
 

@@ -502,7 +502,7 @@ def StripName(graph, rawterms):
 
 def ThresholdGraph(graph, threshold):
     indices_to_delete = [edge.index 
-                        for edge in sfgc.es.select(weight_lt=threshold)]
+                        for edge in graph.es.select(weight_lt=threshold)]
     graph.delete_edges(indices_to_delete)
     return graph
 

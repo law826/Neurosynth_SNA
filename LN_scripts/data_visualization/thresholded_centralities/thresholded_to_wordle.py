@@ -46,10 +46,10 @@ for threshold in thresholds:
 	centrality_names = ['degree', 'betweenness', 'eigenvector', 'closeness']
 
 	# Output wordle documents.
-	for j, degree_cent in enumerate(degree_cents):
-		outname = '%s_%s.txt' %(centrality_names[i], str(threshold)[-1])
+	for i, centrality in enumerate(centralities):
+		outname = '%s_%s.txt' %(centrality_names[j], str(threshold)[-1])
 		with open(os.path.join(outdir, outname), 'wb') as outfile:
-			for i, centrality in enumerate(centralities):
+			for j, degree_cent in enumerate(degree_cents):
 				outfile.write('%s: %s\n' %(node_names[i], degree_cent))	
 
 	import pdb; pdb.set_trace()

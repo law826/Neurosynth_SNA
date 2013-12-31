@@ -53,15 +53,15 @@ class TestDatabase(unittest.TestCase):
 		self.assertEqual(first_five, self.graph.vs['numberofstudies'][0:5])
 		self.assertEqual(last_five, self.graph.vs['numberofstudies'][-5:])
 
-	def test_ArticleJaccard(self):
-		jaccards = self.graph.es['jaccards']
-		self.assertEqual(len(jaccards), 85491)
+	# def test_ArticleJaccard(self):
+	# 	jaccards = self.graph.es['jaccards']
+	# 	self.assertEqual(len(jaccards), 85491)
 
-		# All 1back and 2back are 'NA'. This should equal 413+412
-		self.assertEqual(jaccards.count('NA', 825))
+	# 	# All 1back and 2back are 'NA'. This should equal 413+412
+	# 	self.assertEqual(jaccards.count('NA', 825))
 
-		# No Jaccards should be greater than 1.
-		self.assertEqual(max(jaccard)<1, True)
+	# 	# No Jaccards should be greater than 1.
+	# 	self.assertEqual(max(jaccard)<1, True)
 
 		
 

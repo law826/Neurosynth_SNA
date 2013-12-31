@@ -31,7 +31,7 @@ add_number_of_studies = False
 add_brain_means = False
 print_node_attributes_to_csv = False
 import_partials_from_table = False
-assign_semantic_Jaccards = True
+assign_semantic_Jaccards = False
 save_the_graph = False
 ######
 
@@ -157,5 +157,6 @@ try:
 	os.system(
 		"""osascript -e 'tell app "System Events" to display""" \
 		""" dialog "Your script has finished running."'""")
+	import pdb; pdb.set_trace()
 except:
 	pass

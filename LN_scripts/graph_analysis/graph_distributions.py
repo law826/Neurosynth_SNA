@@ -27,15 +27,14 @@ outdir = '/Volumes/huettel/KBE.01/Analysis/Neurosynth/graph_analysis_data/' \
 # Load the graph.
 graph = ns.LoadGraph(graph_pth)
 
-histogram_of_zero_order_correlation = False
+histogram_of_zero_order_correlation = True
 histogram_of_number_of_studies = False
 histogram_of_number_of_studies_lower_range = False
-histogram_of_partial_correlations = True
+histogram_of_partial_correlations = False
 
 if histogram_of_zero_order_correlation:
 	P.figure()
 	x = graph.es['weight']
-	import pdb; pdb.set_trace()
 	histogram = P.hist(x)
 	P.xlabel('Pearson Correlation (R)')
 	P.ylabel('Number of Edges')

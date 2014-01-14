@@ -288,7 +288,7 @@ class ArticleAnalysis():
     def RetrieveMergeTerms(self, graph):
         """
         Takes a graph and cross references against a thesaurus to create
-        a list of merge terms.
+        a list of merge terms relevant to the full edgelists.
         """
         sys.path.append('/Users/ln30/Git/Neurosynth_SNA/')
         from ListClass import ListClass
@@ -336,22 +336,32 @@ class ArticleAnalysis():
 
         items_to_exclude = ['(1back)', '(2back)']
 
-        import pdb; pdb.set_trace()
-        jaccards = ['NA'
-                    if any([i in list(pair) for i in items_to_exclude]) 
-                    else self.CalculateJaccard(*pair) 
-                    for pair in thesaurus_merge_terms]
+        jaccards = []
+
+        # Exclude
+
+        for i, pair in enumerate(thesaurus_merge_terms):
+            print i
+            if ((items_to_exclude[0] in list(pair)) or 
+                (items_to_exclude[1] in list(pair))):
+                jaccards.append('NA')
+                print 'NA'
+            else:
+                jaccard = self.CalculateJaccard(*pair)
+                jaccards.append(jaccard)
+                print jaccard
+
+        sys.path.append('/Users/ln30/Git/general_scripts/')
+        import send_message; send_message.send_text()
 
         import pdb; pdb.set_trace()
-
         return jaccards
-
 
     def OutputJaccardsAndWeightsToFiles(self, graph_pickle, directory):
         """
         Takes a graph that already has the number of studies jaccard attribute 
-        and outputs files appropriate 
-            to create a jaccard vs. weight scatter plot.
+        and outputs files appropriate to create a jaccard vs. weight scatter 
+        plot.
         """
         graph = Graph.Read_Pickle(graph_pickle)
         with open(os.path.join(directory, 'jaccard.txt'), 'w') as f:

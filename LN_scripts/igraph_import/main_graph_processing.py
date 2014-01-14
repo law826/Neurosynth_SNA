@@ -31,7 +31,7 @@ add_number_of_studies = False
 add_brain_means = False
 print_node_attributes_to_csv = False
 import_partials_from_table = False
-assign_semantic_Jaccards = False
+assign_semantic_Jaccards = True
 save_the_graph = False
 ######
 
@@ -148,7 +148,7 @@ if assign_semantic_Jaccards:
 	# Get term from thesaurus.
 	aa = ns.ArticleAnalysis(git_path)
 	jaccards = aa.CalculateMergedJaccards(graph)
-	import pdb; pdb.set_trace()
+	graph.es['jaccards'] = jaccards
 
 if save_the_graph:
 	ns.SaveGraph(graph, outpath)

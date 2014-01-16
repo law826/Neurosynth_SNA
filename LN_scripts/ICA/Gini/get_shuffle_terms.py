@@ -5,7 +5,7 @@ Takes the paths from a shuffled iteration and gives back a list of term names.
 import os, sys
 
 sys.path.append('/Users/ln30/Git/Neurosynth_SNA/LN_scripts/ICA/')
-from radar_plots import descendingLoadings
+from ICA_utils import descendingLoadings
 
 ICA_path = '/Volumes/Huettel/KBE.01/Analysis/Neurosynth/ICA/SHUFFLED2/'
 load_dir = os.path.join(ICA_path, 'loadings')
@@ -25,4 +25,5 @@ def get_shuffled_terms():
 
 if __name__ == '__main__':
 	shuffled_terms = get_shuffled_terms()
+	print shuffled_terms
 	descendingLoadings(ICA_path, shuffled_terms, load_dir)

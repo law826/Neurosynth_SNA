@@ -17,36 +17,7 @@ import ListClass as lc
 
 sys.path.append('/Users/ln30/Git/Neurosynth_SNA/LN_scripts/ICA/')
 import radar_plot
-
-def descendingLoadings(ICA_path, terms, main_out):
-	"""
-	Given an ICA directory, output terms and loadings in descending order 
-	for each each component into CSVs.
-	"""
-
-	# Make main output directory if it does not exist. 
-	if not os.path.exists(main_out):
-		os.makedirs(main_out)
-
-	# Get components.
-	report_dir = os.path.join(ICA_path, 'report')
-	component_files = glob.glob1(report_dir, "t*.txt")
-
-	# Loop through components.
-	for c_number, component_file in enumerate(component_files):
-		# Load in lines as list.
-		with open(os.path.join(report_dir, component_file), 'rb') as f:
-			timepoints = [float(line.rstrip()) for line in f]
-		component_tuples = [(terms[i], timepoints[i]) 
-							for i, term in enumerate(terms)]
-		sorted_cts = sorted(component_tuples, 
-						key=lambda component: component[1], reverse = True)
-
-		# Write to file.
-		with open(os.path.join(
-			main_out, 'component_%s.txt' %(c_number+1)), 'wb') as o:
-			for i, sorted_ct in enumerate(sorted_cts):
-				o.write('%s,%s\n' %(sorted_ct[0], sorted_ct[1]))
+from ICA_utils import descendingLoadings
 
 def get_sorted_list_by_term(term, ICA_path, sort_list=True):
 	"""
@@ -76,6 +47,7 @@ def get_sorted_list_by_term(term, ICA_path, sort_list=True):
 	# Sort by loadings.
 	sorted_inter_line_list = sorted(inter_line_list, key = lambda ill: ill[1],
 							reverse = True)
+	import pdb; pdb.set_trace()
 
 	if sort_list:
 		return sorted_inter_line_list
@@ -119,19 +91,19 @@ def radar_plot_top_terms(term, ICA_path):
 
 if __name__ == '__main__':
 
-	# # Radar plot
-	# ICA_path = '/Volumes/Huettel/KBE.01/Analysis/Neurosynth/ICA/merged_rTPJ_free_ICA/'
-	# radar_plot_top_terms("attention", ICA_path)
+	# Radar plot
+	ICA_path = '/Volumes/Huettel/KBE.01/Analysis/Neurosynth/ICA/merged_rTPJ_free_ICA/'
+	radar_plot_top_terms("attention", ICA_path)
 
 	# Radar plot.
 	# radar_plot_top_terms("morality", ICA_path)
 
-	# Do descending loadings
-	# Load the graph.
-	graph_pth = '/Volumes/huettel/KBE.01/Analysis/Neurosynth/graph_analysis_data/' \
-	'pickles/reverse_graph2.p'
-	graph = ns.LoadGraph(graph_pth)
-	terms = graph.vs['term']
-	ICA_path = '/Volumes/Huettel/KBE.01/Analysis/Neurosynth/ICA/SHUFFLED2/'
-	main_out = os.path.join(ICA_path, 'loadings')
-	descendingLoadings(ICA_path, main_out)
+	# # Do descending loadings
+	# # Load the graph.
+	# graph_pth = '/Volumes/huettel/KBE.01/Analysis/Neurosynth/graph_analysis_data/' \
+	# 'pickles/reverse_graph2.p'
+	# graph = ns.LoadGraph(graph_pth)
+	# terms = graph.vs['term']
+	# ICA_path = '/Volumes/Huettel/KBE.01/Analysis/Neurosynth/ICA/SHUFFLED2/'
+	# main_out = os.path.join(ICA_path, 'loadings')
+	# descendingLoadings(ICA_path, main_out)

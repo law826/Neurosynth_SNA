@@ -11,7 +11,7 @@ csv_path = '/Volumes/Huettel/KBE.01/Analysis/Neurosynth/ICA/ICA65/'\
 outdir = '/Volumes/Huettel/KBE.01/Analysis/Neurosynth/ICA/ICA65/'\
             'distribution/weight_histograms/'
 
-with open(csv_path, 'rb') as f:
+with open(csv_path, 'rU') as f:
     reader = csv.reader(f)
     row_list = [row for row in reader]
     term_list = [list(row) for row in zip(*row_list)]

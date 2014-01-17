@@ -7,12 +7,12 @@ import os, sys
 sys.path.append('/Users/ln30/Git/Neurosynth_SNA/LN_scripts/ICA/')
 from ICA_utils import descendingLoadings
 
-ICA_path = '/Volumes/Huettel/KBE.01/Analysis/Neurosynth/ICA/SHUFFLED2/'
+ICA_path = '/Volumes/Huettel/KBE.01/Analysis/Neurosynth/ICA/SHUFFLED4/'
 load_dir = os.path.join(ICA_path, 'loadings')
 
 def get_shuffled_terms():
 	shuffle_log_path = '/Volumes/Huettel/KBE.01/Analysis/Neurosynth/'\
-					'neurosynthgit/results/run2/shuffle_log.txt'
+					'neurosynthgit/results/run2/merged_images_ri/shuffled_log2.txt'
 	f = open(shuffle_log_path, 'rb') 
 	lines = f.readlines()
 	to_delete1 = '/home/ln30/linux/experiments/KBE.01/Analysis/Neurosynth/'\

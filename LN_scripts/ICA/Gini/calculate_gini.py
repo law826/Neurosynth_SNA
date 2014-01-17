@@ -20,7 +20,7 @@ sys.path.append('/Users/ln30/Git/Neurosynth_SNA/LN_scripts/ICA/Gini/')
 import utilities
 
 sys.path.append('/Users/ln30/Git/Neurosynth_SNA/LN_scripts/ICA/')
-import ICA_data_visualization as idv
+from radar_plots import get_sorted_list_by_term
 
 # Get terms.
 graph_pth = '/Volumes/huettel/KBE.01/Analysis/Neurosynth/graph_analysis_data/' \
@@ -37,7 +37,7 @@ outpath = '/Volumes/Huettel/KBE.01/Analysis/Neurosynth/ICA/ICA65/distribution/'
 data = []
 data.append(['term', 'sum', 'std', 'max', 'min', 'gini_min', 'gini_pos'])
 for term in terms:
-	term_data = idv.get_sorted_list_by_term(term, ICA_path)
+	term_data = get_sorted_list_by_term(term, ICA_path)
 	weights = [item[1] for item in term_data]
 
 	# Calculate ginis.
@@ -59,6 +59,7 @@ for term in terms:
 	min_of_weights = np.amin(weights) 
 	data.append([term, np.sum(weights), np.std(weights), 
 		np.amax(weights), np.amin(weights), gini_min, gini_positive])
+	import pdb; pdb.set_trace()
 
 # Write to csv.
 with open(os.path.join(outpath, 'gini_data.csv'), 'wb') as f:

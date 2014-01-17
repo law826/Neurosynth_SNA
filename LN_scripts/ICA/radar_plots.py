@@ -37,17 +37,18 @@ def get_sorted_list_by_term(term, ICA_path, sort_list=True):
 				if term in file_line: 
 					file_line = file_line.replace('\n', '')
 					intra_line_list = file_line.split(',')
-					intra_line_list[1] = float(intra_line_list[1])
-					numeral_component = component_file.replace('component_', '')
-					numeral_component = numeral_component.replace('.txt', '')
-					intra_line_list.append(int(numeral_component))
-					intra_line_list.append(component_file)
-					inter_line_list.append(intra_line_list)
+					# Make sure no nested terms.
+					if intra_line_list[0] == term:
+						intra_line_list[1] = float(intra_line_list[1])
+						numeral_component = component_file.replace('component_', '')
+						numeral_component = numeral_component.replace('.txt', '')
+						intra_line_list.append(int(numeral_component))
+						intra_line_list.append(component_file)
+						inter_line_list.append(intra_line_list)
 
 	# Sort by loadings.
 	sorted_inter_line_list = sorted(inter_line_list, key = lambda ill: ill[1],
 							reverse = True)
-	import pdb; pdb.set_trace()
 
 	if sort_list:
 		return sorted_inter_line_list

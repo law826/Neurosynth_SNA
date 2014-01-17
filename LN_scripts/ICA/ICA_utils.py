@@ -4,6 +4,8 @@ def descendingLoadings(ICA_path, terms, main_out):
 	"""
 	Given an ICA directory, output terms and loadings in descending order 
 	for each each component into CSVs.
+
+	- Implemented in get_shuffle_terms
 	"""
 
 	# Make main output directory if it does not exist. 
@@ -31,3 +33,4 @@ def descendingLoadings(ICA_path, terms, main_out):
 				o.write('%s,%s\n' %(sorted_ct[0], sorted_ct[1]))
 
 def open_csv_and_transpose_to_list_of_lists(CSV_path):
+	pass

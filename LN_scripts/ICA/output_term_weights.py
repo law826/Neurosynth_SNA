@@ -42,5 +42,3 @@ csv_list = [list(row) for row in zip(*all_data)]
 f = open(os.path.join(distribution, 'term_weights.csv'), 'wb')
 writer = csv.writer(f)
 writer.writerows(csv_list)
-
-import pdb; pdb.set_trace()

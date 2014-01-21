@@ -22,7 +22,7 @@ import node_analysis as na
 
 ##### Sequences of events.
 create_edgelist_from_columns = False
-create_cross_corr_table_from_columns = False
+create_cross_corr_table_from_columns = True
 import_graph_from_edgelist = False # Will otherwise load a pickle.
 make_graph_undirected = False
 strip_loops_from_graph = False
@@ -31,27 +31,25 @@ add_number_of_studies = False
 add_brain_means = False
 print_node_attributes_to_csv = False
 import_partials_from_table = False
-assign_semantic_Jaccards = True
+assign_semantic_Jaccards = False
 save_the_graph = False
 ######
 
 edgelist = '/Volumes/huettel/KBE.01/Analysis/Neurosynth/graph_analysis_data/' \
 			'NeurosynthMerge/merged_edgelist/merged_edgelist.csv'
 
-corr_table = '/Volumes/huettel/KBE.01/Analysis/Neurosynth/'\
-			'graph_analysis_data/NeurosynthMerge/merged_correlation/'\
-			'merged_correlation.csv'
+corr_table = '/Volumes/Huettel/KBE.01/Analysis/Neurosynth/ICA/validation/'\
+			'merged_output/merged_correlation.csv'
 
 pcorr_table = '/Volumes/huettel/KBE.01/Analysis/Neurosynth/'\
 			'graph_analysis_data/NeurosynthMerge/merged_correlation/'\
 			'merged_pcorrelation.csv'
 
-term_correlation_dir = os.path.join('/Volumes', 'huettel', 'KBE.01', 
-                'Analysis', 'Neurosynth', 'correlations_raw_data', 'run2', 
-                'Reverse_Inference')
+term_correlation_dir = '/Volumes/Huettel/KBE.01/Analysis/Neurosynth/ICA/'\
+					'validation/output/'
 
-outdir = '/Volumes/huettel/KBE.01/Analysis/Neurosynth/graph_analysis_data/' \
-			'NeurosynthMerge/merged_edgelist/'
+outdir = '/Volumes/Huettel/KBE.01/Analysis/Neurosynth/ICA/'\
+				'validation/merged_output/'
 
 outpath = '/Volumes/huettel/KBE.01/Analysis/Neurosynth/graph_analysis_data/' \
 			'pickles/reverse_graph2.p'
@@ -157,6 +155,5 @@ try:
 	os.system(
 		"""osascript -e 'tell app "System Events" to display""" \
 		""" dialog "Your script has finished running."'""")
-	import pdb; pdb.set_trace()
 except:
 	pass

@@ -408,8 +408,9 @@ def CreateCrossCorrelationTable(maindir, file_names, outpath):
 
 
     # Add concept indices:
-    num_of_rows = concatenate_data.shape[0]
-    horz_labels = np.arange(0, num_of_rows)
+    processed_fn = [string.replace('.nii.gz.npy', '') for string in file_names]
+    processed_fn = [string.replace('_main', '') for string in processed_fn]
+    horz_labels = np.array(processed_fn)
     horz_labels = np.expand_dims(horz_labels, axis=0) # Necessary for swapping 
     # and concatenating.
     vert_labels = np.swapaxes(horz_labels, 0, 1)
@@ -418,11 +419,13 @@ def CreateCrossCorrelationTable(maindir, file_names, outpath):
     # the last line eliminates an axis for some reason.
 
 
+    concatenate_data = np.char.mod('%10.3f', concatenate_data)
     concatenate_data = np.concatenate((vert_labels, concatenate_data), axis=1)
     concatenate_data = np.concatenate((horz_labels, concatenate_data), axis=0)
 
+    import pdb; pdb.set_trace()
     np.save(outpath, concatenate_data)
-    np.savetxt(outpath, concatenate_data, fmt='%10.3f', delimiter=',')
+    np.savetxt(outpath, concatenate_data, fmt='%s', delimiter=',')
         
 def CreateEdgelist(maindir, file_names, outdir, outname):
     """

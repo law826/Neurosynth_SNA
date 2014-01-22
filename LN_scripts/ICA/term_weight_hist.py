@@ -2,13 +2,13 @@
 Takes csv of term weights and makes a histogram for each term.
 """
 
-import os, csv 
+import os, csv. sys 
 import pylab as P
 
 
-csv_path = '/Volumes/Huettel/KBE.01/Analysis/Neurosynth/ICA/ICA65/'\
+csv_path = '/Volumes/Huettel/KBE.01/Analysis/Neurosynth/ICA/ICA20/'\
             'distribution/term_weights.csv'
-outdir = '/Volumes/Huettel/KBE.01/Analysis/Neurosynth/ICA/ICA65/'\
+outdir = '/Volumes/Huettel/KBE.01/Analysis/Neurosynth/ICA/ICA20/'\
             'distribution/weight_histograms/'
 
 with open(csv_path, 'rU') as f:
@@ -22,7 +22,7 @@ with open(csv_path, 'rU') as f:
         weights = [float(item) for i,item in enumerate(term) if i != 0]
         histogram = P.hist(weights)
         P.xlabel('ICA temporal weight')
-        P.ylabel('Number of Component')
+        P.ylabel('Number of Components')
         P.figtext(0.5, 0.965, term_name, ha='center', color='black', 
                     weight='bold', size='large')
         P.savefig(os.path.join(outdir, term_name))

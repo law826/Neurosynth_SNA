@@ -14,13 +14,13 @@ import Neurosynth_SNA as ns
 import database as db
 import ListClass as lc
 
-sys.path.append('/Users/ln30/Git/Neurosynth_SNA/LN_scripts/ICA/radar_plots.py')
-import radar_plots
+sys.path.append('/Users/ln30/Git/Neurosynth_SNA/LN_scripts/ICA/radar_plots')
+import single_panel_plots
 import csv
 
 graph_pth = '/Volumes/huettel/KBE.01/Analysis/Neurosynth/graph_analysis_data/' \
 			'pickles/reverse_graph2.p'
-ICA_path = '/Volumes/Huettel/KBE.01/Analysis/Neurosynth/ICA/ICA65/'
+ICA_path = '/Volumes/Huettel/KBE.01/Analysis/Neurosynth/ICA/ICA20/'
 distribution = os.path.join(ICA_path, 'distribution')
 
 
@@ -31,7 +31,7 @@ terms = graph.vs['term']
 
 all_data = [] 
 for term in terms:
-	data = radar_plots.get_sorted_list_by_term(term, ICA_path, sort_list = False)
+	data = single_panel_radar.get_sorted_list_by_term(term, ICA_path, sort_list = False)
 	data_row = [datum[1] for datum in data]
 	data_row.insert(0, term)
 	all_data.append(data_row)

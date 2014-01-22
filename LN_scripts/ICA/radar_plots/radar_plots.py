@@ -15,8 +15,10 @@ import Neurosynth_SNA as ns
 import database as db
 import ListClass as lc
 
-sys.path.append('/Users/ln30/Git/Neurosynth_SNA/LN_scripts/ICA/')
+sys.path.append('/Users/ln30/Git/Neurosynth_SNA/LN_scripts/ICA/radar_plots')
 import radar_plot
+
+sys.path.append('/Users/ln30/Git/Neurosynth_SNA/LN_scripts/ICA/')
 from ICA_utils import descendingLoadings
 
 def get_sorted_list_by_term(term, ICA_path, sort_list=True):
@@ -88,12 +90,12 @@ def radar_plot_top_terms(term, ICA_path):
 
 	# Create the radar plot.
 	radar_plot.one_panel_top_terms(data)
+	# import pdb; pdb.set_trace()
 
 
 if __name__ == '__main__':
-
 	# Radar plot
-	ICA_path = '/Volumes/Huettel/KBE.01/Analysis/Neurosynth/ICA/merged_rTPJ_free_ICA/'
+	ICA_path = '/Volumes/Huettel/KBE.01/Analysis/Neurosynth/ICA/ICA20/'
 	radar_plot_top_terms("attention", ICA_path)
 
 	# Radar plot.

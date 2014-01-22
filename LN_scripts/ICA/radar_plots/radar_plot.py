@@ -146,7 +146,7 @@ def example_data():
             [[2.39, 0.62, 0.98, 0.95, 1.60, 0.81, 0.81, 0.79, 1.19]]}
     return data
 
-def one_panel_top_terms(data):
+def one_panel_top_terms(data, savepath=False):
     """
     Given a dataset as above, returns a single plot.
     """
@@ -174,6 +174,8 @@ def one_panel_top_terms(data):
 
     plt.figtext(0.5, 0.965, '"%s"' %title,
                 ha='center', color='black', weight='bold', size=25)
+
+    
     plt.show()
 
 if __name__ == '__main__':

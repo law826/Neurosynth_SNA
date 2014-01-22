@@ -423,7 +423,6 @@ def CreateCrossCorrelationTable(maindir, file_names, outpath):
     concatenate_data = np.concatenate((vert_labels, concatenate_data), axis=1)
     concatenate_data = np.concatenate((horz_labels, concatenate_data), axis=0)
 
-    import pdb; pdb.set_trace()
     np.save(outpath, concatenate_data)
     np.savetxt(outpath, concatenate_data, fmt='%s', delimiter=',')
         

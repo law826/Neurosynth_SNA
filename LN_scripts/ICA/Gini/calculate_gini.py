@@ -20,7 +20,7 @@ sys.path.append('/Users/ln30/Git/Neurosynth_SNA/LN_scripts/ICA/Gini/')
 import utilities
 
 sys.path.append('/Users/ln30/Git/Neurosynth_SNA/LN_scripts/ICA/')
-from radar_plots import get_sorted_list_by_term
+from single_panel_radar import get_sorted_list_by_term
 
 # Get terms.
 graph_pth = '/Volumes/huettel/KBE.01/Analysis/Neurosynth/graph_analysis_data/' \

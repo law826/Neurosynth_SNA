@@ -11,8 +11,6 @@ from matplotlib.projections import register_projection
 
 from base_plot import *
 
-terms = ['attention', 'reward', 'moral']
-
 def get_term_weight(term, ICA_path):
     """
     Get a sorted list given a term and ICA_path. Several other pieces of 
@@ -42,7 +40,7 @@ def get_term_weight(term, ICA_path):
     return inter_line_list
 
 def get_all_term_weights(terms, ICA_path):
-    big_list = [] 
+    big_list = []
     for term in terms:
         inter_line_list = get_term_weight(term, ICA_path)
         big_list.append(inter_line_list)
@@ -50,8 +48,12 @@ def get_all_term_weights(terms, ICA_path):
     return big_list
 
 def convert_final_data(big_list):
+    """
+    Make it into a format appropriate for radar plot. 
+    This also includes taking the absolute value.
+    """
     column_name_list = [str(item[2]) for item in big_list[0]]
-    weight_list = [[subitem[1] for subitem in item] for item in big_list]
+    weight_list = [[abs(subitem[1]) for subitem in item] for item in big_list]
     data = {
         'column names': column_name_list,
         'ICA_weights': weight_list
@@ -59,13 +61,12 @@ def convert_final_data(big_list):
 
     return data
 
-if __name__ == '__main__':
-    ICA_path = '/Volumes/Huettel/KBE.01/Analysis/Neurosynth/ICA/ICA20'
+def overlaid_plot(num_terms, savepath=None):
+    ICA_path = '/Volumes/Huettel/KBE.01/Analysis/Neurosynth/ICA/ICA%s' %num_terms
     big_list = get_all_term_weights(terms, ICA_path)
     data = convert_final_data(big_list)
 
-
-    N = 20
+    N = num_terms
     theta = radar_factory(N, frame='polygon')
 
     spoke_labels = data.pop('column names')
@@ -77,7 +78,7 @@ if __name__ == '__main__':
     # Plot the four cases from the example data on separate axes
     for n, title in enumerate(data.keys()):
         ax = fig.add_subplot(1, 1, n+1, projection='radar')
-        plt.rgrids([0.2, 0.4, 0.6, 0.8])
+        #plt.rgrids([0.2, 0.4, 0.6, 0.8])
         ax.set_title(title, weight='bold', size='medium', position=(0.5, 1.1),
                      horizontalalignment='center', verticalalignment='center')
         for d, color in zip(data[title], colors):
@@ -93,4 +94,19 @@ if __name__ == '__main__':
 
     plt.figtext(0.5, 0.965, 'Differential Term Weightings on ICA components',
                 ha='center', color='black', weight='bold', size='large')
-    plt.show()
+
+    if savepath == None:
+        plt.show()
+    else:
+        plt.savefig(savepath)
+
+if __name__ == '__main__':
+    terms = ['reward', 'attention']
+    savedir = '/Volumes/Huettel/KBE.01/Analysis/Neurosynth/ICA/visualization/'
+    num_terms = 20
+    savename = '_'.join(terms)
+    savename = '%s_%s' %(savename, num_terms)
+    savepath = os.path.join(savedir, savename)
+
+    overlaid_plot(num_terms, savepath=savepath)
+    

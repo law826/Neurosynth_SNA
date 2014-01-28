@@ -11,7 +11,7 @@ from matplotlib.projections import register_projection
 
 from base_plot import *
 
-terms = ['attention', 'reward', 'moral']
+terms = ['reward', 'moral']
 
 def get_term_weight(term, ICA_path):
     """

@@ -9,9 +9,9 @@ from ListClass import ListClass
 lc = ListClass()
 sub_concepts = lc.sub_Beam_concepts
 input_csv = '/Volumes/Huettel/KBE.01/Analysis/Neurosynth/ICA/ICA20/'\
-				'distribution/kurtosis.csv'
+				'distribution/outlier_difference_count.csv'
 csv_out = '/Volumes/Huettel/KBE.01/Analysis/Neurosynth/ICA/ICA20/'\
-				'distribution/Beam_sub_kurtosis.csv'
+				'distribution/Beam_sub_outlier_difference.csv'
 
 # Import CSV.
 with open(input_csv, 'rU') as f:

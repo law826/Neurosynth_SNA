@@ -11,11 +11,8 @@ from matplotlib.projections import register_projection
 
 from base_plot import *
 
-<<<<<<< HEAD
 terms = ['reward', 'moral']
 
-=======
->>>>>>> 1159a722ec6b999c5245cc88019ab0fbfe9a2adf
 def get_term_weight(term, ICA_path):
     """
     Get a sorted list given a term and ICA_path. Several other pieces of 

@@ -97,7 +97,7 @@ if __name__ == '__main__':
 
 	# Radar plot
 	ICA_path = '/Volumes/Huettel/KBE.01/Analysis/Neurosynth/ICA/ICA65/'
-	radar_plot_top_terms("motor", ICA_path)
+	radar_plot_top_terms("hand", ICA_path)
 
 	# Radar plot.
 	# radar_plot_top_terms("morality", ICA_path)

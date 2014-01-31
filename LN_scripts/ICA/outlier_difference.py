@@ -5,9 +5,9 @@ import os, sys, csv
 import numpy as np
 from scipy.stats.mstats import zscore
 
-csv_input = '/Volumes/Huettel/KBE.01/Analysis/Neurosynth/ICA/ICA20/'\
+csv_input = '/Volumes/Huettel/KBE.01/Analysis/Neurosynth/ICA/old/SHUFFLED3/'\
 			'distribution/term_weights.csv'
-csv_output = '/Volumes/Huettel/KBE.01/Analysis/Neurosynth/ICA/ICA20/'\
+csv_output = '/Volumes/Huettel/KBE.01/Analysis/Neurosynth/ICA/old/SHUFFLED3/'\
 			'distribution/outlier_difference_count.csv'
 
 

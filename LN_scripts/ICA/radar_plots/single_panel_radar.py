@@ -20,13 +20,12 @@ import radar_plot
 sys.path.append('/Users/ln30/Git/Neurosynth_SNA/LN_scripts/ICA/')
 from ICA_utils import descendingLoadings
 
-def get_sorted_list_by_term(term, ICA_path, sort_list=True):
+def get_sorted_list_by_term(term, ICA_path, load_dir, sort_list=True):
 	"""
 	Get a sorted list given a term and ICA_path. Several other pieces of 
 	information are included as well.
 	"""
 	# Search a directory for all lines that include a certain term.
-	load_dir = os.path.join(ICA_path, 'loadings')
 	component_files = glob.glob1(load_dir, "*.txt")
 
 	# Collect all of these into tuples, which includes the component name.
@@ -56,12 +55,11 @@ def get_sorted_list_by_term(term, ICA_path, sort_list=True):
 	else:
 		return inter_line_list
 
-def radar_plot_top_terms(term, ICA_path):
+def radar_plot_top_terms(term, ICA_path, load_dir):
 	"""
 	Takes the list returned by get_sorted_list_by_term and returns a radar_plot.
 	"""
-	load_dir = os.path.join(ICA_path, 'loadings')
-	sorted_inter_line_list = get_sorted_list_by_term(term, ICA_path)
+	sorted_inter_line_list = get_sorted_list_by_term(term, ICA_path, load_dir)
 
 	# Retrieve the top 9.
 	num_top_items = 9
@@ -95,7 +93,8 @@ if __name__ == '__main__':
 
 	# Radar plot
 	ICA_path = '/Volumes/Huettel/KBE.01/Analysis/Neurosynth/ICA/ICA65/'
-	radar_plot_top_terms("addiction", ICA_path)
+	load_dir = '/Volumes/Huettel/KBE.01/Analysis/Neurosynth/ICA/ICA65/filtered_loadings'
+	radar_plot_top_terms("vision", ICA_path, load_dir)
 
 	# Radar plot.
 	# radar_plot_top_terms("morality", ICA_path)

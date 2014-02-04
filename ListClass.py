@@ -22,6 +22,13 @@ class ListClass:
         "top-down", "cerebellum", "extrastriate", "learning", "encoding", "MTL", "parahippocampus", "visual cortex", "object", "representation", "V1", "somatosensory", "S2", 
         "sensorimotor", "language", "frontal", "semantic", "LIFG", "M1", "motor", "premortor cortex", "V5", "motion", "MTA"]
 
+        self.participant_terms = ['aging', 'sex', 'women', 'agerelated', 
+                            'sexual', 'development', 'child', 'adolescence', 
+                            'adults', 'elderly', 'age', 'female', 'polymorphism',
+                            'family', 'autism', 'male', 'adhd', 'epilepsy', 
+                            'cocaine', 'dyslexia', 'addiction', 'antipsyschotic',
+                            'bipolar', 'ptsd', 'allele']
+
         self.thesaurus = [('ability', 'abilities', 'ability|abilities'),
                             ('action', 'actions', 'action|actions'),
                             ('adolescence', 'adolescents', 'adolescence|adolescents'),

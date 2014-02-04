@@ -12,9 +12,9 @@ import glob
 import csv
 from scipy.stats import kurtosis
 
-input_csv = '/Volumes/Huettel/KBE.01/Analysis/Neurosynth/ICA/ICA20/'\
+input_csv = '/Volumes/Huettel/KBE.01/Analysis/Neurosynth/ICA/old/SHUFFLED3/'\
 				'distribution/term_weights.csv'
-csv_out = '/Volumes/Huettel/KBE.01/Analysis/Neurosynth/ICA/ICA20/'\
+csv_out = '/Volumes/Huettel/KBE.01/Analysis/Neurosynth/ICA/old/SHUFFLED3/'\
 				'distribution/kurtosis.csv'
 
 # Open and transpose csv.

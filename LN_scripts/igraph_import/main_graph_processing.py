@@ -21,18 +21,18 @@ sys.path.append('/Users/ln30/Git/Neurosynth_SNA/LN_scripts/')
 import node_analysis as na
 
 ##### Sequences of events.
-create_edgelist_from_columns = False
-create_cross_corr_table_from_columns = True
-import_graph_from_edgelist = False # Will otherwise load a pickle.
-make_graph_undirected = False
-strip_loops_from_graph = False
-add_term_names = False
+create_edgelist_from_columns = False ##
+create_cross_corr_table_from_columns = False
+import_graph_from_edgelist = False ## Will otherwise load a pickle.
+make_graph_undirected = False ##
+strip_loops_from_graph = False ##
+add_term_names = False 
 add_number_of_studies = False
 add_brain_means = False
 print_node_attributes_to_csv = False
 import_partials_from_table = False
 assign_semantic_Jaccards = False
-save_the_graph = False
+save_the_graph = False ##
 ######
 
 edgelist = '/Volumes/huettel/KBE.01/Analysis/Neurosynth/graph_analysis_data/' \

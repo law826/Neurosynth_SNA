@@ -11,8 +11,6 @@ from matplotlib.projections import register_projection
 
 from base_plot import *
 
-terms = ['reward', 'moral']
-
 def get_term_weight(term, ICA_path):
     """
     Get a sorted list given a term and ICA_path. Several other pieces of 
@@ -53,7 +51,6 @@ def get_all_term_weights(terms, ICA_path):
         inter_line_list = get_term_weight(term, ICA_path)
         big_list.append(inter_line_list)
 
-    import pdb; pdb.set_trace()
     return big_list
 
 def term_weight_filter(big_list, filter_threshold):
@@ -67,7 +64,9 @@ def term_weight_filter(big_list, filter_threshold):
     Output: a big_list that is paired down from the input
     """
     for i, term in enumerate(big_list):
-        big_list[i] = big_list[i][:filtered_threshold]
+        big_list[i] = big_list[i][:filter_threshold]
+
+    return big_list
 
 def convert_final_data(big_list):
     """
@@ -83,12 +82,26 @@ def convert_final_data(big_list):
 
     return data
 
-def overlaid_plot(num_terms, savepath=None):
-    ICA_path = '/Volumes/Huettel/KBE.01/Analysis/Neurosynth/ICA/ICA%s' %num_terms
-    big_list = get_all_term_weights(terms, ICA_path)
-    data = convert_final_data(big_list)
+def overlaid_plot(terms, ICA_component_number, savepath=None, filtered_num=False):
+    """
+    Args:
+        - ICA_component_number: integer that corresponds to ICA analysis and directory
+        - savepath: just shows if no path is provided
+        - filtered_num: Integer that corresponds to the number of terms desired in 
+                    the radar plot.
+    """
+    ICA_path = '/Volumes/Huettel/KBE.01/Analysis/Neurosynth/ICA/ICA%s' %ICA_component_number
 
-    N = num_terms
+    big_list = get_all_term_weights(terms, ICA_path)
+
+    if filtered_num:
+        big_list = term_weight_filter(big_list, filtered_num)
+        N = filtered_num
+    else:
+        N = ICA_component_number
+
+    data = convert_final_data(big_list)
+    
     theta = radar_factory(N, frame='polygon')
 
     spoke_labels = data.pop('column names')
@@ -130,11 +143,28 @@ def plot_of_all_terms():
     """
     terms = ['reward', 'attention']
     savedir = '/Volumes/Huettel/KBE.01/Analysis/Neurosynth/ICA/visualization/'
-    num_terms = 20
+    ICA_component_number = 20
     savename = '_'.join(terms)
-    savename = '%s_%s' %(savename, num_terms)
+    savename = '%s_%s' %(savename, ICA_component_number)
     savepath = os.path.join(savedir, savename)
-    overlaid_plot(num_terms, savepath=savepath)
+    overlaid_plot(ICA_component_number, savepath=savepath)
+
+def plot_of_subset_of_terms():
+    """
+    Same as above but only takes a subset of the terms.
+    """
+    terms = ['motor', 'auditory', 'emotion', 'pain', 'reward']
+    savedir = '/Volumes/Huettel/KBE.01/Analysis/Neurosynth/ICA/visualization/'\
+                'subset'
+    ICA_component_number = 65
+    filtered_num = 10 # Number of components to include in radar plot.
+    savename = '_'.join(terms)
+    savename = '%s_%s' %(savename, ICA_component_number)
+    savepath = os.path.join(savedir, savename)
+    overlaid_plot(terms, ICA_component_number, savepath=savepath, 
+                    filtered_num=filtered_num)
+
 
 if __name__ == '__main__':
-   plot_of_all_terms()
+    plot_of_subset_of_terms()
+   # plot_of_all_terms()

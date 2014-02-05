@@ -42,12 +42,32 @@ def get_term_weight(term, ICA_path):
     return inter_line_list
 
 def get_all_term_weights(terms, ICA_path):
+    """
+    Args:
+        terms: list of terms that should be analyzed
+        ICA_path: general path
+    Output: A list of lists e.g. ['reward', -0.98, 1]
+    """
     big_list = []
     for term in terms:
         inter_line_list = get_term_weight(term, ICA_path)
         big_list.append(inter_line_list)
 
+    import pdb; pdb.set_trace()
     return big_list
+
+def term_weight_filter(big_list, filter_threshold):
+    """
+    Filters output from the get_all_term_weights function to limit the number
+    of components being run.
+    Args:
+        - big_list: output of get_all_term_weights
+        - filtered_threshold: number of terms to keep (this will be in order
+            of component number and is not sorted)
+    Output: a big_list that is paired down from the input
+    """
+    for i, term in enumerate(big_list):
+        big_list[i] = big_list[i][:filtered_threshold]
 
 def convert_final_data(big_list):
     """
@@ -102,13 +122,19 @@ def overlaid_plot(num_terms, savepath=None):
     else:
         plt.savefig(savepath)
 
-if __name__ == '__main__':
+#######
+def plot_of_all_terms():
+    """
+    Takes all of the terms within a directory and plots as many componets as 
+    were available.
+    """
     terms = ['reward', 'attention']
     savedir = '/Volumes/Huettel/KBE.01/Analysis/Neurosynth/ICA/visualization/'
     num_terms = 20
     savename = '_'.join(terms)
     savename = '%s_%s' %(savename, num_terms)
     savepath = os.path.join(savedir, savename)
-
     overlaid_plot(num_terms, savepath=savepath)
-    
+
+if __name__ == '__main__':
+   plot_of_all_terms()

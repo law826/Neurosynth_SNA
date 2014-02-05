@@ -1,5 +1,5 @@
 """
-Plot a 20 vertex radar plot.
+Can specific which directory the radar plot should go in. 
 """
 import os, sys, glob
 import numpy as np

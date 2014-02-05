@@ -1,6 +1,5 @@
 """
 Can specific which directory the radar plot should go in.
-test
 """
 import os, sys, glob
 import numpy as np

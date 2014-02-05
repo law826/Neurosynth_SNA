@@ -77,7 +77,7 @@ def convert_final_data(big_list):
     weight_list = [[abs(subitem[1]) for subitem in item] for item in big_list]
     data = {
         'column names': column_name_list,
-        'ICA_weights': weight_list
+        'ICA weights': weight_list
     }
 
     return data

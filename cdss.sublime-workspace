@@ -131,13 +131,61 @@
 	},
 	"buffers":
 	[
+		{
+			"file": "/Users/ln30/Git/cdss/meteor/client/views/diagnoses/filtered_diagnoses.js",
+			"settings":
+			{
+				"buffer_size": 200,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/Users/ln30/Git/cdss/meteor/client/main.html",
+			"settings":
+			{
+				"buffer_size": 310,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/Users/ln30/Git/cdss/meteor/client/main.js",
+			"settings":
+			{
+				"buffer_size": 60,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/Users/ln30/Git/cdss/meteor/client/views/diagnoses/diagnoses_list.html",
+			"settings":
+			{
+				"buffer_size": 1067,
+				"line_ending": "Unix"
+			}
+		}
 	],
 	"build_system": "",
 	"command_palette":
 	{
-		"height": 392.0,
+		"height": 167.0,
 		"selected_items":
 		[
+			[
+				"pull",
+				"Git: Pull"
+			],
+			[
+				"git:status",
+				"Git: Status"
+			],
+			[
+				"git:pull",
+				"Git: Pull"
+			],
+			[
+				"git:stash",
+				"Git: Stash"
+			],
 			[
 				"packa",
 				"Preferences: Browse Packages"
@@ -171,7 +219,7 @@
 				"Preferences: Settings - User"
 			]
 		],
-		"width": 593.0
+		"width": 602.0
 	},
 	"console":
 	{
@@ -188,6 +236,7 @@
 	},
 	"file_history":
 	[
+		"/Users/ln30/Git/cdss/meteor/server/fixtures.js",
 		"/Users/ln30/Git/Neurosynth_SNA/ply/yacc.py",
 		"/Users/ln30/Git/Neurosynth_SNA/Neurosynth_SNA.py",
 		"/Users/ln30/Git/Neurosynth_SNA/LN_scripts/igraph_import/3import_node_attributes.py",
@@ -319,7 +368,7 @@
 	},
 	"find_in_files":
 	{
-		"height": 0.0,
+		"height": 93.0,
 		"where_history":
 		[
 			""
@@ -479,6 +528,216 @@
 		{
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "/Users/ln30/Git/cdss/meteor/client/views/diagnoses/filtered_diagnoses.js",
+					"settings":
+					{
+						"buffer_size": 200,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								193,
+								193
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "/Users/ln30/Git/cdss/meteor/client/main.html",
+					"settings":
+					{
+						"buffer_size": 310,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "/Users/ln30/Git/cdss/meteor/client/main.js",
+					"settings":
+					{
+						"buffer_size": 60,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "/Users/ln30/Git/cdss/meteor/client/views/diagnoses/diagnoses_list.html",
+					"settings":
+					{
+						"buffer_size": 1067,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1067,
+								1067
+							]
+						],
+						"settings":
+						{
+							"codeintel": true,
+							"codeintel_config":
+							{
+								"JavaScript":
+								{
+									"codeintel_max_recursive_dir_depth": 2.0,
+									"codeintel_scan_files_in_project": false,
+									"javascriptExtraPaths":
+									[
+									]
+								},
+								"PHP":
+								{
+									"codeintel_max_recursive_dir_depth": 5.0,
+									"codeintel_scan_files_in_project": false,
+									"phpExtraPaths":
+									[
+									]
+								},
+								"Python":
+								{
+									"env":
+									{
+									}
+								}
+							},
+							"codeintel_enabled_languages":
+							[
+								"JavaScript",
+								"Mason",
+								"XBL",
+								"XUL",
+								"RHTML",
+								"SCSS",
+								"Python",
+								"HTML",
+								"Ruby",
+								"Python3",
+								"XML",
+								"Sass",
+								"XSLT",
+								"Django",
+								"HTML5",
+								"Perl",
+								"CSS",
+								"Twig",
+								"Less",
+								"Smarty",
+								"Node.js",
+								"Tcl",
+								"TemplateToolkit",
+								"PHP"
+							],
+							"codeintel_live": true,
+							"codeintel_live_enabled_languages":
+							[
+								"JavaScript",
+								"Mason",
+								"XBL",
+								"XUL",
+								"RHTML",
+								"SCSS",
+								"Python",
+								"HTML",
+								"Ruby",
+								"Python3",
+								"XML",
+								"Sass",
+								"XSLT",
+								"Django",
+								"HTML5",
+								"Perl",
+								"CSS",
+								"Twig",
+								"Less",
+								"Smarty",
+								"Node.js",
+								"Tcl",
+								"TemplateToolkit",
+								"PHP"
+							],
+							"codeintel_max_recursive_dir_depth": 10.0,
+							"codeintel_scan_exclude_dir":
+							{
+								"JavaScript":
+								[
+									"/build/",
+									"/min/"
+								]
+							},
+							"codeintel_scan_files_in_project": true,
+							"codeintel_selected_catalogs":
+							[
+								"PyWin32",
+								"jQuery",
+								"Rails"
+							],
+							"codeintel_snippets": true,
+							"codeintel_syntax_map":
+							{
+								"Python Django": "Python"
+							},
+							"codeintel_tooltips": "popup",
+							"sublime_auto_complete": true,
+							"syntax": "Packages/HTML/HTML.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
 			]
 		}
 	],
@@ -516,6 +775,10 @@
 	"output.exec":
 	{
 		"height": 100.0
+	},
+	"output.git-pull":
+	{
+		"height": 118.0
 	},
 	"replace":
 	{

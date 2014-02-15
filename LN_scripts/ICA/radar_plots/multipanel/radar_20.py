@@ -91,8 +91,8 @@ def overlaid_plot(num_terms, savepath=None):
     # add legend relative to top-left plot
     plt.subplot(1, 1, 1)
     labels = tuple(terms)
-    legend = plt.legend(labels, loc=(0.9, .95), labelspacing=0.1)
-    plt.setp(legend.get_texts(), fontsize='small')
+    #legend = plt.legend(labels, loc=(0.9, .95), labelspacing=0.1)
+    #plt.setp(legend.get_texts(), fontsize='small')
 
     plt.figtext(0.5, 0.965, 'Differential Term Weightings on ICA components',
                 ha='center', color='black', weight='bold', size='large')
@@ -103,9 +103,9 @@ def overlaid_plot(num_terms, savepath=None):
         plt.savefig(savepath)
 
 if __name__ == '__main__':
-    terms = ['reward', 'attention']
-    savedir = '/Volumes/Huettel/KBE.01/Analysis/Neurosynth/ICA/visualization/'
-    num_terms = 20
+    terms = ['attention']
+    savedir = '/Volumes/Huettel/KBE.01/Analysis/Neurosynth/ICA/visualization/animations'
+    num_terms = 65
     savename = '_'.join(terms)
     savename = '%s_%s' %(savename, num_terms)
     savepath = os.path.join(savedir, savename)

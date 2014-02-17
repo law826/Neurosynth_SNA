@@ -157,7 +157,7 @@ def plot_of_subset_of_terms():
     savedir = '/Volumes/Huettel/KBE.01/Analysis/Neurosynth/ICA/visualization/'\
                 'subset'
     ICA_component_number = 65
-    filtered_num = 10 # Number of components to include in radar plot.
+    filtered_num = 65 # Number of components to include in radar plot.
     savename = '_'.join(terms)
     savename = '%s_%s' %(savename, ICA_component_number)
     savepath = os.path.join(savedir, savename)

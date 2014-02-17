@@ -17,7 +17,7 @@ def get_term_weight(term, ICA_path):
     information are included as well.
     """
     # Search a directory for all lines that include a certain term.
-    load_dir = os.path.join(ICA_path, 'loadings')
+    load_dir = os.path.join(ICA_path, 'filtered_loadings')
     component_files = glob.glob1(load_dir, "*.txt")
 
     # Collect all of these into tuples, which includes the component name.
@@ -65,6 +65,8 @@ def term_weight_filter(big_list, filter_threshold):
     """
     for i, term in enumerate(big_list):
         big_list[i] = big_list[i][:filter_threshold]
+
+    import pdb; pdb.set_trace()
 
     return big_list
 
@@ -153,13 +155,13 @@ def plot_of_subset_of_terms():
     """
     Same as above but only takes a subset of the terms.
     """
-    terms = ['motor', 'auditory', 'emotion', 'pain', 'reward']
+    terms = ['moral']
     savedir = '/Volumes/Huettel/KBE.01/Analysis/Neurosynth/ICA/visualization/'\
-                'subset'
+                'moral/filtered'
     ICA_component_number = 65
-    filtered_num = 65 # Number of components to include in radar plot.
+    filtered_num = 53 # Number of components to include in radar plot.
     savename = '_'.join(terms)
-    savename = '%s_%s' %(savename, ICA_component_number)
+    savename = '%s_%s_%s' %(savename, ICA_component_number, filtered_num)
     savepath = os.path.join(savedir, savename)
     overlaid_plot(terms, ICA_component_number, savepath=savepath, 
                     filtered_num=filtered_num)

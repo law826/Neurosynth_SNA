@@ -4,18 +4,23 @@ the biggest jump in weights.
 """
 
 import os, sys, glob, csv
+import pylab as plt
 
-ICA_path = '/Volumes/Huettel/KBE.01/Analysis/Neurosynth/ICA/old/SHUFFLED3/'
-csv_output = '/Volumes/Huettel/KBE.01/Analysis/Neurosynth/ICA/old/SHUFFLED3/'\
-			'distribution/top_terms/terms_only.csv'
+ICA_path = '/Volumes/Huettel/KBE.01/Analysis/Neurosynth/ICA/ICA65'
+csv_output = '/Volumes/Huettel/KBE.01/Analysis/Neurosynth/ICA/ICA65/'\
+			'distribution/top_terms/dictionary.csv'
+
+difference_dir = '/Volumes/Huettel/KBE.01/Analysis/Neurosynth/ICA/ICA65/'\
+			'distribution/top_terms/differences/plots'
 
 # Import files.
-load_dir = os.path.join(ICA_path, 'loadings')
+load_dir = os.path.join(ICA_path, 'filtered_loadings')
 component_files = glob.glob1(load_dir, "*.txt")
 
 # Collect all of these into tuples, which includes the component name.
 out_list = []
-for component_file in component_files:
+diff_list = []
+for i, component_file in enumerate(component_files):
 	with open(os.path.join(load_dir, component_file), 'rb') as f:
 		file_lines = f.readlines()
 		matrix = []
@@ -27,7 +32,14 @@ for component_file in component_files:
 			# element.
 			if i != 0:
 				intra_line_list.append(matrix[i-1][1] - intra_line_list[1])
+			else:
+				intra_line_list.append(0)
+			intra_line_list.append(i+1)
+
 			matrix.append(intra_line_list)
+
+		# Add raw data so that differences can be printed. 
+		diff_list.append(matrix)
 		# Find the maximum weight in the matrix.
 		diff_weights = zip(*matrix[1:])[2]
 		max_value = max(diff_weights)
@@ -50,8 +62,25 @@ for component_file in component_files:
 		out_list.append(components)
 
 # Output to a CSV.
-with open(csv_output, 'wb') as output:
-    writer = csv.writer(output, dialect= 'excel')
-    writer.writerows(out_list)
+# with open(csv_output, 'wb') as output:
+#     writer = csv.writer(output, dialect= 'excel')
+#     writer.writerows(out_list)
 
+# Output diff list to csv.
+# for i, component in enumerate(diff_list):
+# 	diff_path = os.path.join(difference_dir, 'component_%s.csv' %(i+1)) 
+# 	with open(diff_path, 'wb') as do:
+# 		writer = csv.writer(do, dialect= 'excel')
+# 		writer.writerows(component)
 
+# Make scatterplots.
+for i, component in enumerate(diff_list):
+	transposed = [list(row) for row in zip(*component)]
+	ax = plt.figure(figsize=(20,6))
+	plt.xlabel('Nth Component Jump')
+	plt.ylabel('Difference in Weight')
+	plt.xlim([0, 414])
+	# plt.ylim([0, 3])
+	plt.tight_layout()
+	plt.plot(transposed[3][1:], transposed[2][1:], '.b-')
+	plt.savefig(os.path.join(difference_dir, '%s.png' %out_list[i][0]))

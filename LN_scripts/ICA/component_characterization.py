@@ -5,8 +5,8 @@ the biggest jump in weights.
 
 import os, sys, glob, csv
 
-ICA_path = '/Volumes/Huettel/KBE.01/Analysis/Neurosynth/ICA/ICA65/'
-csv_output = '/Volumes/Huettel/KBE.01/Analysis/Neurosynth/ICA/ICA65/'\
+ICA_path = '/Volumes/Huettel/KBE.01/Analysis/Neurosynth/ICA/old/SHUFFLED3/'
+csv_output = '/Volumes/Huettel/KBE.01/Analysis/Neurosynth/ICA/old/SHUFFLED3/'\
 			'distribution/top_terms/terms_only.csv'
 
 # Import files.

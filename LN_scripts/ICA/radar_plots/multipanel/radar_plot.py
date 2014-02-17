@@ -11,6 +11,11 @@ from matplotlib.projections import register_projection
 
 from base_plot import *
 
+<<<<<<< HEAD:LN_scripts/ICA/radar_plots/multipanel/radar_plot.py
+=======
+terms = ['moral']
+
+>>>>>>> a4788ade8d7281b0a742ee2c8fd59ad7ac9b828c:LN_scripts/ICA/radar_plots/multipanel/radar_20.py
 def get_term_weight(term, ICA_path):
     """
     Get a sorted list given a term and ICA_path. Several other pieces of 
@@ -124,8 +129,8 @@ def overlaid_plot(terms, ICA_component_number, savepath=None, filtered_num=False
     # add legend relative to top-left plot
     plt.subplot(1, 1, 1)
     labels = tuple(terms)
-    legend = plt.legend(labels, loc=(0.9, .95), labelspacing=0.1)
-    plt.setp(legend.get_texts(), fontsize='small')
+    #legend = plt.legend(labels, loc=(0.9, .95), labelspacing=0.1)
+    #plt.setp(legend.get_texts(), fontsize='small')
 
     plt.figtext(0.5, 0.965, 'Differential Term Weightings on ICA components',
                 ha='center', color='black', weight='bold', size='large')
@@ -135,6 +140,7 @@ def overlaid_plot(terms, ICA_component_number, savepath=None, filtered_num=False
     else:
         plt.savefig(savepath)
 
+<<<<<<< HEAD:LN_scripts/ICA/radar_plots/multipanel/radar_plot.py
 #######
 def plot_of_all_terms():
     """
@@ -144,6 +150,12 @@ def plot_of_all_terms():
     terms = ['reward', 'attention']
     savedir = '/Volumes/Huettel/KBE.01/Analysis/Neurosynth/ICA/visualization/'
     ICA_component_number = 20
+=======
+if __name__ == '__main__':
+    terms = ['moral']
+    savedir = '/Volumes/Huettel/KBE.01/Analysis/Neurosynth/ICA/visualization/animations'
+    num_terms = 65
+>>>>>>> a4788ade8d7281b0a742ee2c8fd59ad7ac9b828c:LN_scripts/ICA/radar_plots/multipanel/radar_20.py
     savename = '_'.join(terms)
     savename = '%s_%s' %(savename, ICA_component_number)
     savepath = os.path.join(savedir, savename)

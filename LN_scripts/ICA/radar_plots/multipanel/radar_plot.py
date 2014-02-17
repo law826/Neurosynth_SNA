@@ -135,7 +135,6 @@ def overlaid_plot(terms, ICA_component_number, savepath=None, filtered_num=False
     else:
         plt.savefig(savepath)
 
-<<<<<<< HEAD:LN_scripts/ICA/radar_plots/multipanel/radar_plot.py
 #######
 def plot_of_all_terms():
     """
@@ -145,12 +144,6 @@ def plot_of_all_terms():
     terms = ['reward', 'attention']
     savedir = '/Volumes/Huettel/KBE.01/Analysis/Neurosynth/ICA/visualization/'
     ICA_component_number = 20
-=======
-if __name__ == '__main__':
-    terms = ['moral']
-    savedir = '/Volumes/Huettel/KBE.01/Analysis/Neurosynth/ICA/visualization/animations'
-    num_terms = 65
->>>>>>> a4788ade8d7281b0a742ee2c8fd59ad7ac9b828c:LN_scripts/ICA/radar_plots/multipanel/radar_20.py
     savename = '_'.join(terms)
     savename = '%s_%s' %(savename, ICA_component_number)
     savepath = os.path.join(savedir, savename)

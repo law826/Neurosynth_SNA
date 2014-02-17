@@ -76,11 +76,13 @@ for i, component_file in enumerate(component_files):
 # Make scatterplots.
 for i, component in enumerate(diff_list):
 	transposed = [list(row) for row in zip(*component)]
-	ax = plt.figure(figsize=(20,6))
-	plt.xlabel('Nth Component Jump')
-	plt.ylabel('Difference in Weight')
+	ax = plt.figure(figsize=(20,12))
+	plt.xlabel('Nth Component Jump', fontsize=30)
+	plt.ylabel('Difference in Weight', fontsize=30)
 	plt.xlim([0, 414])
 	# plt.ylim([0, 3])
+	plt.tick_params(axis='x', labelsize=24)
+	plt.tick_params(axis='y', labelsize=24)
 	plt.tight_layout()
-	plt.plot(transposed[3][1:], transposed[2][1:], '.b-')
+	plt.plot(transposed[3][1:], transposed[2][1:], '.b-', linewidth=3.0)
 	plt.savefig(os.path.join(difference_dir, '%s.png' %out_list[i][0]))

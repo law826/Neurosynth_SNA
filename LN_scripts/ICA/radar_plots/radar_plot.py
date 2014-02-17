@@ -146,11 +146,11 @@ def example_data():
             [[2.39, 0.62, 0.98, 0.95, 1.60, 0.81, 0.81, 0.79, 1.19]]}
     return data
 
-def one_panel_top_terms(data, savepath=False):
+def one_panel_top_terms(data, outpath=False):
     """
     Given a dataset as above, returns a single plot.
     """
-    N = 9
+    N = 15
     theta = radar_factory(N, frame='polygon')
 
     #data = example_data()
@@ -175,8 +175,8 @@ def one_panel_top_terms(data, savepath=False):
     plt.figtext(0.5, 0.965, '"%s"' %title,
                 ha='center', color='black', weight='bold', size=25)
 
-    
-    plt.show()
+    if outpath:
+        plt.savefig(outpath)
 
 if __name__ == '__main__':
     data = example_data()

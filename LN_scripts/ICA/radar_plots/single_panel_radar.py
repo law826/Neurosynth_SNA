@@ -55,38 +55,55 @@ def get_sorted_list_by_term(term, ICA_path, load_dir, sort_list=True):
 	else:
 		return inter_line_list
 
-def radar_plot_top_terms(term, ICA_path, load_dir):
+def radar_plot_top_terms(term, ICA_path, load_dir, dictionary, outpath):
 	"""
 	Takes the list returned by get_sorted_list_by_term and returns a radar_plot.
 	"""
 	sorted_inter_line_list = get_sorted_list_by_term(term, ICA_path, load_dir)
 
 	# Retrieve the top 9.
-	num_top_items = 9
+	num_top_items = 15
 	num_top_terms = 4
 	top_components = sorted_inter_line_list[:num_top_items]
 
-	# Based on these components, retrieve the top 4 terms associated 
+	
+
+
+	# Retrive the terms to label the radar plot. 
+	with open(dictionary_file, 'rb') as df:
+		lines = df.readlines()
+		# Split because of stupid \r carriage returns. 
+		lines = lines[0].split('\r')
+		# Make a dictionary. 
+		dictionary = {}
+		for line in lines:
+			line_list = line.split(',')
+			# Get rid of empty list items.
+			line_list = [item for item in line_list if item != '']
+			component_name = line_list[0]
+			labels = '\n'.join(line_list[1:])
+			dictionary[component_name] = labels
+
+	# Based on these components, retrieve the top terms associated 
 	# with a component. 
 	top_terms_list = [] 
+	components_label_list = []
 	for top_component in top_components:
 		with open(os.path.join(load_dir, top_component[3])) as f:
 			file_lines = f.readlines()
-			top_lines = file_lines[:num_top_terms]
-			top_terms = [line.split(',')[0] for line in top_lines]
-			top_terms = '\n'.join(top_terms)
+			top_terms = dictionary[top_component[3]]
 			top_terms_list.append(top_terms)
 
 	top_loadings = [component[1] for component in top_components]
 
-	# Put the data into appropriate format for radar plot. 
+	# Put the data into appropriate format for radar plot.
 	data = {
 		'column names': top_terms_list,
 		term: [top_loadings]
 	}
 
 	# Create the radar plot.
-	radar_plot.one_panel_top_terms(data)
+	radar_plot.one_panel_top_terms(data, outpath)
 
 
 if __name__ == '__main__':
@@ -94,7 +111,11 @@ if __name__ == '__main__':
 	# Radar plot
 	ICA_path = '/Volumes/Huettel/KBE.01/Analysis/Neurosynth/ICA/ICA65/'
 	load_dir = '/Volumes/Huettel/KBE.01/Analysis/Neurosynth/ICA/ICA65/filtered_loadings'
-	radar_plot_top_terms("value", ICA_path, load_dir)
+	outpath = '/Volumes/Huettel/KBE.01/Analysis/Neurosynth/ICA/'\
+				'visualization/moral/filtered/moral_top_15.png'
+	dictionary_file = '/Volumes/Huettel/KBE.01/Analysis/Neurosynth/ICA/ICA65/'\
+					'distribution/top_terms/task_terms_top.csv'
+	radar_plot_top_terms("moral", ICA_path, load_dir, dictionary_file, outpath)
 
 	# Radar plot.
 	# radar_plot_top_terms("morality", ICA_path)

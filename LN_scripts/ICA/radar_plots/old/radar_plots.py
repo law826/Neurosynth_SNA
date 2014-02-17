@@ -95,8 +95,8 @@ def radar_plot_top_terms(term, ICA_path):
 
 if __name__ == '__main__':
 	# Radar plot
-	ICA_path = '/Volumes/Huettel/KBE.01/Analysis/Neurosynth/ICA/ICA20/'
-	radar_plot_top_terms("attention", ICA_path)
+	ICA_path = '/Volumes/Huettel/KBE.01/Analysis/Neurosynth/ICA/ICA65/'
+	radar_plot_top_terms("moral", ICA_path)
 
 	# Radar plot.
 	# radar_plot_top_terms("morality", ICA_path)

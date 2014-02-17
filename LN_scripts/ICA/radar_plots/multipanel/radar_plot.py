@@ -11,11 +11,6 @@ from matplotlib.projections import register_projection
 
 from base_plot import *
 
-<<<<<<< HEAD:LN_scripts/ICA/radar_plots/multipanel/radar_plot.py
-=======
-terms = ['moral']
-
->>>>>>> a4788ade8d7281b0a742ee2c8fd59ad7ac9b828c:LN_scripts/ICA/radar_plots/multipanel/radar_20.py
 def get_term_weight(term, ICA_path):
     """
     Get a sorted list given a term and ICA_path. Several other pieces of 

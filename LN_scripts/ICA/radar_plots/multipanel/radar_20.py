@@ -11,7 +11,7 @@ from matplotlib.projections import register_projection
 
 from base_plot import *
 
-terms = ['reward', 'moral']
+terms = ['moral']
 
 def get_term_weight(term, ICA_path):
     """
@@ -103,7 +103,7 @@ def overlaid_plot(num_terms, savepath=None):
         plt.savefig(savepath)
 
 if __name__ == '__main__':
-    terms = ['attention']
+    terms = ['moral']
     savedir = '/Volumes/Huettel/KBE.01/Analysis/Neurosynth/ICA/visualization/animations'
     num_terms = 65
     savename = '_'.join(terms)

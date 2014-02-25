@@ -21,7 +21,7 @@ sys.path.append('/Users/ln30/Git/Neurosynth_SNA/LN_scripts/')
 import node_analysis as na
 
 ##### Sequences of events.
-create_edgelist_from_columns = False ##
+create_edgelist_from_columns = True ##
 create_cross_corr_table_from_columns = False
 import_graph_from_edgelist = False ## Will otherwise load a pickle.
 make_graph_undirected = False ##
@@ -35,8 +35,8 @@ assign_semantic_Jaccards = False
 save_the_graph = False ##
 ######
 
-edgelist = '/Volumes/huettel/KBE.01/Analysis/Neurosynth/graph_analysis_data/' \
-			'NeurosynthMerge/merged_edgelist/merged_edgelist.csv'
+edgelist = '/Volumes/Huettel/KBE.01/Analysis/Neurosynth/ICA/ICA65/decoding/test/'\
+
 
 corr_table = '/Volumes/Huettel/KBE.01/Analysis/Neurosynth/ICA/validation/'\
 			'merged_output/merged_correlation.csv'
@@ -45,8 +45,8 @@ pcorr_table = '/Volumes/huettel/KBE.01/Analysis/Neurosynth/'\
 			'graph_analysis_data/NeurosynthMerge/merged_correlation/'\
 			'merged_pcorrelation.csv'
 
-term_correlation_dir = '/Volumes/Huettel/KBE.01/Analysis/Neurosynth/ICA/'\
-					'validation/output/'
+term_correlation_dir = '/Volumes/Huettel/KBE.01/Analysis/Neurosynth/ICA/ICA65/'\
+						'decoding/applied_unthresh_overlap/'
 
 outdir = '/Volumes/Huettel/KBE.01/Analysis/Neurosynth/ICA/'\
 				'validation/merged_output/'
@@ -64,8 +64,7 @@ git_path = '/Volumes/huettel/KBE.01/Analysis/Neurosynth/neurosynthgit/'
 # Import all the relevant paths.
 if create_edgelist_from_columns:
 	file_names = ns.GetFileNamesInDirectory(term_correlation_dir)
-	ns.CreateEdgelist(term_correlation_dir, file_names, outdir,
-		'merged_edgelist')
+	ns.CreateEdgelist(term_correlation_dir, file_names, edgelist, 'merged_edgelist.csv')
 
 if create_cross_corr_table_from_columns:
 	file_names = ns.GetFileNamesInDirectory(term_correlation_dir)

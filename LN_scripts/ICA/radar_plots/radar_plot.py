@@ -76,7 +76,7 @@ def radar_factory(num_vars, frame='circle'):
                 line.set_data(x, y)
 
         def set_varlabels(self, labels):
-            self.set_thetagrids(theta * 180/np.pi, labels)
+            self.set_thetagrids(theta * 180/np.pi, labels, fontsize=12)
 
         def _gen_axes_patch(self):
             return self.draw_patch()
@@ -150,7 +150,7 @@ def one_panel_top_terms(data, outpath=False):
     """
     Given a dataset as above, returns a single plot.
     """
-    N = 15
+    N = 25
     theta = radar_factory(N, frame='polygon')
 
     #data = example_data()
@@ -203,11 +203,11 @@ if __name__ == '__main__':
     #         ax.fill(theta, d, facecolor=color, alpha=0.25)
     #     ax.set_varlabels(spoke_labels)
 
-    # # add legend relative to top-left plot
-    # # plt.subplot(2, 2, 1)
-    # # labels = ('Factor 1', 'Factor 2', 'Factor 3', 'Factor 4', 'Factor 5')
-    # # legend = plt.legend(labels, loc=(0.9, .95), labelspacing=0.1)
-    # # plt.setp(legend.get_texts(), fontsize='small')
+    # add legend relative to top-left plot
+    # plt.subplot(2, 2, 1)
+    # labels = ('Factor 1', 'Factor 2', 'Factor 3', 'Factor 4', 'Factor 5')
+    # legend = plt.legend(labels, loc=(0.9, .95), labelspacing=0.1)
+    # plt.setp(legend.get_texts(), fontsize='small')
 
     # plt.figtext(0.5, 0.965, 'Morality mapped onto ICA factors',
     #             ha='center', color='black', weight='bold', size='large')

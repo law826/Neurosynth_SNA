@@ -66,8 +66,6 @@ def term_weight_filter(big_list, filter_threshold):
     for i, term in enumerate(big_list):
         big_list[i] = big_list[i][:filter_threshold]
 
-    import pdb; pdb.set_trace()
-
     return big_list
 
 def convert_final_data(big_list):
@@ -111,7 +109,7 @@ def overlaid_plot(terms, ICA_component_number, savepath=None, filtered_num=False
     fig = plt.figure(figsize=(9, 9))
     fig.subplots_adjust(wspace=0.25, hspace=0.20, top=0.85, bottom=0.05)
 
-    colors = ['b', 'r', 'g', 'm', 'y']
+    colors = ['y', 'r', 'g', 'b', 'm']
     # Plot the four cases from the example data on separate axes
     for n, title in enumerate(data.keys()):
         ax = fig.add_subplot(1, 1, n+1, projection='radar')
@@ -126,8 +124,8 @@ def overlaid_plot(terms, ICA_component_number, savepath=None, filtered_num=False
     # add legend relative to top-left plot
     plt.subplot(1, 1, 1)
     labels = tuple(terms)
-    #legend = plt.legend(labels, loc=(0.9, .95), labelspacing=0.1)
-    #plt.setp(legend.get_texts(), fontsize='small')
+    legend = plt.legend(labels, loc=(0.9, .95), labelspacing=0.1)
+    plt.setp(legend.get_texts(), fontsize='small')
 
     plt.figtext(0.5, 0.965, 'Differential Term Weightings on ICA components',
                 ha='center', color='black', weight='bold', size='large')
@@ -155,11 +153,11 @@ def plot_of_subset_of_terms():
     """
     Same as above but only takes a subset of the terms.
     """
-    terms = ['moral']
+    terms = ['visuomotor', 'self', 'moral', 'music']
     savedir = '/Volumes/Huettel/KBE.01/Analysis/Neurosynth/ICA/visualization/'\
-                'moral/filtered'
+                'neural_compounds'
     ICA_component_number = 65
-    filtered_num = 52 # Number of components to include in radar plot.
+    filtered_num = 51 # Number of components to include in radar plot.
     savename = '_'.join(terms)
     savename = '%s_%s_%s' %(savename, ICA_component_number, filtered_num)
     savepath = os.path.join(savedir, savename)

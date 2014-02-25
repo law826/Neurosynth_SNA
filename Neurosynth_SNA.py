@@ -448,6 +448,7 @@ def CreateEdgelist(maindir, file_names, outdir, outname):
     outpath=os.sep.join([outdir, outname])
 
     np.save(outpath, concatenate_data)
+    import pdb; pdb.set_trace()
     np.savetxt(outpath+'.csv', concatenate_data, fmt='%1.f %1.f %1.3f')
 
 def Import_Edges_from_Table(graph, table_csv_path, edge_attribute):

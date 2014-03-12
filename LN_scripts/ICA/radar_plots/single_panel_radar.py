@@ -62,7 +62,7 @@ def radar_plot_top_terms(term, ICA_path, load_dir, dictionary, outpath):
 	sorted_inter_line_list = get_sorted_list_by_term(term, ICA_path, load_dir)
 
 	# Retrieve the top 9.
-	num_top_items = 15
+	num_top_items = 25
 	num_top_terms = 4
 	top_components = sorted_inter_line_list[:num_top_items]
 
@@ -109,13 +109,14 @@ def radar_plot_top_terms(term, ICA_path, load_dir, dictionary, outpath):
 if __name__ == '__main__':
 
 	# Radar plot
+	term = 'choice'
 	ICA_path = '/Volumes/Huettel/KBE.01/Analysis/Neurosynth/ICA/ICA65/'
 	load_dir = '/Volumes/Huettel/KBE.01/Analysis/Neurosynth/ICA/ICA65/filtered_loadings'
 	outpath = '/Volumes/Huettel/KBE.01/Analysis/Neurosynth/ICA/'\
-				'visualization/moral/filtered/moral_top_15.png'
+				'visualization/neural_compounds/%s_top_15.png' % term
 	dictionary_file = '/Volumes/Huettel/KBE.01/Analysis/Neurosynth/ICA/ICA65/'\
 					'distribution/top_terms/task_terms_top.csv'
-	radar_plot_top_terms("moral", ICA_path, load_dir, dictionary_file, outpath)
+	radar_plot_top_terms(term, ICA_path, load_dir, dictionary_file, outpath)
 
 	# Radar plot.
 	# radar_plot_top_terms("morality", ICA_path)

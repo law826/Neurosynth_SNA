@@ -109,7 +109,7 @@ def overlaid_plot(terms, ICA_component_number, savepath=None, filtered_num=False
     fig = plt.figure(figsize=(9, 9))
     fig.subplots_adjust(wspace=0.25, hspace=0.20, top=0.85, bottom=0.05)
 
-    colors = ['b', 'r', 'g', 'm', 'y']
+    colors = ['y', 'r', 'g', 'b', 'm']
     # Plot the four cases from the example data on separate axes
     for n, title in enumerate(data.keys()):
         ax = fig.add_subplot(1, 1, n+1, projection='radar')
@@ -128,7 +128,6 @@ def overlaid_plot(terms, ICA_component_number, savepath=None, filtered_num=False
     labels = tuple(terms)
     legend = plt.legend(labels, loc=(0.9, .95), labelspacing=0.1)
     plt.setp(legend.get_texts(), fontsize='large')
-
     plt.figtext(0.5, 0.965, '',
                 ha='center', color='black', weight='bold', size='large')
 
@@ -158,6 +157,7 @@ def plot_of_subset_of_terms():
     terms = ['auditory', 'reward']
     savedir = '/Volumes/Huettel/KBE.01/Analysis/Neurosynth/ICA/visualization/'\
                 'neural_elements'
+
     ICA_component_number = 65
     filtered_num = 51 # Number of components to include in radar plot.
     savename = '_'.join(terms)

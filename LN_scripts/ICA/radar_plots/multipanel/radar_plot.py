@@ -66,8 +66,6 @@ def term_weight_filter(big_list, filter_threshold):
     for i, term in enumerate(big_list):
         big_list[i] = big_list[i][:filter_threshold]
 
-    import pdb; pdb.set_trace()
-
     return big_list
 
 def convert_final_data(big_list):
@@ -79,7 +77,7 @@ def convert_final_data(big_list):
     weight_list = [[abs(subitem[1]) for subitem in item] for item in big_list]
     data = {
         'column names': column_name_list,
-        'ICA weights': weight_list
+        'Elemental Compounds': weight_list
     }
 
     return data
@@ -115,10 +113,12 @@ def overlaid_plot(terms, ICA_component_number, savepath=None, filtered_num=False
     # Plot the four cases from the example data on separate axes
     for n, title in enumerate(data.keys()):
         ax = fig.add_subplot(1, 1, n+1, projection='radar')
+        plt.rgrids([2, 4, 6, 8])
         #plt.rgrids([0.2, 0.4, 0.6, 0.8])
         ax.set_title(title, weight='bold', size='medium', position=(0.5, 1.1),
                      horizontalalignment='center', verticalalignment='center')
         for d, color in zip(data[title], colors):
+            ax.set_ylim(0,10)
             ax.plot(theta, d, color=color)
             ax.fill(theta, d, facecolor=color, alpha=0.25)
         ax.set_varlabels(spoke_labels)
@@ -126,10 +126,10 @@ def overlaid_plot(terms, ICA_component_number, savepath=None, filtered_num=False
     # add legend relative to top-left plot
     plt.subplot(1, 1, 1)
     labels = tuple(terms)
-    #legend = plt.legend(labels, loc=(0.9, .95), labelspacing=0.1)
-    #plt.setp(legend.get_texts(), fontsize='small')
+    legend = plt.legend(labels, loc=(0.9, .95), labelspacing=0.1)
+    plt.setp(legend.get_texts(), fontsize='large')
 
-    plt.figtext(0.5, 0.965, 'Differential Term Weightings on ICA components',
+    plt.figtext(0.5, 0.965, '',
                 ha='center', color='black', weight='bold', size='large')
 
     if savepath == None:
@@ -143,7 +143,7 @@ def plot_of_all_terms():
     Takes all of the terms within a directory and plots as many componets as 
     were available.
     """
-    terms = ['reward', 'attention']
+    terms = ['motor', 'social']
     savedir = '/Volumes/Huettel/KBE.01/Analysis/Neurosynth/ICA/visualization/'
     ICA_component_number = 20
     savename = '_'.join(terms)
@@ -155,11 +155,11 @@ def plot_of_subset_of_terms():
     """
     Same as above but only takes a subset of the terms.
     """
-    terms = ['moral']
+    terms = ['auditory', 'reward']
     savedir = '/Volumes/Huettel/KBE.01/Analysis/Neurosynth/ICA/visualization/'\
-                'moral/filtered'
+                'neural_elements'
     ICA_component_number = 65
-    filtered_num = 52 # Number of components to include in radar plot.
+    filtered_num = 51 # Number of components to include in radar plot.
     savename = '_'.join(terms)
     savename = '%s_%s_%s' %(savename, ICA_component_number, filtered_num)
     savepath = os.path.join(savedir, savename)

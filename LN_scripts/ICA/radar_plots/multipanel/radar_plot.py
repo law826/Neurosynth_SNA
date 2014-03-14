@@ -77,7 +77,7 @@ def convert_final_data(big_list):
     weight_list = [[abs(subitem[1]) for subitem in item] for item in big_list]
     data = {
         'column names': column_name_list,
-        'Elemental Compounds': weight_list
+        'Neural Compounds': weight_list
     }
 
     return data
@@ -109,7 +109,7 @@ def overlaid_plot(terms, ICA_component_number, savepath=None, filtered_num=False
     fig = plt.figure(figsize=(9, 9))
     fig.subplots_adjust(wspace=0.25, hspace=0.20, top=0.85, bottom=0.05)
 
-    colors = ['y', 'r', 'g', 'b', 'm']
+    colors = ['b', 'r', 'g', 'y', 'm']
     # Plot the four cases from the example data on separate axes
     for n, title in enumerate(data.keys()):
         ax = fig.add_subplot(1, 1, n+1, projection='radar')
@@ -154,12 +154,12 @@ def plot_of_subset_of_terms():
     """
     Same as above but only takes a subset of the terms.
     """
-    terms = ['auditory', 'reward']
+    terms = ['disgust']
     savedir = '/Volumes/Huettel/KBE.01/Analysis/Neurosynth/ICA/visualization/'\
                 'neural_elements'
 
     ICA_component_number = 65
-    filtered_num = 51 # Number of components to include in radar plot.
+    filtered_num = 50 # Number of components to include in radar plot.
     savename = '_'.join(terms)
     savename = '%s_%s_%s' %(savename, ICA_component_number, filtered_num)
     savepath = os.path.join(savedir, savename)

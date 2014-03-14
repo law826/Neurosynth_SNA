@@ -10,7 +10,7 @@ from scipy.cluster.hierarchy import linkage, fcluster, dendrogram
 
 load_dir = '/Volumes/Huettel/KBE.01/Analysis/Neurosynth/ICA/ICA65/filtered_loadings/'
 component_files = glob.glob1(load_dir, "*.txt")
-
+savepath = '/Volumes/Huettel/KBE.01/Analysis/Neurosynth/ICA/ICA65/distribution/hierarchical.png'
 
 # Terms to exclude 
 
@@ -19,7 +19,7 @@ component_files = glob.glob1(load_dir, "*.txt")
 # 		'epilepsy', 'family', 'female', 'genotype', 'illness', 'male', 
 # 		'polymorphism', 'ptsd', 'schizophrenia', 'sex', 'sexual', 'women']
 
-matrix = np.empty((51, 414))
+matrix = np.empty((50, 414))
 for i, component_file in enumerate(component_files):
 	with open(os.path.join(load_dir, component_file), 'rb') as f:
 		file_lines = f.readlines()
@@ -51,6 +51,6 @@ ax = plt.figure(figsize=(10, 6))
 dendrogram_labels = [component.replace('component_', '').replace('.txt', '')
 						for component in component_files]
 dendrogram(linkageMatrix, labels = dendrogram_labels)
-plt.show()
+plt.savefig(savepath)
 
 
